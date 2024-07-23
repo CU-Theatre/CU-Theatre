@@ -1,4 +1,4 @@
-package cu.theater.backend.backend;
+package cu.theater.backend;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

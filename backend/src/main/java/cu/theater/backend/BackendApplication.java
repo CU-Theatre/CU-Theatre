@@ -1,4 +1,4 @@
-package cu.theater.backend.backend;
+package cu.theater.backend;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
