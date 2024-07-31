@@ -18,27 +18,32 @@ import java.util.Set;
 import lombok.Data;
 import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.annotations.SQLDelete;
-import org.hibernate.annotations.Where;
+import org.hibernate.annotations.SQLRestriction;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 @Data
 @Entity
-@SQLDelete(sql = "UPDATE users SET is_deleted = TRUE WHERE id = ?")
-@Where(clause = "is_deleted = FALSE")
+@SQLDelete(sql = "UPDATE users SET is_deleted = true WHERE id=?")
+@SQLRestriction("is_deleted=false")
 @Table(name = "users")
 public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     @Column(nullable = false, unique = true, name = "email")
     private String email;
+
     @Column(nullable = false, name = "first_name")
     private String firstName;
+
     @Column(nullable = false, name = "last_name")
     private String lastName;
+
     @Column(name = "password")
     private String password;
+
     @JdbcTypeCode(TINYINT)
     @Column(nullable = false)
     private boolean isDeleted = false;
