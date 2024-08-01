@@ -24,6 +24,7 @@ public class EventServiceImpl implements EventService {
 
     @Override
     public EventResponseDto update(Long id, EventRequestDto requestDto) {
+        System.out.println("DB Called!");
         eventRepository.findById(id).orElseThrow(() ->
                 new EntityNotFoundException("Can't find event with id: " + id));
         Event event = eventMapper.toModel(requestDto);
@@ -33,6 +34,7 @@ public class EventServiceImpl implements EventService {
 
     @Override
     public List<EventResponseDto> getAll() {
+        System.out.println("DB Called!");
         return eventRepository.findAll().stream()
                 .map(eventMapper::toDto)
                 .toList();
@@ -40,6 +42,7 @@ public class EventServiceImpl implements EventService {
 
     @Override
     public EventResponseDto getById(Long id) {
+        System.out.println("DB Called!");
         return eventMapper.toDto(eventRepository.findById(id).orElseThrow(() ->
                 new EntityNotFoundException("Can't find event with id: " + id)));
     }

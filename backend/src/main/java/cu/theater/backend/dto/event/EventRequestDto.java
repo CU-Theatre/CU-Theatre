@@ -3,12 +3,13 @@ package cu.theater.backend.dto.event;
 import cu.theater.backend.model.Event;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import java.io.Serializable;
 import java.math.BigDecimal;
 import lombok.Data;
 import org.hibernate.validator.constraints.Length;
 
 @Data
-public class EventRequestDto {
+public class EventRequestDto implements Serializable {
     @NotBlank
     @Length(min = 4, max = 35)
     private String name;
