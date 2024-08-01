@@ -5,7 +5,6 @@ import cu.theater.backend.dto.event.EventResponseDto;
 import cu.theater.backend.mapper.EventMapper;
 import cu.theater.backend.model.Event;
 import cu.theater.backend.repository.EventRepository;
-import jakarta.persistence.EntityNotFoundException;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -25,7 +24,8 @@ public class EventServiceImpl implements EventService {
     @Override
     public EventResponseDto update(Long id, EventRequestDto requestDto) {
         eventRepository.findById(id).orElseThrow(() ->
-                new EntityNotFoundException("Can't find event with id: " + id));
+                new cu.theater.backend.exception
+                        .EntityNotFoundException("Can't find event with id: " + id));
         Event event = eventMapper.toModel(requestDto);
         event.setId(id);
         return eventMapper.toDto(eventRepository.save(event));
@@ -41,7 +41,8 @@ public class EventServiceImpl implements EventService {
     @Override
     public EventResponseDto getById(Long id) {
         return eventMapper.toDto(eventRepository.findById(id).orElseThrow(() ->
-                new EntityNotFoundException("Can't find event with id: " + id)));
+                new cu.theater.backend.exception
+                        .EntityNotFoundException("Can't find event with id: " + id)));
     }
 
     @Override
