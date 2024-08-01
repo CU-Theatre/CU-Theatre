@@ -5,11 +5,15 @@ on: [ push, pull_request ]
 jobs:
   build:
     runs-on: ubuntu-latest
+    services:
+      redis:
+        image: redis:latest
+        ports:
+          - 6379:6379
 
     defaults:
       run:
         working-directory: ./backend
-
     steps:
       - uses: actions/checkout@v4
       - name: Set up JDK 17
@@ -18,13 +22,6 @@ jobs:
           java-version: '17'
           distribution: 'temurin'
           cache: maven
-
-#      - name: Change to backend directory
-#        run: cd backend
-#      - name: Build with Maven
-#        run: cd backend && mvn --batch-mode verify
-#      - name: Run tests
-#        run: cd backend && mvn test
       - name: Build and run Unit/Integration Tests with Maven
         run: mvn -ntp -B verify
 
