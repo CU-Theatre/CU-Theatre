@@ -10,13 +10,6 @@ jobs:
         image: redis:latest
         ports:
           - 6379:6379
-      mysql:
-        image: mysql:latest
-        env:
-          MYSQL_ROOT_PASSWORD: test
-          MYSQL_DATABASE: test
-        ports:
-          - 3306:3306
 
     defaults:
       run:
