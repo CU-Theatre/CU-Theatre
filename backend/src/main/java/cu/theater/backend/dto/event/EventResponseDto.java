@@ -1,11 +1,12 @@
 package cu.theater.backend.dto.event;
 
 import cu.theater.backend.model.Event;
+import java.io.Serializable;
 import java.math.BigDecimal;
 import lombok.Data;
 
 @Data
-public class EventResponseDto {
+public class EventResponseDto implements Serializable {
     private Long id;
     private String name;
     private String description;
