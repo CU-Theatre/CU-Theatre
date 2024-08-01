@@ -6,9 +6,11 @@ import jakarta.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import lombok.Data;
+import lombok.experimental.Accessors;
 import org.hibernate.validator.constraints.Length;
 
 @Data
+@Accessors(chain = true)
 public class EventRequestDto implements Serializable {
     @NotBlank
     @Length(min = 4, max = 35)
