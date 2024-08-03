@@ -1,10 +1,10 @@
 databaseChangeLog:
   - changeSet:
-      id: create-users-table
+      id: create-emergency-contact-table
       author: me
       changes:
         - createTable:
-            tableName: users
+            tableName: emergency_contact
             columns:
               - column:
                   name: id
@@ -12,22 +12,6 @@ databaseChangeLog:
                   autoIncrement: true
                   constraints:
                     primaryKey: true
-                    nullable: false
-              - column:
-                  name: email
-                  type: varchar(255)
-                  constraints:
-                    nullable: false
-                    unique: true
-              - column:
-                  name: phone_number
-                  type: varchar(255)
-                  constraints:
-                    nullable: false
-              - column:
-                  name: password
-                  type: varchar(255)
-                  constraints:
                     nullable: false
               - column:
                   name: first_name
@@ -40,8 +24,19 @@ databaseChangeLog:
                   constraints:
                     nullable: false
               - column:
-                  name: is_deleted
-                  type: boolean
-                  defaultValueBoolean: false
+                  name: phone_number
+                  type: varchar(255)
                   constraints:
                     nullable: false
+              - column:
+                  name: relation
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: user_id
+                  type: BIGINT
+                  constraints:
+                    nullable: false
+                    foreignKeyName: fk_emergency_contact_user_id
+                    references: users(id)
