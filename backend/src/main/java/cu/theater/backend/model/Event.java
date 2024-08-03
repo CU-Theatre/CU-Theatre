@@ -47,8 +47,11 @@ public class Event {
     private boolean isDeleted;
 
     public enum Status {
+        EARLY_BIRD,
         SCHEDULED,
+        RESCHEDULED,
         ONGOING,
-        COMPLETED
+        COMPLETED,
+        CANCELED
     }
 }
