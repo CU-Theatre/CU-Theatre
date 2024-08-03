@@ -15,14 +15,16 @@ import jakarta.persistence.Table;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.SQLRestriction;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-@Data
+@Getter
+@Setter
 @Entity
 @SQLDelete(sql = "UPDATE users SET is_deleted = true WHERE id=?")
 @SQLRestriction("is_deleted=false")
@@ -43,6 +45,9 @@ public class User implements UserDetails {
 
     @Column(name = "password")
     private String password;
+
+    @Column(name = "phone_number", nullable = false, unique = true)
+    private String phoneNumber;
 
     @JdbcTypeCode(TINYINT)
     @Column(nullable = false)
@@ -91,4 +96,5 @@ public class User implements UserDetails {
         return !isDeleted;
     }
 }
+
 

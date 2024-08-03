@@ -1,5 +1,6 @@
 package cu.theater.backend.service.user;
 
+import cu.theater.backend.dto.user.UpdateUserDto;
 import cu.theater.backend.dto.user.UserRegistrationRequestDto;
 import cu.theater.backend.dto.user.UserResponseDto;
 import cu.theater.backend.exception.RegistrationException;
@@ -15,4 +16,5 @@ public interface UserService {
 
     User getByEmail(String email);
 
+    UserResponseDto updateUserDetails(UpdateUserDto updateUserDto);
 }

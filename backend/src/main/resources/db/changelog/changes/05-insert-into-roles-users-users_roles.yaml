@@ -37,6 +37,9 @@ databaseChangeLog:
                 - column:
                     name: last_name
                     value: Doe
+                - column:
+                      name: phone_number
+                      value: 3530000000
             - insert:
                 tableName: users
                 columns:
@@ -55,6 +58,9 @@ databaseChangeLog:
                 - column:
                     name: last_name
                     value: Doe
+                - column:
+                      name: phone_number
+                      value: 3530000001
   - changeSet:
       id: insert-into-users_roles
       author: me
@@ -77,3 +83,49 @@ databaseChangeLog:
               - column:
                   name: role_id
                   value: 2
+  - changeSet:
+      id: insert-into-emergency_contact
+      author: me
+      changes:
+        - insert:
+            tableName: emergency_contact
+            columns:
+              - column:
+                  name: id
+                  value: 1
+              - column:
+                  name: user_id
+                  value: "1"
+              - column:
+                  name: first_name
+                  value: Janes
+              - column:
+                  name: last_name
+                  value: Mom
+              - column:
+                  name: phone_number
+                  value: 3530000000
+              - column:
+                  name: relation
+                  value: Mother
+        - insert:
+            tableName: emergency_contact
+            columns:
+              - column:
+                  name: id
+                  value: 2
+              - column:
+                  name: user_id
+                  value: "2"
+              - column:
+                  name: first_name
+                  value: Johns
+              - column:
+                  name: last_name
+                  value: Dad
+              - column:
+                  name: phone_number
+                  value: 3530000002
+              - column:
+                  name: relation
+                  value: Father
