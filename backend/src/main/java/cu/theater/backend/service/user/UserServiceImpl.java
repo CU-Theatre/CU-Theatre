@@ -1,5 +1,6 @@
 package cu.theater.backend.service.user;
 
+import cu.theater.backend.dto.user.UpdateUserDto;
 import cu.theater.backend.dto.user.UserRegistrationRequestDto;
 import cu.theater.backend.dto.user.UserResponseDto;
 import cu.theater.backend.exception.EntityNotFoundException;
@@ -9,7 +10,6 @@ import cu.theater.backend.model.Role;
 import cu.theater.backend.model.User;
 import cu.theater.backend.repository.RoleRepository;
 import cu.theater.backend.repository.UserRepository;
-import cu.theater.backend.security.JwtUtil;
 import java.util.Set;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -22,7 +22,6 @@ public class UserServiceImpl implements UserService {
     private final UserMapper userMapper;
     private final PasswordEncoder passwordEncoder;
     private final RoleRepository roleRepository;
-    private final JwtUtil jwtUtil;
 
     @Override
     public UserResponseDto registerUser(UserRegistrationRequestDto requestDto)
@@ -35,9 +34,8 @@ public class UserServiceImpl implements UserService {
         user.setPassword(passwordEncoder.encode(requestDto.getPassword()));
         Role role = roleRepository.findByName(Role.RoleName.ROLE_USER);
         user.setRoles(Set.of(role));
+        user.setPhoneNumber(requestDto.getPhoneNumber());
         UserResponseDto dto = userMapper.toDto(userRepository.save(user));
-        String token = jwtUtil.generateToken(user.getUsername());
-        dto.setToken(token);
         return dto;
     }
 
@@ -56,6 +54,17 @@ public class UserServiceImpl implements UserService {
     public User getByEmail(String email) {
         return userRepository.findByEmail(email).orElseThrow(() ->
                 new EntityNotFoundException("Can't find user by email=" + email));
+    }
+
+    @Override
+    public UserResponseDto updateUserDetails(UpdateUserDto updateUserDto) {
+        User user = userRepository.findByEmail(updateUserDto.email()).orElseThrow(() ->
+                new EntityNotFoundException("Can't find user by id=" + updateUserDto.email()));
+        user.setFirstName(updateUserDto.firstName());
+        user.setEmail(updateUserDto.email());
+        user.setLastName(updateUserDto.lastName());
+        user.setPhoneNumber(updateUserDto.phoneNumber());
+        return userMapper.toDto(userRepository.save(user));
     }
 
 }
