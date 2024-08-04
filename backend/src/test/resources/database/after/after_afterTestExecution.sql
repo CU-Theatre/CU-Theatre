@@ -1,3 +1,4 @@
+DELETE FROM emergency_contact;
 DELETE FROM users_roles;
 DELETE FROM roles;
 DELETE FROM users;
