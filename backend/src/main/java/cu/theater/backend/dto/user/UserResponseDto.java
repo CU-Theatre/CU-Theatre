@@ -1,12 +1,13 @@
 package cu.theater.backend.dto.user;
 
-import lombok.Data;
+import cu.theater.backend.model.Role;
 
-@Data
-public class UserResponseDto {
-    private Long id;
-    private String email;
-    private String firstName;
-    private String lastName;
-    private String phoneNumber;
+public record UserResponseDto(
+        Long id,
+        String email,
+        String firstName,
+        String lastName,
+        String phoneNumber,
+        Role.RoleName roleName){
+
 }

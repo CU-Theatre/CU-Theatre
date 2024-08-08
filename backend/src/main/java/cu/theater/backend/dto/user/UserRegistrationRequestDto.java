@@ -5,12 +5,16 @@ import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
+import lombok.Builder;
 import lombok.Data;
+import lombok.experimental.Accessors;
 import org.hibernate.validator.constraints.Length;
 
 @Data
 @FieldMatch(first = "password", second = "repeatPassword",
         message = "The password fields must match")
+@Builder
+@Accessors(chain = true)
 public class UserRegistrationRequestDto {
     @NotBlank
     @Email
