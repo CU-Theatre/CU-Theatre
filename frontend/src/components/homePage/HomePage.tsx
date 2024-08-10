@@ -1,12 +1,13 @@
-import styles from './homePage.module.scss';
+import React from 'react'; 
 import { Welcome } from './welcomeSection/Welcome';
+import { About } from './aboutSection';
+import  './HomePage.scss';
 
 export const HomePage = () => {
   return (
-    <div className={styles.home}>
-      <div className={styles.home__container}>
+    <div className='home'>
         <Welcome />
-      </div>
+        <About />
     </div>
   );
 };
