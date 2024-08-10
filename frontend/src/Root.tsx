@@ -2,7 +2,7 @@ import React from 'react';
 import { HashRouter as Router, Route, Routes } from 'react-router-dom';
 import { App } from './App';
 import { ErrorPage } from './Page/ErrorPage';
-import { HomePage } from './components/homePage/HomePage';
+import { HomePage } from './Components/homePage/HomePage';
 
 export const Root: React.FC = () => {
   return (
