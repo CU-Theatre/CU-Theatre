@@ -7,6 +7,9 @@
 html {
   scroll-behavior: smooth;
 }
+body {
+  min-width: 320px;
+}
 
 .nav-isActive {
   display: block;
@@ -47,4 +50,3 @@ html {
   &:hover {
     background-color: $gray-color;
   }
-}

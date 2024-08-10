@@ -1,6 +1,7 @@
 package cu.theater.backend.service.user;
 
 import cu.theater.backend.dto.user.UpdateUserDto;
+import cu.theater.backend.dto.user.UpdateUserRoleRequestDto;
 import cu.theater.backend.dto.user.UserRegistrationRequestDto;
 import cu.theater.backend.dto.user.UserResponseDto;
 import cu.theater.backend.exception.RegistrationException;
@@ -12,9 +13,12 @@ public interface UserService {
 
     void deleteById(Long id);
 
-    User getById(Long id);
+    UserResponseDto getById(Long id);
 
     User getByEmail(String email);
 
+    UserResponseDto updateUserRole(Long userId, UpdateUserRoleRequestDto requestDto);
+
     UserResponseDto updateUserDetails(UpdateUserDto updateUserDto);
+
 }
