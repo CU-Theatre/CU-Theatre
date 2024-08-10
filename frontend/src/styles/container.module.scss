@@ -1,0 +1,17 @@
+@import "./variables";
+@import "./mixins.scss";
+
+.container {
+  margin: 0;
+  padding-inline: 20px;
+
+  @include on-tablet {
+    padding-inline: 25px;
+  }
+
+  @include on-desktop {
+    max-width: 1170px;
+    padding-inline: 55px;
+    margin-inline: auto;
+  }
+}

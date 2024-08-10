@@ -1,6 +1,7 @@
 package cu.theater.backend.service.user;
 
 import cu.theater.backend.dto.user.UpdateUserDto;
+import cu.theater.backend.dto.user.UpdateUserRoleRequestDto;
 import cu.theater.backend.dto.user.UserRegistrationRequestDto;
 import cu.theater.backend.dto.user.UserResponseDto;
 import cu.theater.backend.exception.EntityNotFoundException;
@@ -45,15 +46,27 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User getById(Long id) {
-        return userRepository.findById(id).orElseThrow(() ->
+    public UserResponseDto getById(Long id) {
+        User user = userRepository.findById(id).orElseThrow(() ->
                 new EntityNotFoundException("Can't find user by id=" + id));
+        if (user.isDeleted()) {
+            throw new EntityNotFoundException("Can't find user by id=" + id);
+        }
+        return userMapper.toDto(user);
     }
 
     @Override
     public User getByEmail(String email) {
         return userRepository.findByEmail(email).orElseThrow(() ->
                 new EntityNotFoundException("Can't find user by email=" + email));
+    }
+
+    @Override
+    public UserResponseDto updateUserRole(Long userId, UpdateUserRoleRequestDto requestDto) {
+        User user = getUserById(userId);
+        user.setRoles(Set.of(roleRepository.findByName(requestDto.roleName())));
+        User savedUser = userRepository.save(user);
+        return userMapper.toDto(savedUser);
     }
 
     @Override
@@ -65,6 +78,12 @@ public class UserServiceImpl implements UserService {
         user.setLastName(updateUserDto.lastName());
         user.setPhoneNumber(updateUserDto.phoneNumber());
         return userMapper.toDto(userRepository.save(user));
+    }
+
+    private User getUserById(Long userId) {
+        return userRepository.findById(userId)
+                .orElseThrow(()
+                        -> new EntityNotFoundException("Can't find user with ID: " + userId));
     }
 
 }

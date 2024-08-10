@@ -1,0 +1,130 @@
+@import "../../styles/variables.scss";
+@import "../../styles/mixins.scss";
+
+.footer {
+  --translateX: -10%;
+
+  width: 100%;
+  background-color: #000;
+  padding-bottom: 100px;
+
+  &__content {
+    @include page-grid;
+  }
+
+  &__location,
+  &__hours,
+  &__contacts {
+    grid-column: span 2;
+
+    @include on-tablet {
+    }
+
+    @include on-desktop {
+      text-align: center;
+      grid-column: span 4;
+    }
+  }
+
+  &__title {
+    color: #fff;
+
+    @include on-tablet {
+    }
+
+    @include on-desktop {
+      font-size: 24px;
+    }
+  }
+
+  &__link {
+    color: #fff;
+    text-decoration: none;
+    display: block;
+
+    font-size: 12px;
+
+    @include on-tablet {
+    }
+
+    @include on-desktop {
+      font-size: 18px;
+    }
+
+    & div {
+      padding: 10px;
+    }
+  }
+
+  &__list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  &__item {
+    margin-bottom: 10px;
+    display: flex;
+
+    @include on-tablet {
+    }
+
+    @include on-desktop {
+      justify-content: center;
+    }
+  }
+
+  &__sadMask,
+  &__smilingMask {
+    width: 100%;
+    padding-bottom: 100%;
+    background-repeat: no-repeat;
+    transform: translateX(var(--translateX));
+    background-size: contain;
+
+
+    @include on-desktop {
+      grid-row: 2;
+      grid-column: span 3;
+
+      background-size: contain;
+    }
+  }
+
+  &__sadMask {
+    grid-column: 1 / 2;
+    background-image: url(../../../public/img/sad_masks_shadow_mobile.webp);
+    background-position: right top;
+    transform: translate(var(--translateX), 50px);
+
+    @include on-tablet {
+      background-image: url(../../../public/img/sad_masks_shadow_tablet.webp);
+
+      grid-column: 3 / 5;
+    }
+
+    @include on-desktop {
+      background-image: url(../../../public/img/sad_masks_shadow_desktop.webp);
+
+      grid-column: 7 / 10;
+    }
+  }
+
+  &__smilingMask {
+    grid-column: 2 / 3;
+    background-image: url(../../../public/img/smiling_masks_shadow_mobile.webp);
+
+    @include on-tablet {
+      background-image: url(../../../public/img/smiling_masks_shadow_tablet.webp);
+
+      grid-column: 5 / 7;
+
+    }
+
+    @include on-desktop {
+      background-image: url(../../../public/img/smiling_masks_shadow_desktop.webp);
+
+      grid-column: 10 / 13;
+    }
+  }
+}
