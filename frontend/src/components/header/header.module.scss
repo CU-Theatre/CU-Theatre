@@ -1,0 +1,168 @@
+@import '../../utils/variables.scss';
+
+.header {
+  position: absolute;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  z-index: 10;
+  width: 100%;
+
+    @media (min-width: 768px) {
+      height: 90px;
+    }
+  
+  &__logo {
+    display: block;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-image: url('../img/header/logo.svg');
+    background-size: contain;
+    transition: opacity 0.3s;
+
+    &:hover {
+      opacity: 0.8;
+    }
+
+      @media (min-width: 768px) {
+        width: 60px;
+        height: 60px;
+      }
+
+      @media (min-width: 1280px) {
+        width: 70px;
+        height: 70px;
+      }
+    }
+
+  &__container,
+  &__buttons,
+  &__list,
+  &__icons {
+    display: flex;
+    align-items: center;
+  }
+  
+  &__container {
+    justify-content: space-between;
+    width: 100%;
+  }  
+
+  &__navigation,
+  &__button--log {
+    display: none;
+  }
+
+  &__navigation {
+    gap: 60px;
+  
+    @media (min-width: 1280px) {
+      display: flex;
+    }
+  }
+
+  &__list {
+    color: $white;
+    font-size: 16px;
+    gap: 40px;
+  }
+
+  &__item {
+    position: relative;
+    transition: color 0.3s;
+
+    &:hover {
+      color: $gray-color;
+    }
+  }
+
+  &__buttons {
+    gap: 18px;
+
+    @media (min-width: 768px) {
+      gap: 30px;
+    }
+
+    @media (min-width: 1280px) {
+      gap: 70px;
+    }
+  }
+  
+  &__button {
+    &--book {
+      font-weight: 500;
+      font-size: 12px;
+      width: 120px;
+      height: 25px;
+
+      @media (min-width: 768px) {
+        width: 165px;
+        height: 35px;
+        font-size: 14px;
+      }
+    
+      @media (min-width: 1280px) {
+        width: 220px;
+        height: 47px;
+        font-size: 16px;
+      }
+    }
+
+    &--log {
+      font-weight: 500;
+      font-size: 16px;
+      width: 115px;
+      height: 47px;
+
+      @media (min-width: 1280px) {
+        display: flex;
+      }
+    }
+  }
+
+  &__icons {
+    gap: 46px;
+  }
+
+  &__icon {
+    display: block;
+    filter: grayscale(0) brightness(1);
+    transition: all  0.3s;
+
+    &:hover {
+      transform: scale(1.05);
+      filter: grayscale(1) brightness(0.5);
+    }
+
+    &--inst {
+      background-image: url('../img/header/inst.svg');
+      width: 24px;
+      height: 24px;
+    }
+
+    &--facebook {
+      background-image: url('../img/header/facebook.svg');
+      width: 10px;
+      height: 20px;
+    }
+
+    &--burger {
+      width: 16px;
+      height: 16px;
+      background-size: contain;
+      background-repeat: no-repeat;
+      background-position: center;
+      background-image: url('../img/header/burgerMenu.svg');
+
+      @media (min-width: 768px) {
+        width: 24px;
+        height: 24px;
+      }
+
+      @media (min-width: 1280px) {
+        display: none;
+      }
+    }
+  }
+}
