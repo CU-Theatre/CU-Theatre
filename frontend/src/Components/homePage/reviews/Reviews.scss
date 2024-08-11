@@ -1,0 +1,30 @@
+@import '../../../styles/mixins';
+@import '../../../styles/variables';
+
+.reviews {
+  padding-top: 50px;
+  background: linear-gradient(rgb(119, 17, 57),rgb(0, 0, 0) 50.382%);
+
+  @include on-tablet {
+    padding-top: 70px;
+  }
+
+  @include on-desktop {
+    padding-top: 170px
+  }
+
+  &__container {
+    @include page-grid;
+
+    gap: 60px;
+  }
+
+  &__content {
+    grid-column: 1 / -1;
+  }
+
+  &__title {
+    grid-column: 1 / -1;
+    text-align: center;
+  }
+}
