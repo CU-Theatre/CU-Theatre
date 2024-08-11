@@ -1,8 +1,12 @@
 import  React from "react";
 import './SignButton.scss';
 
-export const SignButton: React.FC = () => {
+interface Props {
+  title: string;
+}
+
+export const SignButton: React.FC<Props> = ({ title }) => {
   return (
-    <button className="sign-button">Sign for a course</button>
+    <button className="sign-button">{title}</button>
   );
 };

@@ -5,6 +5,7 @@ import '../../../styles/variables.scss';
 import './About.scss';
 import { Link } from "react-router-dom";
 import { SignButton } from "../../general_components/signButton";
+import { useFadeIn } from "../../../hooks/useFadeIn";
 
 export const About: React.FC = () => {
   const blocks = [
@@ -31,11 +32,14 @@ export const About: React.FC = () => {
       link: '/#asdasd',
     },
 ];
+
+const [ref, isVisible] = useFadeIn();
+
   return (
     <div className='home__about about'>
-      <div className='about__container'>
+      <div ref={ref} className={`about__container ${isVisible ? 'block-visible' : ''}`}>
         <img className='about__explore' src={explore} alt="explore, express, excell" />
-        <h2 className='about__title'>What we do</h2>
+        <h2 className='about__title title'>What we do</h2>
         <div className="about__main">
           <img className='about__image' src={mainImage} alt="about-photo"/>
           <div className='about__content'>
@@ -46,7 +50,7 @@ export const About: React.FC = () => {
               </Link>
             ))}
           </div>
-          <SignButton />
+          <SignButton title="Sign for a class" />
         </div>
       </div>
     </div>
