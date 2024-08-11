@@ -6,7 +6,11 @@
 
   width: 100%;
   background-color: #000;
-  padding-bottom: 100px;
+  padding: 50px 0;
+
+  @include on-desktop {
+    padding: 100px 0;
+  }
 
   &__content {
     @include page-grid;
