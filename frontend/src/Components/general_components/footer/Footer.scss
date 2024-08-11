@@ -1,5 +1,5 @@
-@import "../../styles/variables.scss";
-@import "../../styles/mixins.scss";
+@import "../../../styles/variables.scss";
+@import "../../../styles/mixins.scss";
 
 .footer {
   --translateX: -10%;
@@ -97,18 +97,18 @@
 
   &__sadMask {
     grid-column: 1 / 2;
-    background-image: url(../img/sad_masks_shadow_mobile.webp);
+    background-image: url(../../img/sad_masks_shadow_mobile.webp);
     background-position: right top;
     transform: translate(var(--translateX), 50px);
 
     @include on-tablet {
-      background-image: url(../img/sad_masks_shadow_tablet.webp);
+      background-image: url(../../img/sad_masks_shadow_tablet.webp);
 
       grid-column: 3 / 5;
     }
 
     @include on-desktop {
-      background-image: url(../img/sad_masks_shadow_desktop.webp);
+      background-image: url(../../img/sad_masks_shadow_desktop.webp);
 
       grid-column: 7 / 10;
     }
@@ -116,17 +116,17 @@
 
   &__smilingMask {
     grid-column: 2 / 3;
-    background-image: url(../img/smiling_masks_shadow_mobile.webp);
+    background-image: url(../../img/smiling_masks_shadow_mobile.webp);
 
     @include on-tablet {
-      background-image: url(../img/smiling_masks_shadow_tablet.webp);
+      background-image: url(../../img/smiling_masks_shadow_tablet.webp);
 
       grid-column: 5 / 7;
 
     }
 
     @include on-desktop {
-      background-image: url(../img/smiling_masks_shadow_desktop.webp);
+      background-image: url(../../img/smiling_masks_shadow_desktop.webp);
 
       grid-column: 10 / 13;
     }
