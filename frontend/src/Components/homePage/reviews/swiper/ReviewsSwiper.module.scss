@@ -1,0 +1,100 @@
+@import '../../../../styles/mixins';
+@import '../../../../styles/variables';
+
+.swiper {
+
+  &__video {
+    height: 260px;
+
+    @include on-tablet {
+      height: 300px;
+    }
+
+    @include on-desktop {
+      height: 370px;
+    }
+  }
+
+  &__reviews-slide,
+  &__content {
+    display: flex;
+    flex-direction: column;
+  }
+
+  &__reviews-slide {
+    height: 400px;
+    background-color: $white;
+    color: black;
+    border-radius: 28px;
+    justify-content: space-between;
+
+    @include on-tablet {
+      height: 445px;
+    }
+
+    @include on-desktop {
+      height: 570px;
+    }
+  }
+
+  &__content {
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 20px;
+
+    @include on-tablet {
+      gap: 25px;
+    }
+
+    @include on-desktop {
+      gap: 30px;
+    }
+  }
+
+  &__text,
+  &__title {
+    font-weight: 500;
+  }
+
+  &__title {
+    font-size: 16px;
+
+    @include on-tablet {
+      font-size: 20px;
+    }
+
+    @include on-desktop {
+      font-size: 24px;
+    }
+  }
+
+  &__text {
+    font-size: 14px;
+
+    @include on-tablet {
+      font-size: 16px;
+    }
+
+    @include on-desktop {
+      font-size: 18px;
+    }
+  }
+
+  &__button {
+    color: $white;
+    padding: 14px 50px;
+    background-color: black;
+    border-radius: 28px;
+    border: 1px solid black;
+    transition: all 0.3s;
+
+    &:hover {
+      background-color: $white;
+      color: black;
+    }
+
+    @include on-desktop {
+      font-size: 16px;
+    }
+  }
+}
