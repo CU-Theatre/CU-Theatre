@@ -1,26 +1,40 @@
 import React from 'react'; 
 import { Link, NavLink } from "react-router-dom";
 import './header.scss';
+import cn from 'classnames';
 
 export const Header = () => {
+  const pages = [
+    {
+      page: 'Home',
+      link: '/',
+    },
+    {
+      page: 'About us',
+      link: '/about',
+    },
+    {
+      page: 'Timetable',
+      link: '/timetable',
+    },
+    {
+      page: 'Contact',
+      link: '/contact',
+    },
+
+  ];
+
   return (
     <div className='header'>
       <div className='header__container'>
         <Link to={'/'} className='header__logo'></Link>
         <nav className='header__navigation'>
           <ul className='header__list'>
-            <li className='header__item nav-isActive'>
-              <NavLink to={'/'} className="header__link">Home</NavLink>
-            </li>
-            <li className='header__item'>
-              <NavLink to={'/about'} className="header__link">About us</NavLink>
-            </li>
-            <li className='header__item'>
-              <NavLink to={'#'} className="header__link">Timetable</NavLink>
-            </li>
-            <li className='header__item'>
-              <NavLink to={'#'} className="header__link">Contact</NavLink>
-            </li> 
+            {pages.map(page => (
+              <li key={page.page} className='header__item'>
+                <NavLink to={page.link} className={({ isActive }) => cn('header__link', { 'nav-isActive': isActive })}>{page.page}</NavLink>
+              </li>
+            ))}
           </ul>
           <nav className='header__icons'>
             <a 

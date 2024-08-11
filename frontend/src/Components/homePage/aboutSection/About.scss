@@ -24,20 +24,9 @@
   }
 
   &__title {
-    color: $white;;
-    font-size: 30px;
-    font-weight: 500;
-    text-transform: uppercase;
-    justify-self: center;
-
     @include on-tablet {
-      font-size: 32px;
       grid-row: 1 / 2;
       align-self: center;
-    }
-
-    @include on-desktop {
-      font-size: 52px;
     }
   }
 

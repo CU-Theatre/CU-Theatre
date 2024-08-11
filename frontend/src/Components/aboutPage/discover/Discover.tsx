@@ -41,7 +41,7 @@ export const Discover: React.FC = () => {
           </div>
 
           <div className='discover__button'>
-            <SignButton />
+            <SignButton title="Sign for a course" />
           </div>
         </div>
       </div>
