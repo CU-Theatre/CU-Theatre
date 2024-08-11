@@ -28,7 +28,7 @@ export const Biography: React.FC = () => {
           </p>
         </div>
 
-        <SignButton />
+        <SignButton title="Sign for a course" />
       </div>
     </section>
   );
