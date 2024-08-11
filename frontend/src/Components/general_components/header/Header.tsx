@@ -10,10 +10,10 @@ export const Header = () => {
         <nav className='header__navigation'>
           <ul className='header__list'>
             <li className='header__item nav-isActive'>
-              <NavLink to={'#'} className="header__link">Home</NavLink>
+              <NavLink to={'/'} className="header__link">Home</NavLink>
             </li>
             <li className='header__item'>
-              <NavLink to={'#'} className="header__link">About us</NavLink>
+              <NavLink to={'/about'} className="header__link">About us</NavLink>
             </li>
             <li className='header__item'>
               <NavLink to={'#'} className="header__link">Timetable</NavLink>

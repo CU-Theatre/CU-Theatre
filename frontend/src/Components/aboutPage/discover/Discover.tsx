@@ -1,28 +1,27 @@
 import React from "react";
-import style from "./Discover.module.scss";
-import container from "../../styles/container.module.scss";
-import { ButtonShoe } from "../ButtonShoe";
+import "./Discover.scss";
+import { SignButton } from "../../general_components/signButton";
 
 export const Discover: React.FC = () => {
   return (
-    <section className={style.discover}>
-      <div className={container.container}>
-        <div className={style.discover__content}>
-          <div className={style.discover__top}>
-            <div className={style.discover__sadFace} />
-            <div className={style.discover__smilingFace} />
-            <h1 className={style.discover__title}>Discover Us</h1>
+    <section className='discover'>
+      <div className='discover__container'>
+        <div className='discover__content'>
+          <div className='discover__top'>
+            <div className='discover__sadFace' />
+            <div className='discover__smilingFace' />
+            <h1 className='discover__title'>Discover Us</h1>
           </div>
 
-          <div className={style.discover__middle}>
-            <div className={style.discover__img}>
+          <div className='discover__middle'>
+            <div className='discover__img'>
               <img
                 src="./img/discover_desctop.webp"
                 alt="Photos of artists"
               />
             </div>
 
-            <p className={style.discover__text}>
+            <p className='discover__text'>
               We are a theater of the new generation, founded by Elina CU. Our
               goal is to make people think. In the era of social media, our
               brains are bombarded with a lot of information that we don’t have
@@ -41,8 +40,8 @@ export const Discover: React.FC = () => {
             </p>
           </div>
 
-          <div className={style.discover__button}>
-            <ButtonShoe />
+          <div className='discover__button'>
+            <SignButton />
           </div>
         </div>
       </div>

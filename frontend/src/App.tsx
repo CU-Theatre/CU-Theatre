@@ -2,8 +2,8 @@ import React from "react";
 import "./App.scss";
 import "./reset.css"
 import { Outlet } from "react-router-dom";
-import { Header } from "./Components/header/Header";
-import { Footer } from "./Components/Footer";
+import { Header } from "./Components/general_components/header/Header";
+import { Footer } from "./Components/general_components/footer";
 
 
 export const App: React.FC = () => {

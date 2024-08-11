@@ -4,7 +4,7 @@ import explore from '../../img/homePageAbout/Explore.png';
 import '../../../styles/variables.scss';
 import './About.scss';
 import { Link } from "react-router-dom";
-import { SignButton } from "../../../Page/signButton";
+import { SignButton } from "../../general_components/signButton";
 
 export const About: React.FC = () => {
   const blocks = [

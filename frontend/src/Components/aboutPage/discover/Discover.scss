@@ -1,11 +1,11 @@
-@import "../../styles/variables.scss";
-@import "../../styles/mixins.scss";
+@import "../../../styles/variables.scss";
+@import "../../../styles/mixins.scss";
 
 .discover {
   --mask-size: 40px;
 
   background: linear-gradient(180deg, rgb(119, 17, 57), rgb(0, 0, 0) 50.382%);
-  padding-top: 70px;
+  padding-top: calc(70px + $header-hight-mob);
   padding-bottom: 50px;
 
   @include on-tablet {
@@ -13,7 +13,7 @@
   }
 
   @include on-desktop {
-    padding-top: 60px;
+    padding-top: calc(60px + $header-hight-mob);
     padding-bottom: 30px;
   }
 
@@ -56,14 +56,14 @@
   }
 
   &__sadFace {
-    background-image: url(../img/sad_masks_litle.webp);
+    background-image: url(../../img/sad_masks_litle.webp);
 
     @include on-tablet {
     }
   }
 
   &__smilingFace {
-    background-image: url(../img/smiling_masks_litle.webp);
+    background-image: url(../../img/smiling_masks_litle.webp);
 
     order: 1;
     transform: translateY(70%);
