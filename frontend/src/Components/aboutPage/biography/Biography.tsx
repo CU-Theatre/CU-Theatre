@@ -2,11 +2,17 @@ import React from "react";
 import "./Biography.scss";
 import directorImg from "../../img/aboutPage/our_director_&_founder_deck.webp";
 import { SignButton } from "../../general_components/signButton";
+import { useFadeIn } from "../../../hooks/useFadeIn";
 
 export const Biography: React.FC = () => {
+  const [ref, isVisible] = useFadeIn();
+
   return (
     <section className="biography">
-      <div className="biography__container">
+      <div 
+        ref={ref}
+        className={`biography__container ${isVisible ? "block-visible" : ""}`}
+      >
         <h2 className="biography__title title">our director & founder</h2>
         <div className="biography__img">
           <img src={directorImg} alt="Elena, our director & founder" />
