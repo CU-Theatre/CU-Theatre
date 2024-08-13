@@ -8,12 +8,7 @@ import imgHeals from "../../img/aboutPageSlider/heals.webp";
 import imgExotic from "../../img/aboutPageSlider/Exotic.webp";
 import imgTwerk from "../../img/aboutPageSlider/Twerk.webp";
 import imgStretching from "../../img/aboutPageSlider/Stretching.webp";
-import {
-  DESKTOP_MIN_WIDTH,
-  GRID_GAP_DESK,
-  GRID_GAP_MOB,
-  TABLE_MIN_WIDTH,
-} from "../../../utils/globalVariables";
+import { DESKTOP_MIN_WIDTH, GRID_GAP_DESK, GRID_GAP_MOB, TABLE_MIN_WIDTH } from "../../../utils/globalVariables";
 
 const classesArr = [
   {
@@ -34,51 +29,7 @@ const classesArr = [
   },
 ];
 
-const getSliderParams = () => {
-  const viewportWidth = window.innerWidth;
-
-  let slidesPerView = 1;
-  let spaceBetween = GRID_GAP_MOB;
-
-  if (viewportWidth >= TABLE_MIN_WIDTH) {
-    slidesPerView = 2;
-  }
-
-  if (viewportWidth >= DESKTOP_MIN_WIDTH) {
-    slidesPerView = 2.5;
-    spaceBetween = GRID_GAP_DESK;
-  }
-
-  return [slidesPerView, spaceBetween];
-};
-
 export const MoreClasses: React.FC = () => {
-  const [slidesPerView, setSlidesPerView] = useState(1);
-  const [spaceBetween, setSpaceBetween] = useState(20);
-
-  const changeSliderParams = (newParams: number[]) => {
-    const oldParams = [slidesPerView, spaceBetween];
-    if (JSON.stringify(newParams) !== JSON.stringify(oldParams)) {
-      setSlidesPerView(newParams[0]);
-      setSpaceBetween(newParams[1]);
-    }
-  };
-
-  const handlerResize = () => {
-    const newParams = getSliderParams();
-    changeSliderParams(newParams)
-  }
-
-  useEffect(() => {
-    handlerResize()
-
-    window.addEventListener("resize", handlerResize);
-
-    return () => {
-      window.removeEventListener("resize", handlerResize);
-    };
-  }, []); //eslint-disable-line
-
   return (
     <section className={style.classes}>
       <div className={style.classes__container}>
@@ -87,7 +38,19 @@ export const MoreClasses: React.FC = () => {
         </h2>
 
         <div className={style.classes__slider}>
-          <Swiper slidesPerView={slidesPerView} spaceBetween={spaceBetween}>
+          <Swiper
+            slidesPerView={1}
+            spaceBetween={GRID_GAP_MOB}
+            breakpoints={{
+              [TABLE_MIN_WIDTH]: {
+                slidesPerView: 2,
+              },
+              [DESKTOP_MIN_WIDTH]: {
+                slidesPerView: 2.5,
+                spaceBetween: GRID_GAP_DESK,
+              },
+            }}
+          >
             {classesArr.map((training, i) => (
               <SwiperSlide
                 className={`${style.classes__slide} ${
