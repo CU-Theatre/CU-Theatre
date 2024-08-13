@@ -2,6 +2,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import someImage from "../../../img/homePageAbout/whoWe.png";
 import "swiper/css";
 import styles from "./ReviewsSwiper.module.scss";
+import { DESKTOP_MIN_WIDTH, GRID_GAP_DESK, TABLE_MIN_WIDTH } from "../../../../utils/globalVariables";
 
 export const ReviewsSwiper = () => {
   const reviews = [
@@ -33,11 +34,12 @@ export const ReviewsSwiper = () => {
       spaceBetween={30}
       slidesPerView={1}
       breakpoints={{
-        640: {
+        [TABLE_MIN_WIDTH]: {
           slidesPerView: 2,
         },
-        1024: {
+        [DESKTOP_MIN_WIDTH]: {
           slidesPerView: 3,
+          spaceBetween: GRID_GAP_DESK,
         },
       }}
     >

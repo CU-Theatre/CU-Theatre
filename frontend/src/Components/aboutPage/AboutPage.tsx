@@ -3,6 +3,7 @@ import "./AboutPage.scss";
 import { Discover } from "./discover";
 import { Biography } from "./biography";
 import { MoreClasses } from "./moreClasses";
+import { WhatYouGet } from "./whatYouGet";
 
 export const AboutPage: React.FC = () => {
   return (
@@ -10,6 +11,7 @@ export const AboutPage: React.FC = () => {
       <Discover />
       <Biography />
       <MoreClasses />
+      <WhatYouGet />
     </main>
   );
 };
