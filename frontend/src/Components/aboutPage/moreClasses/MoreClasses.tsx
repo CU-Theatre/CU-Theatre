@@ -5,10 +5,11 @@ import "swiper/css";
 import style from "./MoreClasses.module.scss";
 
 import imgHeals from "../../img/aboutPageSlider/heals.webp";
-import imgExotic from "../../img/aboutPageSlider/Exotic.webp";
+import imgExotic from "../../img/aboutPageSlider/exotic.png";
 import imgTwerk from "../../img/aboutPageSlider/Twerk.webp";
 import imgStretching from "../../img/aboutPageSlider/Stretching.webp";
 import { DESKTOP_MIN_WIDTH, GRID_GAP_DESK, GRID_GAP_MOB, TABLE_MIN_WIDTH } from "../../../utils/globalVariables";
+import { useFadeIn } from "../../../hooks/useFadeIn";
 
 const classesArr = [
   {
@@ -30,9 +31,11 @@ const classesArr = [
 ];
 
 export const MoreClasses: React.FC = () => {
+  const [ref, isVisible] = useFadeIn();
+
   return (
     <section className={style.classes}>
-      <div className={style.classes__container}>
+      <div ref={ref} className={`${style.classes__container} ${isVisible ? 'block-visible' : ''}`}>
         <h2 className={`${style.classes__title} title`}>
           More classes from our director & founder
         </h2>

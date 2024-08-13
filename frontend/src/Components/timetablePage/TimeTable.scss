@@ -1,0 +1,160 @@
+@import '../../styles/mixins';
+@import '../../styles/variables';
+@import '../../styles/keyframes';
+
+
+.schedule {
+  background: linear-gradient(rgb(119, 17, 57),rgb(0, 0, 0) 50.382%);
+  padding-top: 100px;
+
+  @include on-tablet {
+    padding-top: 144px;
+  }
+
+  @include on-desktop {
+    padding-top: 230px;
+  }
+
+  &__container {
+    @include page-grid;
+
+    gap: 50px;
+  }
+
+  &__title,
+  &__timetable {
+    grid-column: 1 / -1;
+  }
+
+  &__days,
+  &__day,
+  &__pricelist,
+  &__classtype {
+    display: flex;
+    flex-direction: column;
+  }
+
+  &__timetable {
+    padding: 40px 0 40px 10px;
+    background-color: $white;
+    border-radius: 38px;
+    display: flex;
+    gap: 110px;
+    justify-self: center;
+    width: 100%;
+
+    @include on-desktop {
+      grid-column: 3 / 11;
+      padding: 40px;
+      justify-content: space-between;
+      gap: 0;
+    }
+  }
+
+  &__days {
+    min-width: 260px;
+    gap: 20px;
+  }
+
+  &__masks {
+    display: none;
+    align-self: center;
+
+    @include on-tablet {
+      display: block;
+    }
+  }
+
+  &__day {
+    padding-top: 15px;
+    border-top: 1px solid rgb(124, 124, 124);;
+    width: 95%;
+    gap: 30px;
+  }
+
+  &__day-info {
+    font-size: 16px;
+    font-weight: 700;
+    display: flex;
+    justify-content: space-between;
+
+    @include on-desktop {
+      font-size: 26px;
+    }
+  }
+
+  &__day-button {
+    position: relative;
+    width: 18px;
+    height: 18px;
+
+    &::before,
+    &::after {
+      content: "";
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background-color: black;
+      display: block;
+      position: absolute;
+      border-radius: 3px;
+    }
+
+    &::before {
+      width: 18px;
+      height: 3px;
+    }
+
+    &--open {
+    &::after {
+      width: 3px;
+      height: 18px;
+    }
+    }
+  }
+
+  &__day-classes {
+    display: flex;
+    flex-direction: column;
+    height: 0;
+    overflow: hidden;
+    gap: 10px;
+    padding-left: 10px;
+    font-size: 12px;
+    transition: height 0.3s;
+
+    &--active {
+      height: 90px;
+    }
+
+    @include on-desktop {
+      font-size: 16px;
+    }
+  }
+
+  &__pricelist {
+    padding: 30px 10px;
+    border-radius: 38px;
+    background-color: $white;
+    grid-column: 1 / -1;
+    gap: 30px;
+    justify-self: center;
+
+    @include on-tablet {
+      padding: 30px;
+    }
+  }
+
+  &__classtype {
+    gap: 15px;
+  }
+
+  &__pricelist-name {
+    font-size: 14px;
+    font-weight: 700;
+  }
+
+  &__pricelist-price {
+    font-size: 12px;
+  }
+}
