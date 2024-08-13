@@ -12,6 +12,12 @@
   }
 }
 
+@mixin on-wide-desktop {
+  @media (min-width: $wide-desktop-min-width) {
+    @content;
+  }
+}
+
 @mixin hover($property, $toValue) {
   transition: all $effectDuration;
 
