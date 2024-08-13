@@ -1,0 +1,160 @@
+@import '../../../styles/keyframes';
+@import '../../../styles/mixins';
+@import '../../../styles/variables';
+
+.burger-menu {
+  position: fixed;
+  top: 0;
+  right: 0;
+  left: 0;
+  background-color: rgb(119, 17, 57);
+  height: 100vh;
+  z-index: 50;
+  transition: transform 0.3s;
+
+  &__container {
+    @include page-grid;
+
+    row-gap: 40px;
+
+    @include on-tablet {
+      row-gap: 80px;
+    }
+  }
+
+  &__header,
+  &__navigation {
+    grid-column: 1 / -1;
+  }
+
+  &__header {
+    height: 60px;
+    display: flex;
+    align-items: center;
+    width: 100%;
+    justify-content: space-between;
+
+    @include on-tablet {
+      height: 90px;
+    }
+  }
+
+  &__logo {
+    display: block;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-image: url('../../img/header/logo.svg');
+    background-size: contain;
+    transition: opacity 0.3s;
+
+    &:hover {
+      opacity: 0.8;
+    }
+
+      @include on-tablet {
+        width: 60px;
+        height: 60px;
+      }
+
+      @include on-desktop {
+        width: 70px;
+        height: 70px;
+      }
+  }
+
+  &__navigation,
+  &__list--pages {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    align-items: center;
+
+    @include on-tablet {
+      gap: 48px;
+    }
+  }
+
+  &__navigation {
+    justify-self: center;
+  }
+
+  &__list--icons {
+    display: flex;
+    gap: 50px;
+  }
+
+  &__item {
+    font-size: 14px;
+    font-weight: 700;
+    color: $white;
+
+    @include on-tablet {
+      font-size: 18px;
+    }
+  }
+
+  &__icon {
+    display: block;
+    filter: grayscale(0) brightness(1);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain;
+    transition: all  0.3s;
+
+    &:hover {
+      transform: scale(1.05);
+      filter: grayscale(1) brightness(0.5);
+    }
+
+    &--inst {
+      background-image: url('../../img/header/inst.svg');
+      width: 24px;
+      height: 24px;
+    }
+
+    &--facebook {
+      background-image: url('../../img/header/facebook.svg');
+      width: 10px;
+      height: 20px;
+    }
+
+    &--close {
+      width: 16px;
+      height: 16px;
+      background-image: url('./img/IconClose.svg');
+
+      @include on-tablet {
+        width: 18px;
+        height: 18px;
+      }
+    }
+  }
+
+  &__button {
+    font-weight: 500;
+    font-size: 16px;
+    width: 115px;
+    height: 47px;
+
+  }
+
+  &__image {
+    position: absolute;
+
+    @include on-tablet {
+      width: 200px;
+      height: 240px;
+      opacity: 0.8;
+    }
+
+    &--sad {
+      bottom: 0;
+    }
+
+    &--happy {
+      right: 0;
+      top: 60px;
+    }
+  }
+}

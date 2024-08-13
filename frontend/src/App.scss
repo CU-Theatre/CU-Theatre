@@ -14,6 +14,7 @@ body {
 
 .nav-isActive {
   display: block;
+  position: relative;
 
   &::before {
     content: '';
@@ -35,8 +36,11 @@ body {
 
   @include on-desktop {
     max-width: 1170px;
-    padding-inline: 0;
     margin-inline: auto;
+  }
+
+  @include on-wide-desktop {
+    padding-inline: 0px;
   }
 }
 
@@ -50,7 +54,8 @@ body {
   transition: background-color 0.3s;
 
   &:hover {
-    background-color: $gray-color;
+    background-color: black;
+    color: $white;
   }
 }
 
@@ -74,4 +79,8 @@ body {
 
 .block-visible {
   animation: fadeIn 1.3s ease-in-out forwards;
+}
+
+.menu-open {
+  transform: translateX(-100%);
 }

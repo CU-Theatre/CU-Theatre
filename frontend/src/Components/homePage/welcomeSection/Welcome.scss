@@ -13,8 +13,11 @@
   }
 
   @include on-desktop {
-    background-size: cover;
     padding-top: 230px;
+  }
+
+  @media (min-width: 1248px) {
+    background-size: cover;
   }
 
   &__container,
