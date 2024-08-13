@@ -2,11 +2,14 @@ import React from "react";
 import style from "./WhatYouGet.module.scss";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { GRID_GAP_MOB, TABLE_MIN_WIDTH } from "../../../utils/globalVariables";
+import { useFadeIn } from "../../../hooks/useFadeIn";
 
 export const WhatYouGet: React.FC = () => {
+  const [ref, isVisible] = useFadeIn();
+
   return (
     <main className={style["what-you-get"]}>
-      <div className={style["what-you-get__container"]}>
+      <div ref={ref} className={`${style["what-you-get__container"]} ${isVisible ? 'block-visible' : ''}`}>
         <h1 className={`${style["what-you-get__title"]} title`}>
           what you will get
         </h1>
