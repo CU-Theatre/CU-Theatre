@@ -1,12 +1,10 @@
 import React, { useState } from "react";
 import './TimeTable.scss';
-import { useFadeIn } from "../../hooks/useFadeIn";
 import cn from "classnames";
 import { SignButton } from "../general_components/signButton";
 import masks from '../img/timetable/masks.png';
 
 export const TimeTable: React.FC = () => {
-  const [ref, isVisible] = useFadeIn();
   const days = [
     {
       day: 'Tuesday',
@@ -136,7 +134,7 @@ export const TimeTable: React.FC = () => {
 
   return (
     <div className="schedule">
-      <div ref={ref} className={`schedule__container ${isVisible ? 'block-visible' : ''}`}>
+      <div className='schedule__container'>
         <h2 className="schedule__title title">Timetable</h2>
         <div className="schedule__timetable">
           <div className="schedule__days">
