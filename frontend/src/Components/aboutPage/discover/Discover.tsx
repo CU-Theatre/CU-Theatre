@@ -1,16 +1,12 @@
 import React from "react";
 import "./Discover.scss";
 import { SignButton } from "../../general_components/signButton";
-import { useFadeIn } from "../../../hooks/useFadeIn";
 
 export const Discover: React.FC = () => {
-  const [ref, isVisible] = useFadeIn();
-
   return (
     <section className="discover">
       <div
-        ref={ref}
-        className={`discover__container ${isVisible ? "block-visible" : ""}`}
+        className='discover__container'
       >
         <div className="discover__top">
           <div className="discover__sadFace" />
