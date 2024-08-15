@@ -1,0 +1,81 @@
+@import "../../../styles/variables.scss";
+@import "../../../styles/mixins.scss";
+
+.contact-form {
+  background-color: $black;
+  padding-inline: 20px;
+  padding-block: 40px;
+  border-radius: 28px;
+
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px 25px;
+
+  @include on-tablet {
+    padding-inline: 83px;
+    border-radius: 118px;
+  }
+
+  &__input-block {
+    grid-column: 1 / -1;
+
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    align-items: start;
+
+    &--name {
+      @include on-tablet {
+        grid-column: 1 / 2;
+      }
+    }
+
+    &--last-name {
+      @include on-tablet {
+        grid-column: 2 / -1;
+      }
+    }
+  }
+
+  &__label {
+    font-size: 16px;
+    font-weight: 300;
+
+    &--error {
+      color: $error-color;
+    }
+  }
+
+  &__input {
+    box-sizing: border-box;
+    background-color: $input-gray-color;
+    padding: 5px 15px;
+    font-size: 16px;
+    border-radius: 28px;
+    width: 100%;
+    height: fit-content;
+
+    &--textarea {
+      max-width: 100%;
+      resize: none;
+    }
+
+    &--error {
+      border: 2px solid $error-color;
+    }
+  }
+
+  &__err-mes {
+    color: $error-color;
+    font-size: 12px;
+  }
+
+  &__button {
+    grid-column: 1 / -1;
+    background-color: $white;
+    padding: 15px;
+    width: 100%;
+    border-radius: 28px;
+    font-size: 16px;
+  }
+}
