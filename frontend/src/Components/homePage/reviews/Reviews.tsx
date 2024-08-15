@@ -8,13 +8,13 @@ export const Reviews: React.FC = () => {
   const [ref, isVisible] = useFadeIn();
 
   return (
-    <div className="home__reviews reviews">
+    <section className="home__reviews reviews">
       <div ref={ref} className={`reviews__container ${isVisible ? 'block-visible' : ''}`}>
         <h2 className="reviews__title title">Heartfelt Words from Our Audience</h2>
         <div className="reviews__content">
           <ReviewsSwiper />
         </div>
       </div>
-    </div>
+    </section>
   );
 };
