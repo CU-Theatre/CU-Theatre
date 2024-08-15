@@ -8,10 +8,10 @@ import { pages } from '../../../utils/pagesArray'
 import { useAppContext } from '../../../AppContext';
 
 export const Header = () => {
-  const { setIsOpen } = useAppContext();
+  const { setIsOpen, isLoginned } = useAppContext();
 
   return (
-    <div className='header'>
+    <header className='header'>
       <div className='header__container'>
         <Link to={'/'} className='header__logo'></Link>
         <nav className='header__navigation'>
@@ -32,11 +32,21 @@ export const Header = () => {
             <li className='header__item'>
               <a href="#" className='header__icon header__icon--facebook'></a>
             </li>
+            {isLoginned && (
+              <li className='header__item'>
+                <NavLink 
+                  to={'./your-account'} 
+                  className={({ isActive }) => cn('header__icon header__icon--cabinet', { 'nav-isActive': isActive })}
+                  ></NavLink>
+              </li>
+            )}
           </ul>
         </nav>
         <nav className='header__buttons'>
-          <button className='header__button header__button--book white-button'>Book place</button>
-          <Link to={'#'} className='header__button header__button--log white-button'>Log in</Link>
+          <button type='button' className='header__button header__button--book white-button'>Book place</button>
+          {!isLoginned && (
+              <Link to={'#'} className='header__button header__button--log white-button'>Log in</Link>
+          )}
           <button 
             onClick={() => setIsOpen(true)}
             type='button' 
@@ -45,6 +55,6 @@ export const Header = () => {
           </button>
         </nav>
     </div>
-    </div>
+    </header>
   );
 };
