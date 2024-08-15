@@ -1,0 +1,124 @@
+@import "../../../styles/variables.scss";
+@import "../../../styles/mixins.scss";
+
+.touch {
+  background-color: $burgundy-color;
+  padding-block-start: $header-hight-mob;
+  color: $white;
+
+  @include on-tablet {
+    padding-block-start: $header-hight-tab;
+  }
+
+  &__container {
+    @include page-grid;
+
+    align-items: center;
+
+    padding-block: 50px;
+
+    @include on-tablet {
+      padding-block: 50px 80px;
+    }
+
+    @include on-desktop {
+      padding-block: 30px;
+    }
+  }
+
+  &__info {
+    text-transform: capitalize;
+    grid-column: 1 / -1;
+    text-align: center;
+    margin-bottom: 30px;
+
+    @include on-tablet {
+      grid-column: 2 / 6;
+      margin-bottom: 70px;
+    }
+
+    @include on-desktop {
+      grid-column: 1 / 7;
+      margin-bottom: 0;
+    }
+  }
+
+  &__title {
+    margin-bottom: 31px;
+
+    @include on-desktop {
+      font-size: 64px;
+    }
+  }
+
+  &__subtitle {
+    font-size: 20px;
+    margin-bottom: 31px;
+
+    @include on-tablet {
+      font-size: 24px;
+    }
+
+    @include on-desktop {
+      font-size: 32px;
+    }
+  }
+
+  &__greeting {
+    margin-bottom: 31px;
+    font-size: 16px;
+    line-height: 20px;
+  }
+
+  &__links {
+    margin-bottom: 31px;
+    font-size: 16px;
+    text-align: left;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  &__link {
+    display: flex;
+    width: fit-content;
+    padding: 5px;
+  }
+
+  &__medias {
+    font-size: 0;
+    display: flex;
+    gap: 30px;
+    justify-content: center;
+  }
+
+  &__media {
+    --media-size: 25px;
+
+    width: var(--media-size);
+    height: var(--media-size);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+
+    &--inst {
+      background-image: url(../../img/icons/inst_white_circl.svg);
+    }
+
+    &--fb {
+      background-image: url(../../img/icons/fb_white_circl.svg);
+    }
+  }
+
+  &__form {
+    grid-column: 1 / -1;
+
+    @include on-tablet {
+      grid-column: 2 / 6;
+    }
+
+    @include on-desktop {
+      grid-column: 8 / -1;
+    }
+  }
+}

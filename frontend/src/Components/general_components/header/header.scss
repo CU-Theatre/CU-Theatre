@@ -20,6 +20,8 @@
     border-radius: 50%;
     background-image: url('../../img/header/logo.svg');
     background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
     transition: opacity 0.3s;
 
     &:hover {

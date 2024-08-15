@@ -35,7 +35,7 @@ body {
 
   @include on-desktop {
     max-width: 1170px;
-    padding-inline: 0;
+    padding-inline: 20px;
     margin-inline: auto;
   }
 }
