@@ -36,7 +36,7 @@ export const About: React.FC = () => {
 const [ref, isVisible] = useFadeIn();
 
   return (
-    <div className='home__about about'>
+    <section className='home__about about'>
       <div ref={ref} className={`about__container ${isVisible ? 'block-visible' : ''}`}>
         <img className='about__explore' src={explore} alt="explore, express, excell" />
         <h2 className='about__title title'>What we do</h2>
@@ -53,6 +53,6 @@ const [ref, isVisible] = useFadeIn();
           <SignButton title="Sign for a class" />
         </div>
       </div>
-    </div>
+    </section>
   );
 };

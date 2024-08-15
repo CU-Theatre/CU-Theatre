@@ -1,0 +1,36 @@
+<svg width="237.076172" height="217.312027" viewBox="0 0 237.076 217.312" fill="none" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+	<desc>
+			Created with Pixso.
+	</desc>
+	<defs>
+		<filter id="filter_240_213_dd" x="0.000000" y="0.000000" width="237.076172" height="217.312027" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+			<feFlood flood-opacity="0" result="BackgroundImageFix"/>
+			<feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
+			<feOffset dx="0" dy="0"/>
+			<feGaussianBlur stdDeviation="1.66667"/>
+			<feComposite in2="hardAlpha" operator="out" k2="-1" k3="1"/>
+			<feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.16 0"/>
+			<feBlend mode="normal" in2="BackgroundImageFix" result="effect_dropShadow_1"/>
+			<feBlend mode="normal" in="SourceGraphic" in2="effect_dropShadow_1" result="shape"/>
+		</filter>
+		<filter id="filter_240_214_dd" x="-3.000000" y="-1.000031" width="243.076172" height="223.312027" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+			<feFlood flood-opacity="0" result="BackgroundImageFix"/>
+			<feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
+			<feOffset dx="0" dy="0"/>
+			<feGaussianBlur stdDeviation="0.666667"/>
+			<feComposite in2="hardAlpha" operator="out" k2="-1" k3="1"/>
+			<feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.078 0"/>
+			<feBlend mode="normal" in2="BackgroundImageFix" result="effect_dropShadow_1"/>
+			<feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
+			<feOffset dx="0" dy="2"/>
+			<feGaussianBlur stdDeviation="2.66667"/>
+			<feComposite in2="hardAlpha" operator="out" k2="-1" k3="1"/>
+			<feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.12 0"/>
+			<feBlend mode="normal" in2="effect_dropShadow_1" result="effect_dropShadow_2"/>
+			<feBlend mode="normal" in="SourceGraphic" in2="effect_dropShadow_2" result="shape"/>
+		</filter>
+	</defs>
+	<g filter="url(#filter_240_213_dd)">
+		<path id="Icon" d="M182.93 170.714C151.271 204.193 108.623 219.029 72.457 209.447C36.291 199.864 10.5059 166.896 5.86328 123.798C0.744141 76.3019 19.1836 18.0326 40.084 7.90547C50.5488 2.83548 53.8555 3.48059 86.625 17.3017C104.609 24.8871 117.943 29.7532 134.318 34.092C150.693 38.4308 164.889 40.8588 184.693 43.2857C220.777 47.7076 223.936 48.7758 229.34 58.05C240.133 76.5747 217.82 133.818 182.93 170.714ZM71.8164 98.2041C57.4355 93.1685 49.3105 81.5067 53.6699 72.1567C58.0293 62.8067 73.2207 59.3093 87.6016 64.3449C101.984 69.3805 110.109 81.0423 105.75 90.3923C101.391 99.7422 86.1992 103.24 71.8164 98.2041ZM124.217 96.0238C121.797 105.888 132.135 116.15 147.307 118.944C162.479 121.739 176.74 116.009 179.158 106.145C181.578 96.2809 171.24 86.019 156.068 83.2242C140.896 80.4293 126.635 86.1599 124.217 96.0238ZM85.4512 172.593C121.262 182.082 145.955 156.488 141.385 147.243C139.205 142.835 135.258 143.438 128.619 144.453C121.334 145.567 110.809 147.175 95.8203 143.204C80.832 139.233 73.1445 132.798 67.8223 128.345C62.9727 124.286 60.0898 121.873 55.4395 124.471C45.6855 129.921 49.6406 163.105 85.4512 172.593Z" clip-rule="evenodd" fill="#FFFFFF" fill-opacity="1.000000" fill-rule="evenodd"/>
+	</g>
+</svg>
