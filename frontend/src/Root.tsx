@@ -6,6 +6,7 @@ import { AboutPage } from './Components/aboutPage';
 import { HomePage } from './Components/homePage/HomePage';
 import { TimeTable } from './Components/timetablePage';
 import { Loader } from './Components/general_components/Loader';
+import { ContactPage } from './Components/contactPage/ContactPage';
 
 export const Root: React.FC = () => {
   const [loading, setLoading] = useState(false);
@@ -29,6 +30,7 @@ export const Root: React.FC = () => {
           <Route index element={<HomePage />}/>
           <Route path='about' element={<AboutPage />} />
           <Route path='timetable' element={<TimeTable />} />
+          <Route path='contact' element={<ContactPage />} />
           <Route path="*" element={<ErrorPage />} />
         </Route>
       </Routes>
