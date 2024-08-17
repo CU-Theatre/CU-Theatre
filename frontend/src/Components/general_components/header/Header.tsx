@@ -36,7 +36,7 @@ export const Header = () => {
         </nav>
         <nav className='header__buttons'>
           <button className='header__button header__button--book white-button'>Book place</button>
-          <Link to={'#'} className='header__button header__button--log white-button'>Log in</Link>
+          <Link to={'/log-in/true'} className='header__button header__button--log white-button'>Log in</Link>
           <button 
             onClick={() => setIsOpen(true)}
             type='button' 

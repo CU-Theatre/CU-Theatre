@@ -1,0 +1,37 @@
+@import "../../../styles/variables.scss";
+@import "../../../styles/mixins.scss";
+
+.log-in-form {
+  width: 100%;
+  max-width: 500px;
+  margin: 0 auto;
+
+  &__control {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  &__radio-btn {
+    padding: 17px;
+    text-align: center;
+    background-color: $white;
+    opacity: 0.5;
+    cursor: pointer;
+
+    &--left {
+      border-radius: 20px 0 0 0;
+    }
+
+    &--right {
+      border-radius: 0 20px 0 0;
+    }
+
+    &--active {
+      opacity: 1;
+    }
+  }
+
+  &__radio {
+    display: none;
+  }
+}
