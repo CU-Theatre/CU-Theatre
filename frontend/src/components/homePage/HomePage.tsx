@@ -7,11 +7,11 @@ import { Reviews } from './reviews';
 
 export const HomePage = () => {
   return (
-    <div className='home'>
+    <main className='home'>
         <Welcome />
         <About />
         <WhoWe />
         <Reviews />
-    </div>
+    </main>
   );
 };

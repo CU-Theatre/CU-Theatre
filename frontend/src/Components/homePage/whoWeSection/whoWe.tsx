@@ -9,7 +9,7 @@ export const WhoWe: React.FC = () => {
   const [ref, isVisible] = useFadeIn();
 
   return (
-    <div className="home__whoWe whoWe">
+    <section className="home__whoWe whoWe">
       <div ref={ref} className={`whoWe__container ${isVisible ? 'block-visible' : ''}`}>
         <img className="whoWe__explore" src={explore} alt="explore, express, excell" />
         <h2 className="whoWe__title title">Who We Are</h2>
@@ -24,6 +24,6 @@ export const WhoWe: React.FC = () => {
         </div>
         <SignButton title="More classes" />
       </div>
-    </div>
+    </section>
   );
 };

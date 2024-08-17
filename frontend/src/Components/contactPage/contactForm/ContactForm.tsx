@@ -106,7 +106,7 @@ export const ContactForm: React.FC = () => {
         )}
       </div>
 
-      <button type="submit" className="contact-form__button">
+      <button type="submit" className="contact-form__button white-button">
         Send message
       </button>
     </form>
