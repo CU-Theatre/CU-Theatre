@@ -68,7 +68,7 @@ export const BurgerMenu: React.FC = () => {
             {isLoginned && (
               <li className="header__item">
                 <NavLink
-                  to={"./your-account"}
+                  to={"/your-account"}
                   className={({ isActive }) =>
                     cn("header__icon header__icon--cabinet", {
                       "nav-isActive": isActive,
