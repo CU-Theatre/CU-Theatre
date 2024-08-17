@@ -7,7 +7,11 @@ import { HomePage } from './Components/homePage/HomePage';
 import { TimeTable } from './Components/timetablePage';
 import { Loader } from './Components/general_components/Loader';
 import { ContactPage } from './Components/contactPage/ContactPage';
+<<<<<<< HEAD
 import { LogInPage } from './Components/logInPage';
+=======
+import { YourAccount } from './Components/general_components/personalAccount';
+>>>>>>> main
 
 export const Root: React.FC = () => {
   const [loading, setLoading] = useState(false);
@@ -32,7 +36,11 @@ export const Root: React.FC = () => {
           <Route path='about' element={<AboutPage />} />
           <Route path='timetable' element={<TimeTable />} />
           <Route path='contact' element={<ContactPage />} />
+<<<<<<< HEAD
           <Route path='log-in' element={<LogInPage />} />
+=======
+          <Route path='your-account' element={<YourAccount />} />
+>>>>>>> main
           <Route path="*" element={<ErrorPage />} />
         </Route>
       </Routes>

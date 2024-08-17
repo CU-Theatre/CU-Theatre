@@ -11,13 +11,13 @@ import happyMask from "./img/happy.png";
 import sadMask from "./img/sadMask.png";
 
 export const BurgerMenu: React.FC = () => {
-  const { isOpen, setIsOpen } = useAppContext();
+  const { isOpen, setIsOpen, isLoginned } = useAppContext();
   const handleCloseMenu = () => {
     setIsOpen(false);
   };
 
   return (
-    <div className={classNames("burger-menu", { "menu-open": !isOpen })}>
+    <section className={classNames("burger-menu", { "menu-open": !isOpen })}>
       <div className="burger-menu__container">
         <div className="burger-menu__header">
           <Link
@@ -65,11 +65,23 @@ export const BurgerMenu: React.FC = () => {
                 className="burger-menu__icon burger-menu__icon--facebook"
               ></a>
             </li>
+            {isLoginned && (
+              <li className="header__item">
+                <NavLink
+                  to={"./your-account"}
+                  className={({ isActive }) =>
+                    cn("header__icon header__icon--cabinet", {
+                      "nav-isActive": isActive,
+                    })
+                  }
+                ></NavLink>
+              </li>
+            )}
           </ul>
           <Link
             to={{
-              pathname:"/log-in",
-              search: 'control=LogIn'
+              pathname: "/log-in",
+              search: "control=LogIn",
             }}
             className="burger-menu__button white-button"
             onClick={handleCloseMenu}
@@ -83,6 +95,6 @@ export const BurgerMenu: React.FC = () => {
           alt=""
         />
       </div>
-    </div>
+    </section>
   );
 };
