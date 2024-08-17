@@ -24,14 +24,6 @@ export const LogInForm: React.FC = () => {
     setSearchParams(newParams);
   };
 
-  useEffect(() => {
-    return () => {
-      const newParams = new URLSearchParams(searchParams);
-      newParams.delete("control");
-      setSearchParams(newParams);
-    };
-  }, []);
-
   return (
     <article className="log-in-form">
       <div className="log-in-form__control">
