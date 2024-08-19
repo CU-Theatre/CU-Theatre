@@ -9,6 +9,7 @@ import { Loader } from './Components/general_components/Loader';
 import { ContactPage } from './Components/contactPage/ContactPage';
 import { LogInPage } from './Components/logInPage';
 import { YourAccount } from './Components/general_components/personalAccount';
+import { OurCoursesPage } from './Components/OurCoursesPage/OurCoursesPage';
 
 export const Root: React.FC = () => {
   const [loading, setLoading] = useState(false);
@@ -35,6 +36,7 @@ export const Root: React.FC = () => {
           <Route path='contact' element={<ContactPage />} />
           <Route path='log-in' element={<LogInPage />} />
           <Route path='your-account' element={<YourAccount />} />
+          <Route path='our-courses' element={<OurCoursesPage />} />
           <Route path="*" element={<ErrorPage />} />
         </Route>
       </Routes>
