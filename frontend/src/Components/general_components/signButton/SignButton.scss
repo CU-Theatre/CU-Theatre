@@ -1,5 +1,5 @@
-@import '../../../styles/variables';
-@import '../../../styles/mixins';
+@import "../../../styles/variables";
+@import "../../../styles/mixins";
 
 .sign-button {
   width: 280px;
@@ -14,6 +14,10 @@
   border: 1px solid transparent;
   transition: all 0.3s;
 
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
   @include on-tablet {
     width: 368px;
     font-size: 16px;
@@ -24,7 +28,7 @@
   }
 
   &::before {
-    content: '';
+    content: "";
     display: block;
     position: absolute;
     right: 50px;
@@ -34,9 +38,8 @@
     background-repeat: no-repeat;
     background-size: contain;
     background-position: center;
-    background-image: url('./signShooe.svg');
+    background-image: url("./signShooe.svg");
   }
-
 
   &:hover {
     background-color: black;
@@ -44,7 +47,7 @@
     border: 1px solid $white;
 
     &::before {
-      background-image: url('./whiteShoe.svg');
+      background-image: url("./whiteShoe.svg");
     }
   }
 }

@@ -1,0 +1,52 @@
+@import "../../styles/mixins";
+@import "../../styles/variables";
+
+.our-courses-page {
+  padding-block: $header-hight-mob;
+  background: linear-gradient(180deg, rgb(119, 17, 57), rgb(0, 0, 0) 50.382%);
+
+  @include on-tablet {
+    padding-block: $header-hight-tab;
+  }
+
+  &__container {
+    padding-block: 40px;
+
+    @include page-grid;
+
+    @include on-tablet {
+      padding-block: 50px;
+    }
+  }
+
+  &__title {
+    grid-column: 1 / -1;
+
+    font-size: 30px;
+    text-transform: uppercase;
+    text-align: center;
+    color: $white;
+    margin-bottom: 40px;
+
+    @include on-tablet {
+      font-size: 32px;
+      margin-bottom: 70px;
+    }
+
+    @include on-desktop {
+      font-size: 64px;
+      margin-bottom: 140px;
+    }
+  }
+
+  &__courses {
+    grid-column: 1 / -1;
+
+    display: grid;
+    gap: 40px;
+
+    @include on-desktop {
+      grid-column: 1 / 10;
+    }
+  }
+}
