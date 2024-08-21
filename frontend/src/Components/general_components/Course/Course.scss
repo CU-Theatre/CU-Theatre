@@ -37,20 +37,4 @@
   &__image {
     width: 58px;
   }
-
-  &__duration {
-    background-color: black;
-    color: $white;
-    border-radius: 8px;
-    padding: 12px;
-    width: 100%;
-    display: flex;
-    gap: 5px;
-
-    @include on-tablet {
-      width: 370px;
-      justify-content: space-between;
-      gap: 0;
-    }
-  }
 }
