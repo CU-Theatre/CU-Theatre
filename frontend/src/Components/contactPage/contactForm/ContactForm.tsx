@@ -2,6 +2,7 @@ import React from "react";
 import "./ContactForm.scss";
 import { SubmitHandler, useForm } from "react-hook-form";
 import classNames from "classnames";
+import { EMAIL_REGEX } from "../../../utils/globalVariables";
 
 type ContactFormType = {
   name: string;
@@ -16,8 +17,6 @@ export const ContactForm: React.FC = () => {
     handleSubmit,
     formState: { errors },
   } = useForm<ContactFormType>();
-
-  const emailRegex = /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/;
 
   const onSubmit: SubmitHandler<ContactFormType> = (data) => {
     const jsonData = JSON.stringify(data);
@@ -70,7 +69,7 @@ export const ContactForm: React.FC = () => {
           className={classNames("contact-form__input", {
             "contact-form__input--error": errors.email,
           })}
-          {...register("email", { required: true, pattern: emailRegex })}
+          {...register("email", { required: true, pattern: EMAIL_REGEX })}
           id="contact-last-email"
         />
         {errors.email && (

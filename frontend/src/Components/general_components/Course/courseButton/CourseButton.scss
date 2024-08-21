@@ -1,0 +1,50 @@
+@import "../../../../styles/mixins";
+@import "../../../../styles/variables";
+
+
+.course-button {
+    border-radius: 8px;
+    background-color: black;
+    padding: 12px;
+    width: 100%;
+
+    @include on-tablet {
+      width: 370px;
+    }
+
+
+  &--buy {
+    text-align: center;
+  }
+
+  &--lock {
+    background-color: $disable-color;
+    display: flex;
+    gap: 30px;
+    font-size: 12px;
+    justify-content: center;
+
+    &::before {
+      content: '';
+      display: block;
+      width: 16px;
+      height: 21px;
+      background-image: url(../../../img/icons/lock-icon.svg);
+    }
+  }
+
+  &--duration {
+    display: flex;
+    gap: 15px;
+    justify-content: space-between;
+    flex-wrap: wrap;
+  }
+
+  &__text {
+    color: $white;
+
+    &--duration {
+      margin-left: auto;
+    }
+  }
+}
