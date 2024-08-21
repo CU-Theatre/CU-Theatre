@@ -1,0 +1,40 @@
+@import "../../../styles/mixins";
+@import "../../../styles/variables";
+
+.course {
+  background-color: $white;
+  border-radius: 30px;
+  padding: 16px;
+
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+
+  @include on-tablet {
+    padding: 30px;
+    flex-direction: row;
+    align-items: flex-start;
+  }
+
+  &__content {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+
+    align-items: center;
+
+    @include on-tablet {
+      align-items: flex-start;
+      gap: 44px;
+    }
+  }
+
+  &__name {
+    font-size: 24px;
+    font-weight: 700;
+  }
+
+  &__image {
+    width: 58px;
+  }
+}

@@ -1,0 +1,17 @@
+@import "../../styles/variables.scss";
+@import "../../styles/mixins.scss";
+
+.log-in {
+  padding-block: $header-hight-mob;
+  background-color: $burgundy-color;
+
+  &__container {
+    height: 100vh;
+    display: flex;
+    align-items: center;
+  }
+
+  @include on-tablet {
+    padding-block: $header-hight-tab;
+  }
+}
