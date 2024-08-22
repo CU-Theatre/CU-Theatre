@@ -84,3 +84,7 @@ body {
 .menu-open {
   transform: translateX(-100%);
 }
+
+.modal-open {
+  transform: scale(0);
+}
