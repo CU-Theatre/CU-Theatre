@@ -4,3 +4,4 @@ export const GRID_GAP_MOB = 20;
 export const GRID_GAP_DESK = 30;
 export const EMAIL_REGEX = /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/;
 export const REQUIRED_COURSE = "drama course";
+
