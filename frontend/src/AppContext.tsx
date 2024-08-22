@@ -1,6 +1,8 @@
 import React, { createContext, useContext, useState } from "react";
 import { user } from "./utils/user";
 import { User } from "./types/User";
+import { ShowType } from "./types/ShowType";
+import { allShows } from "./utils/allShows";
 
 interface AppContextInterface {
   isOpen: boolean;
@@ -8,14 +10,21 @@ interface AppContextInterface {
   isLoginned: boolean;
   userState: User;
   setUserState: React.Dispatch<React.SetStateAction<User>>;
+  modalsOpen: boolean;
+  setModalIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  modalInfo: ShowType;
+  setModalInfo: React.Dispatch<React.SetStateAction<ShowType>>;
 }
 
 const AppContext = createContext<AppContextInterface | undefined>(undefined);
 
 export const AppProvider: React.FC<React.PropsWithChildren<{}>> = ({ children }) => {
+  const [ liveShow ] = allShows;
   const [isOpen, setIsOpen] = useState(false);
   const [isLoginned] = useState(true);
   const [userState, setUserState] = useState(user);
+  const [modalsOpen, setModalIsOpen] = useState(false);
+  const [modalInfo, setModalInfo] = useState<ShowType>(liveShow);
 
   return (
     <AppContext.Provider 
@@ -25,6 +34,10 @@ export const AppProvider: React.FC<React.PropsWithChildren<{}>> = ({ children })
         isLoginned,
         isOpen,
         setIsOpen,
+        modalInfo,
+        setModalInfo,
+        modalsOpen,
+        setModalIsOpen,
       }}>
       {children}
     </AppContext.Provider>

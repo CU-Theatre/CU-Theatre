@@ -1,0 +1,154 @@
+@import '../../../styles/keyframes';
+@import '../../../styles/mixins';
+@import '../../../styles/variables';
+
+.show {
+  position: fixed;
+  background: linear-gradient(rgb(119, 17, 57),rgb(0, 0, 0) 50.382%);
+  top: 0;
+  height: 100vh;
+  left: 0;
+  bottom: 0;
+  z-index: 50;
+  transition: transform 0.3s;
+
+  &__wrapper,
+  &__main,
+  &__content {
+    @include page-grid;
+    row-gap: 30px;
+
+    @include on-tablet {
+      row-gap: 40px;
+    }
+  }
+
+  &__wrapper {
+    padding: 15px;
+
+    @include on-tablet {
+      padding: 25px;
+    }
+
+    @include on-desktop {
+      padding: 30px;
+    }
+  }
+
+  &__top {
+    grid-column: -1 / 1;
+    text-align: center;
+    row-gap: 20px;
+  
+    @include page-grid;
+
+    @include on-tablet {
+      align-items: center;
+    }
+  }
+
+  &__close {
+    grid-column: 1 / 2;
+    display: block;
+    filter: grayscale(0) brightness(1);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain;
+    transition: all  0.3s;
+    width: 16px;
+    height: 16px;
+    background-image: url('../burgerMenu/img/IconClose.svg');
+
+    @include on-tablet {
+      width: 18px;
+      height: 18px;
+    }
+  }
+
+  &__main,
+  &__image,
+  &__content,
+  &__descr,
+  &__info {
+    grid-column: -1 / 1;
+  }
+
+  &__content {
+    text-align: center;
+
+    @include on-desktop {
+      text-align: start;
+    }
+  }
+
+  &__close {
+    grid-column: 1 / 2;
+  }
+
+  &__title {
+    grid-column: 1 / -1;
+
+    @include on-tablet {
+      grid-column: 2 / 6;
+      grid-row: 1 / 2;
+    }
+
+    @include on-desktop {
+      grid-column: 3 / 11;
+    }
+  }
+
+  &__descr,
+  &__date,
+  &__price {
+    font-size: 12px;
+    color: $white;
+    text-transform: capitalize;
+
+    @include on-tablet {
+      font-size: 18px;
+    }
+
+    @include on-desktop {
+      font-size: 24px;
+    }
+  }
+
+  &__descr {
+    text-align: center;
+
+    @include on-desktop {
+      grid-column: 7 / -3;
+    }
+  }
+
+  &__image {
+    width: 100%;
+    max-height: 360px;
+
+    @include on-desktop {
+      grid-column: 4 / 10;
+    }
+  }
+
+  &__info {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    align-items: center;
+
+    @include on-tablet {
+      grid-column: 2 / 6;
+    }
+
+    @include on-desktop {
+      grid-column: 2 / 7;
+      grid-row: 1 / 2;
+      gap: 40px;
+    }
+  }
+
+  &__button {
+    align-self: center;
+  }
+}

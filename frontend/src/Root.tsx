@@ -27,19 +27,20 @@ export const Root: React.FC = () => {
 
   return (
     <>
-      {loading && <Loader />}
-      <Routes>
-        <Route path='/' element={<App />}>
-          <Route index element={<HomePage />}/>
-          <Route path='about' element={<AboutPage />} />
-          <Route path='timetable' element={<TimeTable />} />
-          <Route path='contact' element={<ContactPage />} />
-          <Route path='log-in' element={<LogInPage />} />
-          <Route path='your-account' element={<YourAccount />} />
-          <Route path='our-courses' element={<OurCoursesPage />} />
-          <Route path="*" element={<ErrorPage />} />
-        </Route>
-      </Routes>
+      {loading ? <Loader/> : (
+        <Routes>
+          <Route path='/' element={<App />}>
+            <Route index element={<HomePage />}/>
+            <Route path='about' element={<AboutPage />} />
+            <Route path='timetable' element={<TimeTable />} />
+            <Route path='contact' element={<ContactPage />} />
+            <Route path='log-in' element={<LogInPage />} />
+            <Route path='your-account' element={<YourAccount />} />
+            <Route path='our-courses' element={<OurCoursesPage />} />
+            <Route path="*" element={<ErrorPage />} />
+          </Route>
+        </Routes>
+      )}
     </>
   );
 }
