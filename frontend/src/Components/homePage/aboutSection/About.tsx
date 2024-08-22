@@ -6,34 +6,23 @@ import './About.scss';
 import { Link } from "react-router-dom";
 import { SignButton } from "../../general_components/signButton";
 import { useFadeIn } from "../../../hooks/useFadeIn";
+import { ShowsWindow } from "../../general_components/ModalWindow/ShowsWindow";
+import { useAppContext } from "../../../AppContext";
+import { allShows } from "../../../utils/allShows";
+import { allCourses } from "../../../utils/courses";
+import { ShowType } from "../../../types/ShowType";
 
 export const About: React.FC = () => {
-  const blocks = [
-    {
-      title: 'Live performances', 
-      subtitle: 'Various plays written by Ukrainian authors interpreted and translated by our theater',
-      link: '/#dd2d',
-    },
-    {
-      title: 'Impro shows', 
-      subtitle: 'Fun, comedy live show where actors don’t have prepared scripts but want to make you laugh.',
-      link: '/#dddd',
-    },
-    {
-      title: 'Playback shows', 
-      subtitle: 
-      'Live show with a healing effect. Audience shares theirs stories, director says a secret word and actors start playing the story focusing on audience’s feelings',
-      link: '/#asdasd',
-    },
-    {
-      title: 'Drama courses', 
-      subtitle: 
-      'Develop your personality, improve your confidence, communication and creative thinking!',
-      link: '/#asdasd',
-    },
-];
+  const [ dramaCourse ] = allCourses;
+
 
 const [ref, isVisible] = useFadeIn();
+const { modalInfo, setModalIsOpen, setModalInfo } = useAppContext();
+
+const openModalWindow = (show: ShowType) => {
+  setModalInfo(show);
+  setModalIsOpen(true);
+}
 
   return (
     <section className='home__about about'>
@@ -43,16 +32,28 @@ const [ref, isVisible] = useFadeIn();
         <div className="about__main">
           <img className='about__image' src={mainImage} alt="about-photo"/>
           <div className='about__content'>
-            {blocks.map((block, index) => (
-              <Link to={block.link} className={`about__block about__block--${index}`} key={block.title}>
-                <h1 className="about__block-title">{block.title}</h1>
-                <p className="about__block-subtitle">{block.subtitle}</p>
-              </Link>
+            {allShows.map((block, index) => (
+              <button 
+                type="button" 
+                className={`about__block about__block--${index}`} 
+                key={block.showName}
+                onClick={() => openModalWindow(block)}
+              >
+                <h1 className="about__block-title">{block.showName}</h1>
+                <p className="about__block-subtitle">{block.showTitle}</p>
+              </button>
             ))}
+              <Link to={'./our-courses'} className={`about__block about__block--3`} key={dramaCourse.courseName}>
+                <h1 className="about__block-title">{dramaCourse.courseName}</h1>
+                <p className="about__block-subtitle">
+                  Develop your personality, improve your confidence, communication and creative thinking!
+                </p>
+              </Link>
           </div>
           <SignButton title="Sign for a class" />
         </div>
       </div>
+      <ShowsWindow show={modalInfo} />
     </section>
   );
 };
