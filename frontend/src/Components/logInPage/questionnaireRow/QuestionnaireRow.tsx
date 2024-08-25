@@ -21,7 +21,22 @@ type Props<T> = {
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
 };
 
-export class QuestionnaireRow<T> extends React.Component<Props<T>> {
+type State = {
+  isShow: boolean;
+};
+
+export class QuestionnaireRow<T> extends React.Component<Props<T>, State> {
+  constructor(props: Props<T>) {
+    super(props);
+    this.state = {
+      isShow: false,
+    };
+  }
+
+  showOrHide = () => {
+    this.setState({ isShow: !this.state.isShow });
+  };
+
   render() {
     const {
       title,
@@ -49,10 +64,13 @@ export class QuestionnaireRow<T> extends React.Component<Props<T>> {
           {title}
         </label>
         <input
-          type={type}
+          type={
+            type !== "password" ? type : this.state.isShow ? "text" : "password"
+          }
           id={title}
           className={classNames("questionnaire-row__input", {
             "questionnaire-row__input--error": errors[name],
+            "questionnaire-row__input--password": type === 'password',
           })}
           placeholder={placeholder}
           {...register(name, {
@@ -63,6 +81,20 @@ export class QuestionnaireRow<T> extends React.Component<Props<T>> {
           })}
           onChange={onChange}
         />
+
+        {type === "password" && (
+          <button
+            type="button"
+            onMouseDown={this.showOrHide}
+            onMouseUp={this.showOrHide}
+            className={classNames("questionnaire-row__show-password", {
+              "questionnaire-row__show-password--active": this.state.isShow,
+            })}
+          >
+            show password
+          </button>
+        )}
+
         <span
           className={classNames("questionnaire-row__error", {
             "questionnaire-row__error--active": errors[name],
