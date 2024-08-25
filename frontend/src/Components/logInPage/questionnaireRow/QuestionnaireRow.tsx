@@ -16,13 +16,31 @@ type Props<T> = {
   name: Path<T & FieldValues>;
   errors: FieldErrors<T & FieldValues>;
   placeholder: string;
-  validate?: (value: string, formValues: T) => boolean;
+  validate?: (value: string, formValues: T) => boolean | string;
+  min?: number;
+  max?: number;
 };
 
 export class QuestionnaireRow<T> extends React.Component<Props<T>> {
   render() {
-    const { title, type, register, errorMessage, name, errors, placeholder, validate } =
-      this.props;
+    const {
+      title,
+      type,
+      register,
+      name,
+      errors,
+      placeholder,
+      validate,
+      min,
+      max,
+    } = this.props;
+
+    const minValid = min
+      ? { value: min, message: `Has to be more then ${min} characters` }
+      : undefined;
+    const maxValid = max
+      ? { value: max, message: `Has to be less then ${max} characters` }
+      : undefined;
 
     return (
       <div className="questionnaire-row">
@@ -36,14 +54,19 @@ export class QuestionnaireRow<T> extends React.Component<Props<T>> {
             "questionnaire-row__input--error": errors[name],
           })}
           placeholder={placeholder}
-          {...register(name, { required: true, validate })}
+          {...register(name, {
+            required: "Required field",
+            validate,
+            minLength: minValid,
+            maxLength: maxValid,
+          })}
         />
         <span
           className={classNames("questionnaire-row__error", {
             "questionnaire-row__error--active": errors[name],
           })}
         >
-          {errorMessage}
+          {errors[name]?.message?.toString()}
         </span>
       </div>
     );

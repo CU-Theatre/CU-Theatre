@@ -1,31 +1,85 @@
 import React from "react";
 import { QuestionnaireRow } from "../questionnaireRow";
 import { SubmitHandler, useForm } from "react-hook-form";
-import { SignUpQuestionnaireType } from "../../../types/SignUpQuestionnaireType";
-import { EMAIL_REGEX } from "../../../utils/globalVariables";
+import {
+  EMAIL_REGEX,
+  PHONE_REGEX,
+} from "../../../utils/globalVariables";
+import { logIn, signUp } from "../../../api/userApi";
+import { useLocalStorage } from "../../../hooks/useLocalStorage";
+import { useNavigate } from "react-router-dom";
+import { useNavigateToPreviousOrHomePage } from "../../../hooks/useNavigateToPreviousOrHomePage";
+import { SignUpData } from "../../../types/SignUpTypes";
+import { FetchErrorMessage } from "../../../types/FetchErrorMessage";
 
 export const SignUpQuestionnaire: React.FC = () => {
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<SignUpQuestionnaireType>();
+    setError,
+  } = useForm<SignUpData>();
+  const [, setToken] = useLocalStorage("token", "");
+  const navigate = useNavigate();
+  const navigateToPrev = useNavigateToPreviousOrHomePage();
 
-  const onSubmit: SubmitHandler<SignUpQuestionnaireType> = (data) => console.log(data);
+  const onSubmit: SubmitHandler<SignUpData> = (data) => {
+    signUp(data)
+      .then(() => {
+        logIn({
+          email: data.email,
+          password: data.password,
+        }).then((response) => {
+          setToken(response.token);
+        });
+      })
+      .then(() => {
+        navigateToPrev();
+      })
+      .catch((err: Error) => {
+        switch (err.message) {
+          case FetchErrorMessage.Occupied:
+            setError("root", {
+              type: "manual",
+              message: FetchErrorMessage.Occupied,
+            });
+            break;
 
-  const validPassword = (rePassword: string, formValues: SignUpQuestionnaireType) => {
-    const password  = formValues.password;
+          case FetchErrorMessage.Unauthorized:
+            navigate('.')
+            break;
+
+          default:
+            setError("root", {
+              type: "manual",
+              message: "Oops, something's wrong",
+            });
+            break;
+        }
+      });
+  };
+
+  const validPassword = (rePassword: string, formValues: SignUpData) => {
+    const password = formValues.password;
 
     if (password.trim() !== rePassword.trim()) {
-      return false;
+      return "Passwords must match";
     }
 
-    return true
-  }
+    return true;
+  };
 
   const validEmail = (email: string) => {
-    return EMAIL_REGEX.test(email)
-  }
+    return EMAIL_REGEX.test(email);
+  };
+
+  const validPhone = (phone: string) => {
+    if (!PHONE_REGEX.test(phone)) {
+      return "Enter your phone number in a format that is convenient for you";
+    }
+
+    return true;
+  };
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="questionnaire">
@@ -36,7 +90,7 @@ export const SignUpQuestionnaire: React.FC = () => {
           register={register}
           errorMessage="This field is required"
           errors={errors}
-          name="name"
+          name="firstName"
           placeholder="your name"
         />
         <QuestionnaireRow
@@ -45,7 +99,7 @@ export const SignUpQuestionnaire: React.FC = () => {
           register={register}
           errorMessage="This field is required"
           errors={errors}
-          name="surname"
+          name="lastName"
           placeholder="your last name"
         />
         <QuestionnaireRow
@@ -56,6 +110,8 @@ export const SignUpQuestionnaire: React.FC = () => {
           errors={errors}
           name="password"
           placeholder="password"
+          min={8}
+          max={35}
         />
         <QuestionnaireRow
           title="repeat Password"
@@ -66,6 +122,18 @@ export const SignUpQuestionnaire: React.FC = () => {
           name="repeatPassword"
           placeholder="repeat Password"
           validate={validPassword}
+          min={8}
+          max={35}
+        />
+        <QuestionnaireRow
+          title="Phone number"
+          type="tel"
+          register={register}
+          errorMessage="This field is required"
+          errors={errors}
+          name="phoneNumber"
+          placeholder="your phone number"
+          validate={validPhone}
         />
         <QuestionnaireRow
           title="email"
@@ -77,6 +145,10 @@ export const SignUpQuestionnaire: React.FC = () => {
           placeholder="your Email"
           validate={validEmail}
         />
+
+        {errors.root && (
+          <p className="questionnaire__error">{errors.root.message}</p>
+        )}
       </div>
 
       <button type="submit" className="questionnaire__button white-button">
