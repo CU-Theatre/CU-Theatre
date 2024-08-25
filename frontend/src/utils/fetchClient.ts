@@ -51,10 +51,6 @@ async function request<T>(
 
       return response.json();
     });
-  // .catch((error: Error) => {
-  //   // eslint-disable-next-line
-  //   console.log(error.message);
-  // });
 }
 
 export const client = {

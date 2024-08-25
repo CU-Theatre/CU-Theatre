@@ -3,6 +3,7 @@ import { QuestionnaireRow } from "../questionnaireRow";
 import { SubmitHandler, useForm } from "react-hook-form";
 import {
   EMAIL_REGEX,
+  KEY_TOKEN,
   PHONE_REGEX,
 } from "../../../utils/globalVariables";
 import { logIn, signUp } from "../../../api/userApi";
@@ -19,7 +20,7 @@ export const SignUpQuestionnaire: React.FC = () => {
     formState: { errors },
     setError,
   } = useForm<SignUpData>();
-  const [, setToken] = useLocalStorage("token", "");
+  const [, setToken] = useLocalStorage(KEY_TOKEN, "");
   const navigate = useNavigate();
   const navigateToPrev = useNavigateToPreviousOrHomePage();
 
@@ -88,7 +89,6 @@ export const SignUpQuestionnaire: React.FC = () => {
           title="First name"
           type="text"
           register={register}
-          errorMessage="This field is required"
           errors={errors}
           name="firstName"
           placeholder="your name"
@@ -97,7 +97,6 @@ export const SignUpQuestionnaire: React.FC = () => {
           title="Last name"
           type="text"
           register={register}
-          errorMessage="This field is required"
           errors={errors}
           name="lastName"
           placeholder="your last name"
@@ -106,7 +105,6 @@ export const SignUpQuestionnaire: React.FC = () => {
           title="Password"
           type="password"
           register={register}
-          errorMessage="This field is required"
           errors={errors}
           name="password"
           placeholder="password"
@@ -117,7 +115,6 @@ export const SignUpQuestionnaire: React.FC = () => {
           title="repeat Password"
           type="password"
           register={register}
-          errorMessage="This field is required"
           errors={errors}
           name="repeatPassword"
           placeholder="repeat Password"
@@ -129,7 +126,6 @@ export const SignUpQuestionnaire: React.FC = () => {
           title="Phone number"
           type="tel"
           register={register}
-          errorMessage="This field is required"
           errors={errors}
           name="phoneNumber"
           placeholder="your phone number"
@@ -139,7 +135,6 @@ export const SignUpQuestionnaire: React.FC = () => {
           title="email"
           type="email"
           register={register}
-          errorMessage="This field is required"
           errors={errors}
           name="email"
           placeholder="your Email"
