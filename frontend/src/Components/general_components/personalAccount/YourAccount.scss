@@ -1,9 +1,9 @@
-@import '../../../styles/keyframes';
-@import '../../../styles/mixins';
-@import '../../../styles/variables';
+@import "../../../styles/keyframes";
+@import "../../../styles/mixins";
+@import "../../../styles/variables";
 
 .cabinet {
-  background: linear-gradient(rgb(119, 17, 57),rgb(0, 0, 0) 50.382%);
+  background: linear-gradient(rgb(119, 17, 57), rgb(0, 0, 0) 50.382%);
   padding-top: 100px;
   @include on-tablet {
     padding-top: 144px;
@@ -101,7 +101,7 @@
       font-size: 16px;
     }
 
-    @include on-desktop{
+    @include on-desktop {
       font-size: 24px;
     }
   }
@@ -121,9 +121,9 @@
       font-size: 20px;
     }
   }
-  
 
-  &__submit {
+  &__submit,
+  &__log-out {
     padding: 15px 0;
     border: 1px solid transparent;
 
@@ -164,4 +164,5 @@
       font-size: 32px;
     }
   }
+
 }

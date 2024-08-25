@@ -12,13 +12,13 @@ type Props<T> = {
   title: string;
   type: string;
   register: UseFormRegister<T & FieldValues>;
-  errorMessage: string;
   name: Path<T & FieldValues>;
   errors: FieldErrors<T & FieldValues>;
   placeholder: string;
   validate?: (value: string, formValues: T) => boolean | string;
   min?: number;
   max?: number;
+  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
 };
 
 export class QuestionnaireRow<T> extends React.Component<Props<T>> {
@@ -33,6 +33,7 @@ export class QuestionnaireRow<T> extends React.Component<Props<T>> {
       validate,
       min,
       max,
+      onChange = () => {},
     } = this.props;
 
     const minValid = min
@@ -60,6 +61,7 @@ export class QuestionnaireRow<T> extends React.Component<Props<T>> {
             minLength: minValid,
             maxLength: maxValid,
           })}
+          onChange={onChange}
         />
         <span
           className={classNames("questionnaire-row__error", {

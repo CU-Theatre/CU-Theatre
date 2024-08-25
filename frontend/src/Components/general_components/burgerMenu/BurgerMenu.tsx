@@ -78,16 +78,19 @@ export const BurgerMenu: React.FC = () => {
               </li>
             )}
           </ul>
-          <Link
-            to={{
-              pathname: "/log-in",
-              search: "control=LogIn",
-            }}
-            className="burger-menu__button white-button"
-            onClick={handleCloseMenu}
-          >
-            Log in
-          </Link>
+
+          {!isLoginned && (
+            <Link
+              to={{
+                pathname: "/log-in",
+                search: "control=LogIn",
+              }}
+              className="burger-menu__button white-button"
+              onClick={handleCloseMenu}
+            >
+              Log in
+            </Link>
+          )}
         </nav>
         <img
           className="burger-menu__image burger-menu__image--happy"
