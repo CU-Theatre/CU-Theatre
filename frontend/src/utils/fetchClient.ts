@@ -1,5 +1,3 @@
-import { ErrorResponses } from "../types/ErrorResponses";
-
 /* eslint-disable @typescript-eslint/no-explicit-any */
 const BASE_URL = "http://localhost:8080/api";
 
@@ -16,7 +14,7 @@ async function request<T>(
   token: string = "",
   method: RequestMethod = "GET",
   data: any = null
-): Promise<T | ErrorResponses> {
+): Promise<T> {
   const options: RequestInit = { method };
   const headers: HeadersInit = {};
 
@@ -35,21 +33,28 @@ async function request<T>(
     .then(() => {
       return fetch(BASE_URL + url, options);
     })
-    .then((response) => {
-      if (response.ok) {
-        return response.json();
+    .then(async (response) => {
+      if (!response.ok) {
+        switch (response.status) {
+          case 400: {
+            const res = await response.text()
+            throw new Error(res);
+          }
+          case 401: {
+            const res = await response.json()
+            throw new Error(res.error);
+          }
+          default:
+            throw new Error();
+        }
       }
 
-      if (response.status === 401) {
-        return ErrorResponses.Authorization;
-      }
-      
-      throw new Error();
-    })
-    // .catch((error) => {
-    //   // eslint-disable-next-line
-    //   console.log(error);
-    // });
+      return response.json();
+    });
+  // .catch((error: Error) => {
+  //   // eslint-disable-next-line
+  //   console.log(error.message);
+  // });
 }
 
 export const client = {
