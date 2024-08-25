@@ -1,7 +1,6 @@
 import classNames from "classnames";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import "./LogInForm.scss";
-import { useSearchParams } from "react-router-dom";
 import { SignUpQuestionnaire } from "../signUpQuestionnaire";
 import { LogInQuestionnaire } from "../logInQuestionnaire";
 
@@ -13,15 +12,9 @@ enum Control {
 export const LogInForm: React.FC = () => {
   const [selectedOption, setSelectedOption] = useState<Control>(Control.LogIn);
 
-  const [searchParams, setSearchParams] = useSearchParams();
-
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value as Control;
+    const value = e.target.value as Control;    
     setSelectedOption(value);
-
-    const newParams = new URLSearchParams(searchParams);
-    newParams.set("control", value);
-    setSearchParams(newParams);
   };
 
   return (
@@ -46,7 +39,6 @@ export const LogInForm: React.FC = () => {
             "log-in-form__radio-btn--active": selectedOption === Control.LogIn,
           })}
         >
-          Log in
           <input
             type="radio"
             className="log-in-form__radio"
@@ -54,7 +46,8 @@ export const LogInForm: React.FC = () => {
             value={Control.LogIn}
             onChange={onChange}
             defaultChecked
-          />
+            />
+            Log in
         </label>
       </div>
 
