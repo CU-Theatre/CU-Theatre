@@ -6,7 +6,6 @@ import { logIn } from "../../../api/userApi";
 import { LoginData } from "../../../types/LogInTypes";
 import { useAppContext } from "../../../AppContext";
 import { useLocalStorage } from "../../../hooks/useLocalStorage";
-import classNames from "classnames";
 import { useNavigateToPreviousOrHomePage } from "../../../hooks/useNavigateToPreviousOrHomePage";
 import { FetchErrorMessage } from "../../../types/FetchErrorMessage";
 import { QuestionnaireRow } from "../questionnaireRow";
