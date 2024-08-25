@@ -5,9 +5,13 @@ import { useAppContext } from "../../../AppContext";
 import { SignButton } from "../signButton";
 import happyMask from "../../img/AccountImg/happymask.svg";
 import { Course } from "../Course";
+import { useNavigate } from "react-router-dom";
+import { KEY_TOKEN } from "../../../utils/globalVariables";
 
 export const YourAccount: React.FC = () => {
-  const { userState, setUserState } = useAppContext();
+  const { userState, setUserState, setIsLoginned } = useAppContext();
+
+  const navigate = useNavigate();
 
   const { name, surname, email, currentCourse } = userState;
   const [nameState, setNameState] = useState(name);
@@ -32,6 +36,14 @@ export const YourAccount: React.FC = () => {
       surname: surnameState,
       email: emailState,
     }));
+  };
+
+  const logOut = () => {
+    setIsLoginned(false);
+
+    navigate("/");
+
+    window.localStorage.removeItem(KEY_TOKEN);
   };
 
   return (
@@ -84,6 +96,14 @@ export const YourAccount: React.FC = () => {
             </div>
             <button type="submit" className="cabinet__submit white-button">
               Submit changes?
+            </button>
+
+            <button
+              type="button"
+              className="white-button cabinet__log-out"
+              onClick={logOut}
+            >
+              Log Out
             </button>
           </form>
           <img
