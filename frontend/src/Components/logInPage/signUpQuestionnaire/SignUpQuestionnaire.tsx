@@ -12,6 +12,7 @@ import { useNavigate } from "react-router-dom";
 import { useNavigateToPreviousOrHomePage } from "../../../hooks/useNavigateToPreviousOrHomePage";
 import { SignUpData } from "../../../types/SignUpTypes";
 import { FetchErrorMessage } from "../../../types/FetchErrorMessage";
+import { validEmail } from "../../../utils/validEmail";
 
 export const SignUpQuestionnaire: React.FC = () => {
   const {
@@ -47,7 +48,7 @@ export const SignUpQuestionnaire: React.FC = () => {
             break;
 
           case FetchErrorMessage.Unauthorized:
-            navigate('.')
+            navigate(".");
             break;
 
           default:
@@ -68,10 +69,6 @@ export const SignUpQuestionnaire: React.FC = () => {
     }
 
     return true;
-  };
-
-  const validEmail = (email: string) => {
-    return EMAIL_REGEX.test(email);
   };
 
   const validPhone = (phone: string) => {

@@ -46,11 +46,12 @@ export const AppProvider: React.FC<React.PropsWithChildren<{}>> = ({
           case FetchErrorMessage.Unauthorized:
           case FetchErrorMessage.InternalServerError:
             setIsLoginned(false);
-            // setToken('')
+            setToken("");
             break;
 
           default:
             console.error(err);
+            // TODO add message Unexpected Error
             break;
         }
       });

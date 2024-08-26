@@ -29,10 +29,6 @@ async function request<T>(
 
   options.headers = headers;
 
-  if (method === 'GET') {
-    options.mode = 'no-cors';
-  }
-
   return wait(100)
     .then(() => {
       return fetch(BASE_URL + url, options);
@@ -40,7 +36,7 @@ async function request<T>(
     .then(async (response) => {
       if (!response.ok) {
 
-        console.log('response', response);
+        console.log('response', await response.json());
         
 
         switch (response.status) {

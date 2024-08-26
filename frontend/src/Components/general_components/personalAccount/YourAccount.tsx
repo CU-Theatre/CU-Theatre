@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./YourAccount.scss";
 import homeIcon from "../../img/header/accountHomeIcon.svg";
 import { useAppContext } from "../../../AppContext";
@@ -7,43 +7,50 @@ import happyMask from "../../img/AccountImg/happymask.svg";
 import { Course } from "../Course";
 import { useNavigate } from "react-router-dom";
 import { KEY_TOKEN } from "../../../utils/globalVariables";
+import { SubmitHandler, useForm } from "react-hook-form";
+import { getCurrentUser } from "../../../api/userApi";
+import { useLocalStorage } from "../../../hooks/useLocalStorage";
+import { FetchErrorMessage } from "../../../types/FetchErrorMessage";
+import { validEmail } from "../../../utils/validEmail";
+
+interface CabinetFormInput {
+  firstName: string;
+  lastName: string;
+  email: string;
+}
 
 export const YourAccount: React.FC = () => {
   const { userState, setUserState, setIsLoginned } = useAppContext();
 
   const navigate = useNavigate();
 
-  // const { firstName, lastName, email, currentCourse } = userState;
-  const [nameState, setNameState] = useState(userState?.firstName);
-  const [surnameState, setSurNameState] = useState(userState?.lastName);
-  const [emailState, setEmailState] = useState(userState?.email);
+  const { register, handleSubmit, reset } = useForm<CabinetFormInput>();
 
-  const handleChangeName = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setNameState(e.target.value);
-  };
-  const handleChangeSurName = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setSurNameState(e.target.value);
-  };
-  const handleChangeEmail = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setEmailState(e.target.value);
-  };
+  const [token] = useLocalStorage(KEY_TOKEN, "");
 
-  const handleSave = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    // setUserState((prevState) => {
-    //   if (!nameState || !surnameState || !emailState) {
-    //     return
-    //   }
+  useEffect(() => {
+    getCurrentUser(token)
+      .then((newUser) => {
+        reset(newUser);
+      })
+      .catch((err: Error) => {
+        switch (err.message) {
+          case FetchErrorMessage.Unauthorized:
+          case FetchErrorMessage.InternalServerError:
+            setIsLoginned(false);
+            navigate("/log-in");
+            break;
 
-    //   if (prevState) {
-    //     return {
-    //       ...prevState,
-    //       firstName: nameState,
-    //       lastName: surnameState,
-    //       email: emailState,
-    //     };
-    //   }
-    // });
+          default:
+            console.error(err);
+            // TODO add message Unexpected Error
+            break;
+        }
+      });
+  }, []);
+
+  const handleSave: SubmitHandler<CabinetFormInput> = (data) => {
+    console.log(data);
   };
 
   const logOut = () => {
@@ -53,6 +60,12 @@ export const YourAccount: React.FC = () => {
 
     window.localStorage.removeItem(KEY_TOKEN);
   };
+
+  // TODO add massages that are for no valid case
+
+  // TODO add disabled while waite fetch
+
+  // TODO add save new user state
 
   return (
     <section className="cabinet">
@@ -66,17 +79,19 @@ export const YourAccount: React.FC = () => {
             <h3 className="cabinet__subtitle">{`Hello, ${userState?.firstName} 😎`}</h3>
           </div>
 
-          <form className="cabinet__user-info" onSubmit={handleSave}>
+          <form
+            className="cabinet__user-info"
+            onSubmit={handleSubmit(handleSave)}
+          >
             <div className="cabinet__user-item">
               <label className="cabinet__user-field" htmlFor="username">
                 First name
               </label>
               <input
+                {...register("firstName", { required: true })}
                 id="username"
                 className="cabinet__user-name"
                 type="text"
-                value={nameState}
-                onChange={handleChangeName}
               />
             </div>
             <div className="cabinet__user-item">
@@ -84,23 +99,21 @@ export const YourAccount: React.FC = () => {
                 Last name
               </label>
               <input
+                {...register("lastName", { required: true })}
                 id="usersurname"
                 className="cabinet__user-name"
                 type="text"
-                value={surnameState}
-                onChange={handleChangeSurName}
               />
             </div>
             <div className="cabinet__user-item">
-              <label className="cabinet__user-field" htmlFor="useremail">
+              <label className="cabinet__user-field" htmlFor="userEmail">
                 Email
               </label>
               <input
-                id="useremail"
+                {...register("email", { required: true, validate: validEmail })}
+                id="userEmail"
                 className="cabinet__user-name"
-                type="text"
-                value={emailState}
-                onChange={handleChangeEmail}
+                type="email"
               />
             </div>
 
@@ -123,8 +136,8 @@ export const YourAccount: React.FC = () => {
             alt="happymask"
           />
         </div>
-        {userState?.currentCourse.length &&
-        userState?.currentCourse.length < 1 ? (
+        {userState?.currentCourse?.length &&
+        userState?.currentCourse?.length < 1 ? (
           <div className="cabinet__main">
             <h3 className="cabinet__main-title">
               {"You are not subscribed to any course yet :("}
@@ -135,7 +148,7 @@ export const YourAccount: React.FC = () => {
           <div className="cabinet__main">
             <h3 className="cabinet__main-title">Assigned courses:</h3>
             <div className="cabinet__courses">
-              {userState?.currentCourse.map((course) => (
+              {userState?.currentCourse?.map((course) => (
                 <Course key={course.courseName} course={course} />
               ))}
             </div>
