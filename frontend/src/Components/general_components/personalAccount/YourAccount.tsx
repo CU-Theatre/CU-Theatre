@@ -13,10 +13,10 @@ export const YourAccount: React.FC = () => {
 
   const navigate = useNavigate();
 
-  const { name, surname, email, currentCourse } = userState;
-  const [nameState, setNameState] = useState(name);
-  const [surnameState, setSurNameState] = useState(surname);
-  const [emailState, setEmailState] = useState(email);
+  // const { firstName, lastName, email, currentCourse } = userState;
+  const [nameState, setNameState] = useState(userState?.firstName);
+  const [surnameState, setSurNameState] = useState(userState?.lastName);
+  const [emailState, setEmailState] = useState(userState?.email);
 
   const handleChangeName = (e: React.ChangeEvent<HTMLInputElement>) => {
     setNameState(e.target.value);
@@ -30,12 +30,20 @@ export const YourAccount: React.FC = () => {
 
   const handleSave = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setUserState((prevState) => ({
-      ...prevState,
-      name: nameState,
-      surname: surnameState,
-      email: emailState,
-    }));
+    // setUserState((prevState) => {
+    //   if (!nameState || !surnameState || !emailState) {
+    //     return
+    //   }
+
+    //   if (prevState) {
+    //     return {
+    //       ...prevState,
+    //       firstName: nameState,
+    //       lastName: surnameState,
+    //       email: emailState,
+    //     };
+    //   }
+    // });
   };
 
   const logOut = () => {
@@ -55,8 +63,9 @@ export const YourAccount: React.FC = () => {
               <img className="cabinet__icon" src={homeIcon} alt="home-icon" />
               <h2 className="cabinet__title title">Your account</h2>
             </div>
-            <h3 className="cabinet__subtitle">{`Hello, ${name} 😎`}</h3>
+            <h3 className="cabinet__subtitle">{`Hello, ${userState?.firstName} 😎`}</h3>
           </div>
+
           <form className="cabinet__user-info" onSubmit={handleSave}>
             <div className="cabinet__user-item">
               <label className="cabinet__user-field" htmlFor="username">
@@ -84,7 +93,7 @@ export const YourAccount: React.FC = () => {
             </div>
             <div className="cabinet__user-item">
               <label className="cabinet__user-field" htmlFor="useremail">
-                First name
+                Email
               </label>
               <input
                 id="useremail"
@@ -94,6 +103,7 @@ export const YourAccount: React.FC = () => {
                 onChange={handleChangeEmail}
               />
             </div>
+
             <button type="submit" className="cabinet__submit white-button">
               Submit changes?
             </button>
@@ -106,13 +116,15 @@ export const YourAccount: React.FC = () => {
               Log Out
             </button>
           </form>
+
           <img
             className="cabinet__happy-mask"
             src={happyMask}
             alt="happymask"
           />
         </div>
-        {currentCourse.length < 1 ? (
+        {userState?.currentCourse.length &&
+        userState?.currentCourse.length < 1 ? (
           <div className="cabinet__main">
             <h3 className="cabinet__main-title">
               {"You are not subscribed to any course yet :("}
@@ -123,7 +135,7 @@ export const YourAccount: React.FC = () => {
           <div className="cabinet__main">
             <h3 className="cabinet__main-title">Assigned courses:</h3>
             <div className="cabinet__courses">
-              {currentCourse.map((course) => (
+              {userState?.currentCourse.map((course) => (
                 <Course key={course.courseName} course={course} />
               ))}
             </div>

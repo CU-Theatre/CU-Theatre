@@ -6,7 +6,7 @@ import {
   KEY_TOKEN,
   PHONE_REGEX,
 } from "../../../utils/globalVariables";
-import { logIn, signUp } from "../../../api/userApi";
+import { logIn, signUp } from "../../../api/authApi";
 import { useLocalStorage } from "../../../hooks/useLocalStorage";
 import { useNavigate } from "react-router-dom";
 import { useNavigateToPreviousOrHomePage } from "../../../hooks/useNavigateToPreviousOrHomePage";
