@@ -1,0 +1,24 @@
+databaseChangeLog:
+  - changeSet:
+      id: create-users-courses-table
+      author: me
+      changes:
+        - createTable:
+            tableName: users_courses
+            columns:
+              - column:
+                  name: user_id
+                  type: bigint
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+                    foreignKeyName: fk_users
+                    references: users(id)
+              - column:
+                  name: course_id
+                  type: bigint
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+                    foreignKeyName: fk_course
+                    references: courses(id)
