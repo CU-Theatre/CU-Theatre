@@ -2,9 +2,10 @@ import { User } from "../types/User";
 import { dramaCourse } from "./courses";
 
 export const user: User = {
-  name: "Ihor",
-  surname: "Prodan",
+  firstName: "Ihor",
+  lastName: "Prodan",
   email: "ihorprodan@gmail.com",
+  phoneNumber: '',
   dramaCourseFinisher: false,
   currentCourse: [dramaCourse],
 };
