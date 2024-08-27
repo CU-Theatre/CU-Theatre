@@ -82,7 +82,6 @@ export class QuestionnaireRow<T> extends React.Component<Props<T>, State> {
           onChange={onChange}
         />
 
-        {/* TODO fix shown show-password-btn when the error spun is active */}
         {type === "password" && (
           <button
             type="button"

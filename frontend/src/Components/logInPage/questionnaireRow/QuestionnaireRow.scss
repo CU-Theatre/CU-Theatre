@@ -2,6 +2,8 @@
 @import "../../../styles/mixins.scss";
 
 .questionnaire-row {
+  --padding-normal: 10px;
+
   display: grid;
   grid-template-columns: 1fr minmax(170px, 1fr);
   column-gap: 10px;
@@ -15,7 +17,7 @@
   }
 
   &__input {
-    padding: 10px;
+    padding: var(--padding-normal);
     border-radius: 28px;
 
     &:placeholder-shown {
@@ -51,7 +53,8 @@
     background-size: contain;
 
     position: absolute;
-    right: 10px;
+    right: var(--padding-normal);
+    top: 12px;
 
     font-size: 0;
 
