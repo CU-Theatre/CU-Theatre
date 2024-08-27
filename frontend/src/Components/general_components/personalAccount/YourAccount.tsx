@@ -8,30 +8,56 @@ import { Course } from "../Course";
 import { useNavigate } from "react-router-dom";
 import { KEY_TOKEN } from "../../../utils/globalVariables";
 import { SubmitHandler, useForm } from "react-hook-form";
-import { getCurrentUser } from "../../../api/userApi";
+import { getCurrentUser, updateUser } from "../../../api/userApi";
 import { useLocalStorage } from "../../../hooks/useLocalStorage";
 import { FetchErrorMessage } from "../../../types/FetchErrorMessage";
 import { validEmail } from "../../../utils/validEmail";
-
-interface CabinetFormInput {
-  firstName: string;
-  lastName: string;
-  email: string;
-}
+import { CabinetFormInput } from "../../../types/CabinetFormInput";
+import classNames from "classnames";
 
 export const YourAccount: React.FC = () => {
   const { userState, setUserState, setIsLoginned } = useAppContext();
+  const [isRootErrShown, setIsRootErrShown] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const navigate = useNavigate();
 
-  const { register, handleSubmit, reset } = useForm<CabinetFormInput>();
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors },
+    setError,
+    clearErrors,
+  } = useForm<CabinetFormInput>();
 
   const [token] = useLocalStorage(KEY_TOKEN, "");
 
+  const setRootError = (str: string) => {
+    setError("root", {
+      message: str,
+      type: "manual",
+    });
+
+    setTimeout(() => {
+      setIsRootErrShown(true);
+    }, 0);
+
+    setTimeout(() => {
+      setIsRootErrShown(false);
+    }, 2000);
+
+    setTimeout(() => {
+      clearErrors("root");
+    }, 2500);
+  };
+
   useEffect(() => {
+    setIsLoading(true);
     getCurrentUser(token)
       .then((newUser) => {
         reset(newUser);
+        setUserState(newUser);
       })
       .catch((err: Error) => {
         switch (err.message) {
@@ -43,29 +69,46 @@ export const YourAccount: React.FC = () => {
 
           default:
             console.error(err);
-            // TODO add message Unexpected Error
+            setRootError("Something went wrong. Reload the page.");
             break;
         }
+      })
+      .finally(() => {
+        setIsLoading(false);
       });
   }, []);
 
   const handleSave: SubmitHandler<CabinetFormInput> = (data) => {
     console.log(data);
+    setIsLoading(true);
+    setRootError("Something went wrong. Your changes did not save.");
+    // TODO add params
+    // updateUser()
+    //   .then()
+    //   .catch((err: Error) => {
+    //     switch (err.message) {
+    //       case FetchErrorMessage.Occupied:
+    //         setRootError("This email address is already taken");
+    //         break;
+
+    //       default:
+    //         setRootError("Something went wrong. Your changes did not save.");
+    //         userState && reset(userState);
+    //         break;
+    //     }
+    //   })
+    //   .finally(() => {
+    //     // setIsLoading(false);
+    //   });
   };
 
   const logOut = () => {
     setIsLoginned(false);
-
     navigate("/");
+    setUserState(null);
 
     window.localStorage.removeItem(KEY_TOKEN);
   };
-
-  // TODO add massages that are for no valid case
-
-  // TODO add disabled while waite fetch
-
-  // TODO add save new user state
 
   return (
     <section className="cabinet">
@@ -92,6 +135,7 @@ export const YourAccount: React.FC = () => {
                 id="username"
                 className="cabinet__user-name"
                 type="text"
+                disabled={isLoading}
               />
             </div>
             <div className="cabinet__user-item">
@@ -103,6 +147,7 @@ export const YourAccount: React.FC = () => {
                 id="usersurname"
                 className="cabinet__user-name"
                 type="text"
+                disabled={isLoading}
               />
             </div>
             <div className="cabinet__user-item">
@@ -114,10 +159,15 @@ export const YourAccount: React.FC = () => {
                 id="userEmail"
                 className="cabinet__user-name"
                 type="email"
+                disabled={isLoading}
               />
             </div>
 
-            <button type="submit" className="cabinet__submit white-button">
+            <button
+              type="submit"
+              className="cabinet__submit white-button"
+              disabled={isLoading}
+            >
               Submit changes?
             </button>
 
@@ -125,9 +175,20 @@ export const YourAccount: React.FC = () => {
               type="button"
               className="white-button cabinet__log-out"
               onClick={logOut}
+              disabled={isLoading}
             >
               Log Out
             </button>
+
+            {errors.root && (
+              <div
+                className={classNames("cabinet__err", {
+                  'cabinet__err--active': isRootErrShown,
+                })}
+              >
+                <p className="cabinet__err-text">{errors.root?.message}</p>
+              </div>
+            )}
           </form>
 
           <img

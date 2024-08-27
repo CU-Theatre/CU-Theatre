@@ -17,7 +17,7 @@ body {
   position: relative;
 
   &::before {
-    content: '';
+    content: "";
     width: 100%;
     height: 1px;
     background-color: #fff;
@@ -45,6 +45,7 @@ body {
 }
 
 .white-button {
+  box-sizing: border-box;
   background-color: $white;
   color: black;
   display: flex;
@@ -53,9 +54,18 @@ body {
   border-radius: 28px;
   transition: background-color $effectDuration;
 
+  border: 1px solid transparent;
+
   &:hover {
+    border: 1px solid $white;
     background-color: black;
     color: $white;
+  }
+
+  &:disabled {
+    color: black;
+    background-color: gray;
+    border: none;
   }
 }
 
@@ -66,7 +76,6 @@ body {
   font-weight: 500;
   justify-self: center;
   align-self: center;
-  
 
   @include on-tablet {
     font-size: 32px;
