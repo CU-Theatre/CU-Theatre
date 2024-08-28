@@ -6,12 +6,14 @@ import {
   KEY_TOKEN,
   PHONE_REGEX,
 } from "../../../utils/globalVariables";
-import { logIn, signUp } from "../../../api/userApi";
+import { logIn, signUp } from "../../../api/authApi";
 import { useLocalStorage } from "../../../hooks/useLocalStorage";
 import { useNavigate } from "react-router-dom";
 import { useNavigateToPreviousOrHomePage } from "../../../hooks/useNavigateToPreviousOrHomePage";
 import { SignUpData } from "../../../types/SignUpTypes";
 import { FetchErrorMessage } from "../../../types/FetchErrorMessage";
+import { validEmail } from "../../../utils/validEmail";
+import { useAppContext } from "../../../AppContext";
 
 export const SignUpQuestionnaire: React.FC = () => {
   const {
@@ -23,6 +25,7 @@ export const SignUpQuestionnaire: React.FC = () => {
   const [, setToken] = useLocalStorage(KEY_TOKEN, "");
   const navigate = useNavigate();
   const navigateToPrev = useNavigateToPreviousOrHomePage();
+  const { setIsLoginned } = useAppContext();
 
   const onSubmit: SubmitHandler<SignUpData> = (data) => {
     signUp(data)
@@ -33,10 +36,10 @@ export const SignUpQuestionnaire: React.FC = () => {
           password: data.password,
         }).then((response) => {
           setToken(response.token);
+
+          setIsLoginned(true);
+          navigateToPrev();
         });
-      })
-      .then(() => {
-        navigateToPrev();
       })
       .catch((err: Error) => {
         switch (err.message) {
@@ -48,7 +51,7 @@ export const SignUpQuestionnaire: React.FC = () => {
             break;
 
           case FetchErrorMessage.Unauthorized:
-            navigate('.')
+            navigate(".");
             break;
 
           default:
@@ -69,10 +72,6 @@ export const SignUpQuestionnaire: React.FC = () => {
     }
 
     return true;
-  };
-
-  const validEmail = (email: string) => {
-    return EMAIL_REGEX.test(email);
   };
 
   const validPhone = (phone: string) => {

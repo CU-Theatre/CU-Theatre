@@ -3,6 +3,10 @@ import { user } from "./utils/user";
 import { User } from "./types/User";
 import { ShowType } from "./types/ShowType";
 import { allShows } from "./utils/allShows";
+import { KEY_TOKEN } from "./utils/globalVariables";
+import { getCurrentUser } from "./api/userApi";
+import { useLocalStorage } from "./hooks/useLocalStorage";
+import { FetchErrorMessage } from "./types/FetchErrorMessage";
 import { allCourses } from "./utils/courses";
 import { CourseType } from "./types/CourseType";
 
@@ -11,8 +15,8 @@ interface AppContextInterface {
   setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
   isLoginned: boolean;
   setIsLoginned: React.Dispatch<React.SetStateAction<boolean>>;
-  userState: User;
-  setUserState: React.Dispatch<React.SetStateAction<User>>;
+  userState: User | null;
+  setUserState: React.Dispatch<React.SetStateAction<User | null>>;
   modalsOpen: boolean;
   setModalIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
   modalInfo: ShowType;
@@ -28,13 +32,38 @@ const AppContext = createContext<AppContextInterface | undefined>(undefined);
 export const AppProvider: React.FC<React.PropsWithChildren<{}>> = ({
   children,
 }) => {
+  const [liveShow] = allShows;
   const [ liveShow ] = allShows;
   const [ dramaCourse ] = allCourses;
   const [isOpen, setIsOpen] = useState(false);
   const [isLoginned, setIsLoginned] = useState(false);
-  const [userState, setUserState] = useState(user);
+  const [userState, setUserState] = useState<User | null>(null);
   const [modalsOpen, setModalIsOpen] = useState(false);
   const [modalInfo, setModalInfo] = useState<ShowType>(liveShow);
+
+  const [token, setToken] = useLocalStorage(KEY_TOKEN, "");
+
+  useEffect(() => {
+    getCurrentUser(token)
+      .then((newUser) => {
+        setUserState(newUser);
+        setIsLoginned(true);
+      })
+      .catch((err: Error) => {
+        switch (err.message) {
+          case FetchErrorMessage.Unauthorized:
+          case FetchErrorMessage.InternalServerError:
+            setIsLoginned(false);
+            setToken("");
+            break;
+
+          default:
+            console.error(err);
+            // TODO add message Unexpected Error
+            break;
+        }
+      });
+  }, []);
   const [courseInfo, setCourseInfo] = useState<CourseType>(dramaCourse);
   const [courseModal, setCourseModal] = useState(false);
 
