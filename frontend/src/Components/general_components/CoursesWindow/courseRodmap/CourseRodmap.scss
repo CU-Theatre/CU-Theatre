@@ -1,0 +1,180 @@
+@import '../../../../styles/keyframes';
+@import '../../../../styles/variables';
+@import '../../../../styles/mixins';
+
+
+.roadmap {
+  @include page-grid;
+  row-gap: 30px;
+  grid-column: 1 / -1;
+
+  &__block,
+  &__info {
+    display: flex;
+  }
+
+  &__block {
+    height: 325px;
+    flex-direction: column;
+    border: 1px solid black;
+    gap: 20px;
+    border-radius: 20px;
+    position: sticky;
+    background-color: $white;
+    padding: 30px 8px;
+    grid-column: 1 / -1;
+
+    @include on-tablet {
+      padding: 30px;
+    }
+
+    @include on-desktop {
+      grid-column: span 4;
+      align-content: space-between;
+      height: 485px;
+    }
+
+    &--showtime {
+      background: rgb(255, 212, 0);
+      padding-bottom: 60px;
+
+      &::before {
+        position: absolute;
+        content: '';
+        width: 40px;
+        height: 38px;
+        display: block;
+        bottom: 20px;
+        right: 20px;
+        background-image: url('./img/showtime.svg');
+      }
+    }
+
+    &--0 {
+      top: 60px;
+    }
+    &--1 {
+      top: 90px;
+    }
+    &--2 {
+      top: 120px;
+    }
+    &--3 {
+      top: 150px;
+    }
+    &--4 {
+      top: 180px;
+    }
+    &--5 {
+      top: 210px;
+    }
+    &--6 {
+      top: 240px;
+    }
+    &--7 {
+      top: 270px;
+    }
+    &--8 {
+      top: 300px;
+    }
+    &--9 {
+      top: 330px;
+    }
+    &--10 {
+      top: 340px;
+    }
+
+    @include on-desktop{
+    &--0,
+    &--1,
+    &--2 {
+      top: 60px;
+    }
+    &--3,
+    &--4,
+    &--5 {
+      top: 90px;
+    }
+    &--6,
+    &--7,
+    &--8 {
+      top: 120px;
+    }
+    }
+  }
+
+  &__title {
+    font-weight: 700;
+    font-size: 16px;
+    text-align: left; 
+
+    @include on-tablet {
+      font-size: 24px;
+    }
+  }
+
+  &__period {
+    font-weight: 700;
+    font-size: 30px;
+    width: 70px;
+    flex-shrink: 0;
+    height: 70px;
+    line-height: 36px;
+    border-radius: 14px;
+    background: rgb(196, 196, 196);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+
+    @include on-desktop {
+      width: 100%;
+    }
+  }
+
+  &__week {
+    font-weight: 300;
+    font-size: 14px;
+  }
+
+  &__text {
+    text-align: left;
+    font-size: 14px;
+    font-weight: 300;
+    line-height: 18px;
+
+    @include on-tablet {
+      font-size: 18px;
+    }
+
+    @include on-desktop {
+      font-size: 22px;
+    }
+  }
+
+  &__info {
+    gap: 15px;
+    align-items: center;
+
+    @include on-desktop {
+      flex-direction: column;
+    }
+  }
+
+  &__list {
+    padding-left: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+  }
+
+  &__item {
+    position: relative;
+
+    &::before {
+      content: "-";
+      position: absolute;
+      left: -15px;
+    }
+  }
+}

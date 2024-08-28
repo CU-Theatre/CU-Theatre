@@ -2,6 +2,7 @@ import React from "react";
 import { allCourses } from "../../utils/courses";
 import { Course } from "../general_components/Course";
 import "./OurCoursesPage.scss";
+import { CoursesWindow } from "../general_components/CoursesWindow";
 
 export const OurCoursesPage: React.FC = () => {
   return (
@@ -15,6 +16,7 @@ export const OurCoursesPage: React.FC = () => {
           ))}
         </div>
       </div>
+      <CoursesWindow />
     </main>
   );
 };

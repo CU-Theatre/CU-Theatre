@@ -88,8 +88,9 @@
     gap: 15px;
     padding: 15px 7px;
     border-radius: 18px;
-    transition: transform 0.3s;
+    transition: all 0.3s;
     align-items: center;
+    border: 1px solid transparent;
 
     &:hover {
       transform: scale(0.95);
@@ -104,6 +105,10 @@
 
     &--0,
     &--2 {
+      background-color: black;
+      color: $white;
+      border: 1px solid $white;
+
       @include on-desktop {
         grid-column: 1 / 9;
       }

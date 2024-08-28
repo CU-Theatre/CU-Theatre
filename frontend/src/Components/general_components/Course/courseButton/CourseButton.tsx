@@ -3,7 +3,6 @@ import "./CourseButton.scss";
 import { useAppContext } from "../../../../AppContext";
 import { REQUIRED_COURSE } from "../../../../utils/globalVariables";
 import { CourseType } from "../../../../types/CourseType";
-import { Link } from "react-router-dom";
 
 type Props = {
   course: CourseType;
@@ -15,8 +14,13 @@ enum StatusButton {
   LOCK = "LOCK",
 }
 export const CourseButton: React.FC<Props> = ({ course }) => {
-  const { isLoginned, userState } = useAppContext();
+  const { isLoginned, userState, setCourseInfo, setCourseModal } = useAppContext();
   const [buttonStatus, setButtonStatus] = useState<StatusButton>();
+
+  const openCourseWindow = (course: CourseType) => {
+    setCourseInfo(course);
+    setCourseModal(true);
+  }
 
   const { courseName, courseDuration } = course;
 
@@ -50,11 +54,13 @@ export const CourseButton: React.FC<Props> = ({ course }) => {
   return (
     <>
       {buttonStatus === StatusButton.BUY && (
-        <button className="course-button course-button--buy">
-          {/* TODO add link to buy-page */}
-          <Link to={""} className="course-button__text">
-            Start course
-          </Link>
+        <button
+          type="button"
+          onClick={() => openCourseWindow(course)} 
+          className="course-button course-button--buy">
+          <p className="course-button__text">
+            Learn more
+          </p>
         </button>
       )}
 
