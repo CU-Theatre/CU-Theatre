@@ -12,10 +12,8 @@ export const SignButton: React.FC<Props> = ({ title, path }) => {
     path || title.toLowerCase().includes("course") ? "/our-courses" : "";
 
   return (
-    <div className="sign-button">
-      <Link to={currantPath} className="sign-button__link">
+      <Link to={currantPath} className="sign-button">
         {title}
       </Link>
-    </div>
   );
 };

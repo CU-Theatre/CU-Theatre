@@ -1,0 +1,197 @@
+@import '../../../styles/keyframes';
+@import '../../../styles/mixins';
+@import '../../../styles/variables';
+
+
+.course-window {
+  position: fixed;
+  background: linear-gradient(rgb(119, 17, 57),rgb(0, 0, 0) 50.382%);
+  top: 0;
+  height: 100vh;
+  left: 0;
+  right: 0;
+  z-index: 50;
+  transition: transform 0.3s;
+  overflow-y: scroll;
+  padding-bottom: 100px;
+
+  &__container,
+  &__about,
+  &__image-for,
+  &__info {
+    @include page-grid;
+  }
+
+  &__container {
+    padding-top: 40px;
+    row-gap: 50px;
+
+    @include on-tablet {
+      row-gap: 70px;
+    }
+
+    @include on-desktop{
+      row-gap: 160px;
+    }
+  }
+
+  &__about,
+  &__top,
+  &__image-for,
+  &__for,
+  &__image,
+  &__benefits,
+  &__info {
+    grid-column: 1 / -1;
+  }
+
+  &__about {
+    row-gap: 30px;
+
+    @include on-tablet {
+      row-gap: 50px;
+    }
+
+    @include on-desktop {
+      row-gap: 84px;
+    }
+  }
+
+  &__image-for {
+    row-gap: 5px;
+
+    @include on-desktop {
+      grid-column: 2 / 12;
+    }
+  }
+
+  &__top {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+  }
+
+  &__subtitle {
+    color: $white;
+    font-size: 12px;
+    line-height: $qoute-heigh;
+    font-weight: 300;
+    text-transform: uppercase;
+
+    @include on-tablet {
+      font-size: 18px;
+    }
+
+    @include on-desktop {
+      font-size: 20px;
+    }
+  }
+
+  &__title {
+    margin-left: 18px;
+  }
+
+
+  
+  &__quotes {
+    height: $qoute-heigh;
+    margin: 0;
+  }
+
+  &__quote {
+    color: rgb(242 143 0);
+    font-weight: 700;
+    font-size: 12px;
+    height: 100%;
+    line-height: $qoute-heigh;
+    text-transform: uppercase;
+
+    @include on-tablet {
+      font-size: 18px;
+    }
+
+    @include on-desktop {
+      font-size: 20px;
+    }
+  }
+
+  &__for {
+    text-align: center;
+
+    @include on-tablet {
+      display: flex;
+      text-align: left;
+      gap: 5px;
+      align-items: center;
+    }
+  }
+
+  &__image {
+    width: 100%;
+    border-radius: 24px;
+  }
+
+  &__close {
+    position: absolute;
+    left: 0;
+    display: block;
+    filter: grayscale(0) brightness(1);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain;
+    transition: all  0.3s;
+    width: 16px;
+    height: 16px;
+    background-image: url('../burgerMenu/img/IconClose.svg');
+
+    &:hover {
+      filter: grayscale(1) brightness(0.5);
+    }
+
+    @include on-tablet {
+      width: 18px;
+      height: 18px;
+    }
+  }
+
+  &__headline {
+    color: $white;
+    text-transform: uppercase;
+    font-size: 24px;
+
+    &--how {
+      grid-column: 1 / -1;
+    }
+
+    @include on-tablet {
+      font-size: 32px;
+    }
+
+    @include on-desktop{
+      font-size: 36px;
+    }
+  }
+
+  &__benefits {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    align-items: center;
+
+    @include on-tablet {
+      gap: 40px;
+    }
+
+    @include on-tablet {
+      gap: 60px;
+    }
+  }
+
+  &__info {
+    text-align: center;
+    row-gap: 60px;
+  }
+
+}
