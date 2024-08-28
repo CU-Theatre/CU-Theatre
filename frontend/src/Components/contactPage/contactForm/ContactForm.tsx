@@ -19,6 +19,8 @@ export const ContactForm: React.FC = () => {
   } = useForm<ContactFormType>();
 
   const onSubmit: SubmitHandler<ContactFormType> = (data) => {
+    // TODO add submit logic
+
     const jsonData = JSON.stringify(data);
 
     console.log(jsonData);
