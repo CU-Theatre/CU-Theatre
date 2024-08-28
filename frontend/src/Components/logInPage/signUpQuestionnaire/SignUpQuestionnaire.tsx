@@ -27,6 +27,7 @@ export const SignUpQuestionnaire: React.FC = () => {
   const onSubmit: SubmitHandler<SignUpData> = (data) => {
     signUp(data)
       .then(() => {
+        console.log(data)
         logIn({
           email: data.email,
           password: data.password,
