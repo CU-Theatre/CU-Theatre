@@ -25,6 +25,7 @@
   &__container {
     padding-top: 40px;
     row-gap: 50px;
+    margin-bottom: 90px;
 
     @include on-tablet {
       row-gap: 70px;
@@ -192,6 +193,95 @@
   &__info {
     text-align: center;
     row-gap: 60px;
+    margin-bottom: 90px;
+  }
+
+  &__bottom-block {
+    color: $white;
+    padding: 20px;
+    grid-column: 1 / -1;
+    border: 1px solid $white;
+    display: flex;
+    flex-direction: column;
+    gap: 80px;
+
+    @include on-tablet {
+      grid-column: 3 / -1;
+      padding: 20px 40px;
+    }
+
+    @include on-desktop {
+      grid-column: 6 / -1;
+    }
+  }
+
+  &__info-schedule,
+  &__date {
+    display: flex;
+    flex-direction: column;
+  }
+
+  &__date {
+    gap: 15px;
+  }
+
+  &__info-schedule {
+    gap: 5px;
+  }
+
+  &__info-title {
+    font-size: 12px;
+    font-weight: 300;
+    line-height: 16px;
+
+    @include on-tablet {
+      font-size: 18px;
+    }
+  }
+  &__info-subtitle {
+    font-size: 24px;
+    line-height: 36px;
+
+    @include on-tablet {
+      font-size: 36px;
+    }
+  }
+
+  &__buttons {
+    display: flex;
+    justify-content: center;
+    gap: 5px;
+    align-self: end;
+  }
+
+  &__button {
+    background-color: $white;
+    padding: 8px 40px;
+    font-size: 12px;
+    text-align: center;
+    border: 1px solid transparent;
+    transition: all 0.3s;
+
+    &:hover {
+      background-color: black;
+      border: 1px solid $white;
+      color: $white;
+    }
+
+    @include on-tablet {
+      font-size: 16px;
+      padding: 12p 60px;
+      width: 185px;
+    }
+
+    &--left {
+      border-top-left-radius: 28px;
+      border-bottom-left-radius: 28px;
+    }
+    &--right {
+      border-top-right-radius: 28px;
+      border-bottom-right-radius: 28px;
+    }
   }
 
 }

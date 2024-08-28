@@ -5,6 +5,7 @@ export interface CourseType {
   courseDuration: string;
   courseImg: string;
   courseLink: string;
+  coursePrice: string;
   courseRoadmap: RoadmapItem[];
   courseBackground: string;
   courseDescr: string;

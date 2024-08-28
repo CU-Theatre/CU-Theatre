@@ -12,6 +12,7 @@ export const dramaCourse: CourseType = {
   courseImg: DramaImg,
   courseBackground: DramaBG,
   courseLink: 'drama-course',
+  coursePrice: '45$',
   courseRoadmap: [
     {
       roadmapId: 1,
@@ -85,7 +86,7 @@ export const dramaCourse: CourseType = {
       ],
     },
     {
-      roadmapId: 10,
+      roadmapId: 9,
       roadmapTitle: 'Etude Preparation and Exam Readiness',
       listStyle: true,
       roadmapText: [
@@ -93,7 +94,7 @@ export const dramaCourse: CourseType = {
       ],
     },
     {
-      roadmapId: 11,
+      roadmapId: 10,
       roadmapTitle: 'Rehearsal and Final Preparations',
       listStyle: true,
       roadmapText: [
@@ -102,7 +103,7 @@ export const dramaCourse: CourseType = {
       ],
     },
     {
-      roadmapId: 12,
+      roadmapId: 11,
       roadmapTitle: 'Performance and Certification ',
       listStyle: true,
       showtime: true,
@@ -123,6 +124,7 @@ export const improCourse: CourseType = {
   courseImg: ImproImg,
   courseBackground: ImproBG,
   courseLink: 'impro-course',
+  coursePrice: '45$',
   courseRoadmap: [
     {
       roadmapId: 1,
@@ -170,6 +172,7 @@ export const playbackCourse: CourseType = {
   courseImg: PlaybackImg,
   courseBackground: PlaybackBG,
   courseLink: 'playback-course',
+  coursePrice: '45$',
   courseRoadmap: [
     {
       roadmapId: 1,

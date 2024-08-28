@@ -1,5 +1,5 @@
 import { User } from "../types/User";
-import { dramaCourse} from "./courses";
+import { dramaCourse } from "./courses";
 
 export const user: User = {
   firstName: "Ihor",

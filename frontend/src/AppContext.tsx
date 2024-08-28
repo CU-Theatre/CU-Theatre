@@ -1,5 +1,4 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
-import { user } from "./utils/user";
 import { User } from "./types/User";
 import { ShowType } from "./types/ShowType";
 import { allShows } from "./utils/allShows";
@@ -33,7 +32,6 @@ export const AppProvider: React.FC<React.PropsWithChildren<{}>> = ({
   children,
 }) => {
   const [liveShow] = allShows;
-  const [ liveShow ] = allShows;
   const [ dramaCourse ] = allCourses;
   const [isOpen, setIsOpen] = useState(false);
   const [isLoginned, setIsLoginned] = useState(false);

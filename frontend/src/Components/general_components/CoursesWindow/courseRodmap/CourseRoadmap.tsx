@@ -10,8 +10,8 @@ interface Props {
 export const CourseRoadmap: React.FC<Props> = ({ course }) => {
   return (
     <div className='course-window__roadmap roadmap'>
-      {course.courseRoadmap.map(period => (
-        <div className={classNames('roadmap__block', {'roadmap__block--showtime': period.showtime})} key={period.roadmapId}>
+      {course.courseRoadmap.map((period, index) => (
+        <div className={classNames(`roadmap__block roadmap__block--${index}`, {'roadmap__block--showtime': period.showtime})} key={period.roadmapId}>
           <div className="roadmap__info">
             {course.courseName === 'Drama course' ? (
             <div className="roadmap__period"><p className="roadmap__week">Week</p> {period.roadmapId}</div>
