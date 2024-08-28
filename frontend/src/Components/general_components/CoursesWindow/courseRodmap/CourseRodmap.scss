@@ -14,10 +14,12 @@
   }
 
   &__block {
+    height: 325px;
     flex-direction: column;
+    border: 1px solid black;
     gap: 20px;
     border-radius: 20px;
-    position: relative;
+    position: sticky;
     background-color: $white;
     padding: 30px 8px;
     grid-column: 1 / -1;
@@ -29,10 +31,11 @@
     @include on-desktop {
       grid-column: span 4;
       align-content: space-between;
+      height: 485px;
     }
 
     &--showtime {
-      background: linear-gradient(-44.45deg, rgb(255, 212, 0) -4.731%,rgb(253, 215, 31) 10.192%,rgba(255, 222, 62, 0.69) 100%);
+      background: rgb(255, 212, 0);
       padding-bottom: 60px;
 
       &::before {
@@ -45,6 +48,58 @@
         right: 20px;
         background-image: url('./img/showtime.svg');
       }
+    }
+
+    &--0 {
+      top: 60px;
+    }
+    &--1 {
+      top: 90px;
+    }
+    &--2 {
+      top: 120px;
+    }
+    &--3 {
+      top: 150px;
+    }
+    &--4 {
+      top: 180px;
+    }
+    &--5 {
+      top: 210px;
+    }
+    &--6 {
+      top: 240px;
+    }
+    &--7 {
+      top: 270px;
+    }
+    &--8 {
+      top: 300px;
+    }
+    &--9 {
+      top: 330px;
+    }
+    &--10 {
+      top: 340px;
+    }
+
+    @include on-desktop{
+    &--0,
+    &--1,
+    &--2 {
+      top: 60px;
+    }
+    &--3,
+    &--4,
+    &--5 {
+      top: 90px;
+    }
+    &--6,
+    &--7,
+    &--8 {
+      top: 120px;
+    }
     }
   }
 
@@ -79,6 +134,7 @@
 
   &__week {
     font-weight: 300;
+    font-size: 14px;
   }
 
   &__text {
