@@ -13,6 +13,7 @@ import { useNavigateToPreviousOrHomePage } from "../../../hooks/useNavigateToPre
 import { SignUpData } from "../../../types/SignUpTypes";
 import { FetchErrorMessage } from "../../../types/FetchErrorMessage";
 import { validEmail } from "../../../utils/validEmail";
+import { useAppContext } from "../../../AppContext";
 
 export const SignUpQuestionnaire: React.FC = () => {
   const {
@@ -24,6 +25,7 @@ export const SignUpQuestionnaire: React.FC = () => {
   const [, setToken] = useLocalStorage(KEY_TOKEN, "");
   const navigate = useNavigate();
   const navigateToPrev = useNavigateToPreviousOrHomePage();
+  const { setIsLoginned } = useAppContext();
 
   const onSubmit: SubmitHandler<SignUpData> = (data) => {
     signUp(data)
@@ -33,10 +35,10 @@ export const SignUpQuestionnaire: React.FC = () => {
           password: data.password,
         }).then((response) => {
           setToken(response.token);
+
+          setIsLoginned(true);
+          navigateToPrev();
         });
-      })
-      .then(() => {
-        navigateToPrev();
       })
       .catch((err: Error) => {
         switch (err.message) {
