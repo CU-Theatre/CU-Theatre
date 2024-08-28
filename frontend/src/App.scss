@@ -97,3 +97,39 @@ body {
 .modal-open {
   transform: scale(0);
 }
+
+.slider-button {
+  background-color: $white;
+  padding: 5px 28px;
+  border-radius: 11px;
+  bottom: -20px;
+  transition: background-color 0.3s;
+
+  &:hover {
+    background-color: gray;
+  }
+
+  &::before {
+    width: 15px;
+    height: 11px;
+    display: block;
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+    content: '';
+  }
+
+  &--prev {
+    left: 0;
+    &::before {
+      background-image: url('./Components/general_components/ModalWindowSwiper/img/prev.svg');
+    }
+  }
+
+  &--next {
+    right: 0;
+    &::before {
+      background-image: url('./Components/general_components/ModalWindowSwiper/img/next.svg');
+    }
+  }
+}

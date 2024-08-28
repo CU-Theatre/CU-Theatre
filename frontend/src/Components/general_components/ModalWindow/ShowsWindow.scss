@@ -59,6 +59,10 @@
     height: 16px;
     background-image: url('../burgerMenu/img/IconClose.svg');
 
+    &:hover {
+      filter: grayscale(1) brightness(0.5);
+    }
+
     @include on-tablet {
       width: 18px;
       height: 18px;
