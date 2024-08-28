@@ -2,7 +2,7 @@ import React from "react";
 import "./LogInQuestionnaire.scss";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { EMAIL_REGEX, KEY_TOKEN } from "../../../utils/globalVariables";
-import { logIn } from "../../../api/userApi";
+import { logIn } from "../../../api/authApi";
 import { LoginData } from "../../../types/LogInTypes";
 import { useAppContext } from "../../../AppContext";
 import { useLocalStorage } from "../../../hooks/useLocalStorage";

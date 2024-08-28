@@ -25,7 +25,7 @@ export const CourseButton: React.FC<Props> = ({ course }) => {
   const { courseName, courseDuration } = course;
 
   const setStatusBasedOnCurrent = () => {
-    if (userState.currentCourse.includes(course)) {
+    if (userState?.currentCourse.includes(course)) {
       setButtonStatus(StatusButton.DURATION);
     } else {
       setButtonStatus(StatusButton.BUY);
@@ -36,7 +36,7 @@ export const CourseButton: React.FC<Props> = ({ course }) => {
     if (isLoginned) {
       if (courseName.toLowerCase() === REQUIRED_COURSE) {
         setStatusBasedOnCurrent();
-      } else if (userState.dramaCourseFinisher) {
+      } else if (userState?.dramaCourseFinisher) {
         setStatusBasedOnCurrent();
       } else {
         setButtonStatus(StatusButton.LOCK);

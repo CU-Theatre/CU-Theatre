@@ -7,12 +7,11 @@ export type SignUpData = {
   phoneNumber: string;
 };
 
-
 export type SignUpResponse = {
-  "id": number,
-  "email": string,
-  "firstName": string,
-  "lastName": string,
-  "phoneNumber": string,
-  "roleName": null
+  id: number;
+  email: string;
+  firstName: string;
+  lastName: string;
+  phoneNumber: string;
+  roleName: null;
 };

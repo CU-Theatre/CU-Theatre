@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./YourAccount.scss";
 import homeIcon from "../../img/header/accountHomeIcon.svg";
 import { useAppContext } from "../../../AppContext";
@@ -7,41 +7,105 @@ import happyMask from "../../img/AccountImg/happymask.svg";
 import { Course } from "../Course";
 import { useNavigate } from "react-router-dom";
 import { KEY_TOKEN } from "../../../utils/globalVariables";
+import { SubmitHandler, useForm } from "react-hook-form";
+import { getCurrentUser, updateUser } from "../../../api/userApi";
+import { useLocalStorage } from "../../../hooks/useLocalStorage";
+import { FetchErrorMessage } from "../../../types/FetchErrorMessage";
+import { validEmail } from "../../../utils/validEmail";
+import { CabinetFormInput } from "../../../types/CabinetFormInput";
+import classNames from "classnames";
 
 export const YourAccount: React.FC = () => {
   const { userState, setUserState, setIsLoginned } = useAppContext();
+  const [isRootErrShown, setIsRootErrShown] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const navigate = useNavigate();
 
-  const { name, surname, email, currentCourse } = userState;
-  const [nameState, setNameState] = useState(name);
-  const [surnameState, setSurNameState] = useState(surname);
-  const [emailState, setEmailState] = useState(email);
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors },
+    setError,
+    clearErrors,
+  } = useForm<CabinetFormInput>();
 
-  const handleChangeName = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setNameState(e.target.value);
-  };
-  const handleChangeSurName = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setSurNameState(e.target.value);
-  };
-  const handleChangeEmail = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setEmailState(e.target.value);
+  const [token] = useLocalStorage(KEY_TOKEN, "");
+
+  const setRootError = (str: string) => {
+    setError("root", {
+      message: str,
+      type: "manual",
+    });
+
+    setTimeout(() => {
+      setIsRootErrShown(true);
+    }, 0);
+
+    setTimeout(() => {
+      setIsRootErrShown(false);
+    }, 2000);
+
+    setTimeout(() => {
+      clearErrors("root");
+    }, 2500);
   };
 
-  const handleSave = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    setUserState((prevState) => ({
-      ...prevState,
-      name: nameState,
-      surname: surnameState,
-      email: emailState,
-    }));
+  useEffect(() => {
+    setIsLoading(true);
+    getCurrentUser(token)
+      .then((newUser) => {
+        reset(newUser);
+        setUserState(newUser);
+      })
+      .catch((err: Error) => {
+        switch (err.message) {
+          case FetchErrorMessage.Unauthorized:
+          case FetchErrorMessage.InternalServerError:
+            setIsLoginned(false);
+            navigate("/log-in");
+            break;
+
+          default:
+            console.error(err);
+            setRootError("Something went wrong. Reload the page.");
+            break;
+        }
+      })
+      .finally(() => {
+        setIsLoading(false);
+      });
+  }, []);
+
+  const handleSave: SubmitHandler<CabinetFormInput> = (data) => {
+    console.log(data);
+    setIsLoading(true);
+    setRootError("Something went wrong. Your changes did not save.");
+    // TODO add params
+    // updateUser()
+    //   .then()
+    //   .catch((err: Error) => {
+    //     switch (err.message) {
+    //       case FetchErrorMessage.Occupied:
+    //         setRootError("This email address is already taken");
+    //         break;
+
+    //       default:
+    //         setRootError("Something went wrong. Your changes did not save.");
+    //         userState && reset(userState);
+    //         break;
+    //     }
+    //   })
+    //   .finally(() => {
+    //     // setIsLoading(false);
+    //   });
   };
 
   const logOut = () => {
     setIsLoginned(false);
-
     navigate("/");
+    setUserState(null);
 
     window.localStorage.removeItem(KEY_TOKEN);
   };
@@ -55,19 +119,23 @@ export const YourAccount: React.FC = () => {
               <img className="cabinet__icon" src={homeIcon} alt="home-icon" />
               <h2 className="cabinet__title title">Your account</h2>
             </div>
-            <h3 className="cabinet__subtitle">{`Hello, ${name} 😎`}</h3>
+            <h3 className="cabinet__subtitle">{`Hello, ${userState?.firstName} 😎`}</h3>
           </div>
-          <form className="cabinet__user-info" onSubmit={handleSave}>
+
+          <form
+            className="cabinet__user-info"
+            onSubmit={handleSubmit(handleSave)}
+          >
             <div className="cabinet__user-item">
               <label className="cabinet__user-field" htmlFor="username">
                 First name
               </label>
               <input
+                {...register("firstName", { required: true })}
                 id="username"
                 className="cabinet__user-name"
                 type="text"
-                value={nameState}
-                onChange={handleChangeName}
+                disabled={isLoading}
               />
             </div>
             <div className="cabinet__user-item">
@@ -75,26 +143,31 @@ export const YourAccount: React.FC = () => {
                 Last name
               </label>
               <input
+                {...register("lastName", { required: true })}
                 id="usersurname"
                 className="cabinet__user-name"
                 type="text"
-                value={surnameState}
-                onChange={handleChangeSurName}
+                disabled={isLoading}
               />
             </div>
             <div className="cabinet__user-item">
-              <label className="cabinet__user-field" htmlFor="useremail">
-                First name
+              <label className="cabinet__user-field" htmlFor="userEmail">
+                Email
               </label>
               <input
-                id="useremail"
+                {...register("email", { required: true, validate: validEmail })}
+                id="userEmail"
                 className="cabinet__user-name"
-                type="text"
-                value={emailState}
-                onChange={handleChangeEmail}
+                type="email"
+                disabled={isLoading}
               />
             </div>
-            <button type="submit" className="cabinet__submit white-button">
+
+            <button
+              type="submit"
+              className="cabinet__submit white-button"
+              disabled={isLoading}
+            >
               Submit changes?
             </button>
 
@@ -102,17 +175,30 @@ export const YourAccount: React.FC = () => {
               type="button"
               className="white-button cabinet__log-out"
               onClick={logOut}
+              disabled={isLoading}
             >
               Log Out
             </button>
+
+            {errors.root && (
+              <div
+                className={classNames("cabinet__err", {
+                  'cabinet__err--active': isRootErrShown,
+                })}
+              >
+                <p className="cabinet__err-text">{errors.root?.message}</p>
+              </div>
+            )}
           </form>
+
           <img
             className="cabinet__happy-mask"
             src={happyMask}
             alt="happymask"
           />
         </div>
-        {currentCourse.length < 1 ? (
+        {userState?.currentCourse?.length &&
+        userState?.currentCourse?.length < 1 ? (
           <div className="cabinet__main">
             <h3 className="cabinet__main-title">
               {"You are not subscribed to any course yet :("}
@@ -123,7 +209,7 @@ export const YourAccount: React.FC = () => {
           <div className="cabinet__main">
             <h3 className="cabinet__main-title">Assigned courses:</h3>
             <div className="cabinet__courses">
-              {currentCourse.map((course) => (
+              {userState?.currentCourse?.map((course) => (
                 <Course key={course.courseName} course={course} />
               ))}
             </div>

@@ -70,7 +70,7 @@ export class QuestionnaireRow<T> extends React.Component<Props<T>, State> {
           id={title}
           className={classNames("questionnaire-row__input", {
             "questionnaire-row__input--error": errors[name],
-            "questionnaire-row__input--password": type === 'password',
+            "questionnaire-row__input--password": type === "password",
           })}
           placeholder={placeholder}
           {...register(name, {

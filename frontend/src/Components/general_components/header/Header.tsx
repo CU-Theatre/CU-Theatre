@@ -62,10 +62,7 @@ export const Header = () => {
           </button>
           {!isLoginned && (
             <Link
-              to={{
-                pathname: "/log-in",
-                search: "control=LogIn",
-              }}
+              to={"/log-in"}
               className="header__button header__button--log white-button"
             >
               Log in
