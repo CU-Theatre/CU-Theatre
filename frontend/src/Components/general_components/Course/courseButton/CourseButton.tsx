@@ -21,11 +21,14 @@ export const CourseButton: React.FC<Props> = ({ course }) => {
   const { courseName, courseDuration } = course;
 
   const setStatusBasedOnCurrent = () => {
-    if (userState?.currentCourse.includes(course)) {
-      setButtonStatus(StatusButton.DURATION);
-    } else {
-      setButtonStatus(StatusButton.BUY);
-    }
+    // TODO return branching operator when would be clear userState?.currentCourse
+
+    // if (userState?.currentCourse.includes(course)) {
+    //   setButtonStatus(StatusButton.DURATION);
+    // } else {
+    //   setButtonStatus(StatusButton.BUY);
+    // }
+    setButtonStatus(StatusButton.BUY);
   };
 
   useEffect(() => {
