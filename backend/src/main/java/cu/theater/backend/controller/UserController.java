@@ -44,9 +44,10 @@ public class UserController {
 
     @Operation(summary = "Update user details",
             description = "Update user details by id")
-    @PutMapping("/update")
-    public UserResponseDto updateUserDetails(@RequestBody UpdateUserDto updateUserDto) {
-        return userService.updateUserDetails(updateUserDto);
+    @PutMapping("/{id}")
+    public UserResponseDto updateUserDetails(@PathVariable Long id,
+                                             @RequestBody UpdateUserDto updateUserDto) {
+        return userService.updateUserDetails(id, updateUserDto);
     }
 
     @Operation(summary = "Delete user by id")

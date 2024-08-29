@@ -176,20 +176,20 @@ public class UserServiceTest {
 
         UpdateUserDto updateUserDto = updateUserDto(user);
 
-        when(userRepository.findByEmail(updateUserDto.email())).thenReturn(Optional.of(user));
+        when(userRepository.findById(id)).thenReturn(Optional.of(user));
         when(userRepository.save(user)).thenReturn(user);
         when(userMapper.toDto(user)).thenReturn(createUserResponse());
 
         UserResponseDto expected = createUserResponse();
 
         //When
-        UserResponseDto actual = userService.updateUserDetails(updateUserDto);
+        UserResponseDto actual = userService.updateUserDetails(id, updateUserDto);
 
         //Then
 
         assertEquals(expected, actual);
 
-        verify(userRepository, times(1)).findByEmail(updateUserDto.email());
+        verify(userRepository, times(1)).findById(id);
         verify(userRepository, times(1)).save(user);
         verify(userMapper, times(1)).toDto(user);
     }
