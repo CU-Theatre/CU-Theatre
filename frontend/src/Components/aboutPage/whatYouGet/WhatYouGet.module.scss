@@ -20,7 +20,6 @@
     text-align: center;
     margin-bottom: 70px;
 
-    
     @include on-tablet {
       margin-bottom: 100px;
     }
@@ -30,16 +29,17 @@
     }
   }
 
-  &__slider {
-    display: flex;
-    align-items: stretch;
-  }
+  // &__slider {
+  //   display: flex;
+  //   align-items: stretch;
+  // }
 
   &__slide {
     box-sizing: border-box;
     padding: 30px 10px;
     background-color: $white;
     border-radius: 50px;
+
 
     @include on-tablet {
       padding: 55px 20px;

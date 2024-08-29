@@ -7,3 +7,4 @@ export const PHONE_REGEX =
   /^(\+\d{1,3}[- ]?)?(\(?\d{3}\)?[- ]?)?[\d\- ]{7,10}$/;
 export const REQUIRED_COURSE = "drama course";
 export const KEY_TOKEN = "CU-Theater-token";
+export const DELAY_SWIPER_AUTOPLAY  = 3000;

@@ -1,0 +1,56 @@
+@import "../../../styles/variables";
+@import "../../../styles/mixins";
+
+.swiper-navigation {
+  margin-top: 15px;
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  justify-content: center;
+
+  &__button {
+    background-color: $white;
+    height: 20px;
+    width: 60px;
+    border-radius: 11px;
+    transition: background-color 0.3s;
+
+    font-size: 0;
+    line-height: 0;
+
+    position: relative;
+
+    &:hover {
+      background-color: gray;
+    }
+
+    &::before {
+      width: 15px;
+      height: 11px;
+      display: block;
+      background-size: contain;
+      background-position: center;
+      background-repeat: no-repeat;
+      content: "";
+
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+
+    &--prev {
+      left: 0;
+      &::before {
+        background-image: url("../../img/icons/arrow-left.svg");
+      }
+    }
+
+    &--next {
+      right: 0;
+      &::before {
+        background-image: url("../../img/icons/arrow-right.svg");
+      }
+    }
+  }
+}
