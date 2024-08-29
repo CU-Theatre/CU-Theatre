@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from "react";
 import "./CourseButton.scss";
 import { useAppContext } from "../../../../AppContext";
-import { REQUIRED_COURSE } from "../../../../utils/globalVariables";
+import { KEY_TOKEN, REQUIRED_COURSE } from "../../../../utils/globalVariables";
 import { CourseType } from "../../../../types/CourseType";
 import { Link } from "react-router-dom";
+import { useLocalStorage } from "../../../../hooks/useLocalStorage";
+import { getCurrentUser } from "../../../../api/userApi";
 
 type Props = {
   course: CourseType;
@@ -17,6 +19,7 @@ enum StatusButton {
 export const CourseButton: React.FC<Props> = ({ course }) => {
   const { isLoginned, userState } = useAppContext();
   const [buttonStatus, setButtonStatus] = useState<StatusButton>();
+  const [token] = useLocalStorage(KEY_TOKEN, "");
 
   const { courseName, courseDuration } = course;
 
