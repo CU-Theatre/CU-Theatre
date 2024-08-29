@@ -19,6 +19,6 @@ public interface UserService {
 
     UserResponseDto updateUserRole(Long userId, UpdateUserRoleRequestDto requestDto);
 
-    UserResponseDto updateUserDetails(UpdateUserDto updateUserDto);
+    UserResponseDto updateUserDetails(Long userId, UpdateUserDto updateUserDto);
 
 }
