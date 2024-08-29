@@ -1,5 +1,6 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
+import { Autoplay } from "swiper/modules";
 
 import "swiper/css";
 import style from "./MoreClasses.module.scss";
@@ -8,8 +9,15 @@ import imgHeals from "../../img/aboutPageSlider/heals.webp";
 import imgExotic from "../../img/aboutPageSlider/exotic.png";
 import imgTwerk from "../../img/aboutPageSlider/Twerk.webp";
 import imgStretching from "../../img/aboutPageSlider/Stretching.webp";
-import { DESKTOP_MIN_WIDTH, GRID_GAP_DESK, GRID_GAP_MOB, TABLE_MIN_WIDTH } from "../../../utils/globalVariables";
+import {
+  DELAY_SWIPER_AUTOPLAY,
+  DESKTOP_MIN_WIDTH,
+  GRID_GAP_DESK,
+  GRID_GAP_MOB,
+  TABLE_MIN_WIDTH,
+} from "../../../utils/globalVariables";
 import { useFadeIn } from "../../../hooks/useFadeIn";
+import { SwiperNavigation } from "../../general_components/swiperNavigation";
 
 const classesArr = [
   {
@@ -35,7 +43,12 @@ export const MoreClasses: React.FC = () => {
 
   return (
     <section className={style.classes}>
-      <div ref={ref} className={`${style.classes__container} ${isVisible ? 'block-visible' : ''}`}>
+      <div
+        ref={ref}
+        className={`${style.classes__container} ${
+          isVisible ? "block-visible" : ""
+        }`}
+      >
         <h2 className={`${style.classes__title} title`}>
           More classes from our director & founder
         </h2>
@@ -52,6 +65,11 @@ export const MoreClasses: React.FC = () => {
                 slidesPerView: 2.5,
                 spaceBetween: GRID_GAP_DESK,
               },
+            }}
+            modules={[Autoplay]}
+            loop={true}
+            autoplay={{
+              delay: DELAY_SWIPER_AUTOPLAY,
             }}
           >
             {classesArr.map((training, i) => (
@@ -79,6 +97,8 @@ export const MoreClasses: React.FC = () => {
                 </button>
               </SwiperSlide>
             ))}
+
+            <SwiperNavigation />
           </Swiper>
         </div>
       </div>
