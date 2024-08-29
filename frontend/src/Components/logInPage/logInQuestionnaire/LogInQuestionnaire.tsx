@@ -17,6 +17,7 @@ export const LogInQuestionnaire: React.FC = () => {
     formState: { errors },
     setError,
     clearErrors,
+    setValue,
   } = useForm<LoginData>();
   const { setIsLoginned } = useAppContext();
   const [, setToken] = useLocalStorage(KEY_TOKEN, "");
@@ -45,7 +46,7 @@ export const LogInQuestionnaire: React.FC = () => {
   };
 
   const validEmail = (email: string) => {
-    return EMAIL_REGEX.test(email) || 'Incorrect email';
+    return EMAIL_REGEX.test(email) || "Incorrect email";
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -65,6 +66,7 @@ export const LogInQuestionnaire: React.FC = () => {
           placeholder="your Email"
           onChange={handleChange}
           validate={validEmail}
+          setValue={setValue}
         />
 
         <QuestionnaireRow
@@ -75,6 +77,7 @@ export const LogInQuestionnaire: React.FC = () => {
           name="password"
           placeholder="your Password"
           onChange={handleChange}
+          setValue={setValue}
         />
 
         {errors.root && (
