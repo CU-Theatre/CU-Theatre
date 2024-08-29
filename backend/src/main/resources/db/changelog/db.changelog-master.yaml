@@ -11,3 +11,7 @@ databaseChangeLog:
       file: db/changelog/changes/05-insert-into-roles-users-users_roles.yaml
   - include:
       file: db/changelog/changes/06-create-events-table.yaml
+  - include:
+      file: db/changelog/changes/07-create-courses-table.yaml
+  - include:
+      file: db/changelog/changes/08-create-users-courses-table.yaml
