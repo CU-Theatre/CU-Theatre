@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import "./CourseButton.scss";
 import { useAppContext } from "../../../../AppContext";
-import { REQUIRED_COURSE } from "../../../../utils/globalVariables";
+import { KEY_TOKEN, REQUIRED_COURSE } from "../../../../utils/globalVariables";
 import { CourseType } from "../../../../types/CourseType";
 
 type Props = {
