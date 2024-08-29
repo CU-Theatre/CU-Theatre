@@ -3,7 +3,9 @@ import {
   FieldErrors,
   FieldValues,
   Path,
+  PathValue,
   UseFormRegister,
+  UseFormSetValue,
 } from "react-hook-form";
 import "./QuestionnaireRow.scss";
 import React from "react";
@@ -19,6 +21,7 @@ type Props<T> = {
   min?: number;
   max?: number;
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  setValue: UseFormSetValue<T & FieldValues>;
 };
 
 type State = {
@@ -49,6 +52,7 @@ export class QuestionnaireRow<T> extends React.Component<Props<T>, State> {
       min,
       max,
       onChange = () => {},
+      setValue,
     } = this.props;
 
     const minValid = min
@@ -79,7 +83,16 @@ export class QuestionnaireRow<T> extends React.Component<Props<T>, State> {
             minLength: minValid,
             maxLength: maxValid,
           })}
-          onChange={onChange}
+          onChange={(e) => {
+            setValue(
+              name,
+              e.target.value as PathValue<
+                T & FieldValues,
+                Path<T & FieldValues>
+              >
+            );
+            onChange(e);
+          }}
         />
 
         {type === "password" && (

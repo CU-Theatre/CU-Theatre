@@ -2,7 +2,6 @@ import React from "react";
 import { QuestionnaireRow } from "../questionnaireRow";
 import { SubmitHandler, useForm } from "react-hook-form";
 import {
-  EMAIL_REGEX,
   KEY_TOKEN,
   PHONE_REGEX,
 } from "../../../utils/globalVariables";
@@ -21,6 +20,7 @@ export const SignUpQuestionnaire: React.FC = () => {
     handleSubmit,
     formState: { errors },
     setError,
+    setValue,
   } = useForm<SignUpData>();
   const [, setToken] = useLocalStorage(KEY_TOKEN, "");
   const navigate = useNavigate();
@@ -30,7 +30,7 @@ export const SignUpQuestionnaire: React.FC = () => {
   const onSubmit: SubmitHandler<SignUpData> = (data) => {
     signUp(data)
       .then(() => {
-        console.log(data)
+        console.log(data);
         logIn({
           email: data.email,
           password: data.password,
@@ -92,6 +92,7 @@ export const SignUpQuestionnaire: React.FC = () => {
           errors={errors}
           name="firstName"
           placeholder="your name"
+          setValue={setValue}
         />
         <QuestionnaireRow
           title="Last name"
@@ -100,6 +101,7 @@ export const SignUpQuestionnaire: React.FC = () => {
           errors={errors}
           name="lastName"
           placeholder="your last name"
+          setValue={setValue}
         />
         <QuestionnaireRow
           title="Password"
@@ -110,6 +112,7 @@ export const SignUpQuestionnaire: React.FC = () => {
           placeholder="password"
           min={8}
           max={35}
+          setValue={setValue}
         />
         <QuestionnaireRow
           title="repeat Password"
@@ -121,6 +124,7 @@ export const SignUpQuestionnaire: React.FC = () => {
           validate={validPassword}
           min={8}
           max={35}
+          setValue={setValue}
         />
         <QuestionnaireRow
           title="Phone number"
@@ -130,6 +134,7 @@ export const SignUpQuestionnaire: React.FC = () => {
           name="phoneNumber"
           placeholder="your phone number"
           validate={validPhone}
+          setValue={setValue}
         />
         <QuestionnaireRow
           title="email"
@@ -139,6 +144,7 @@ export const SignUpQuestionnaire: React.FC = () => {
           name="email"
           placeholder="your Email"
           validate={validEmail}
+          setValue={setValue}
         />
 
         {errors.root && (
