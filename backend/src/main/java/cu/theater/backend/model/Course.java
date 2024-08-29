@@ -1,5 +1,7 @@
 package cu.theater.backend.model;
 
+import static org.hibernate.type.SqlTypes.TINYINT;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -22,8 +24,6 @@ import lombok.Setter;
 import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.Where;
-
-import static org.hibernate.type.SqlTypes.TINYINT;
 
 @Entity
 @Getter
