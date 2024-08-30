@@ -8,3 +8,4 @@ export const PHONE_REGEX =
 export const REQUIRED_COURSE = "drama course";
 export const KEY_TOKEN = "CU-Theater-token";
 export const DELAY_SWIPER_AUTOPLAY  = 3000;
+export const REQUIRED_MESSAGE_ERR = "Required field";

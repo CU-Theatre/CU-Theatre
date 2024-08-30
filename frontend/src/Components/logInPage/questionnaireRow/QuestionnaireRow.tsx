@@ -9,6 +9,7 @@ import {
 } from "react-hook-form";
 import "./QuestionnaireRow.scss";
 import React from "react";
+import { REQUIRED_MESSAGE_ERR } from "../../../utils/globalVariables";
 
 type Props<T> = {
   title: string;
@@ -78,7 +79,7 @@ export class QuestionnaireRow<T> extends React.Component<Props<T>, State> {
           })}
           placeholder={placeholder}
           {...register(name, {
-            required: "Required field",
+            required: REQUIRED_MESSAGE_ERR,
             validate,
             minLength: minValid,
             maxLength: maxValid,
