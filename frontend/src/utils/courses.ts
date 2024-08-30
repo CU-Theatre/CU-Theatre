@@ -78,7 +78,7 @@ export const dramaCourse: CourseType = {
       ],
     },
     {
-      roadmapId: 8,
+      roadmapId: '8-9',
       roadmapTitle: 'Silent Acting and Physical Theatre',
       listStyle: true,
       roadmapText: [
@@ -86,7 +86,7 @@ export const dramaCourse: CourseType = {
       ],
     },
     {
-      roadmapId: 9,
+      roadmapId: 10,
       roadmapTitle: 'Etude Preparation and Exam Readiness',
       listStyle: true,
       roadmapText: [
@@ -94,7 +94,7 @@ export const dramaCourse: CourseType = {
       ],
     },
     {
-      roadmapId: 10,
+      roadmapId: 11,
       roadmapTitle: 'Rehearsal and Final Preparations',
       listStyle: true,
       roadmapText: [
@@ -103,7 +103,7 @@ export const dramaCourse: CourseType = {
       ],
     },
     {
-      roadmapId: 11,
+      roadmapId: 12,
       roadmapTitle: 'Performance and Certification ',
       listStyle: true,
       showtime: true,
