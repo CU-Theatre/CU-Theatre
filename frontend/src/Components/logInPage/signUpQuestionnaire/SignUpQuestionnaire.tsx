@@ -4,6 +4,7 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import {
   KEY_TOKEN,
   PHONE_REGEX,
+  REQUIRED_MESSAGE_ERR,
 } from "../../../utils/globalVariables";
 import { logIn, signUp } from "../../../api/authApi";
 import { useLocalStorage } from "../../../hooks/useLocalStorage";
@@ -21,6 +22,7 @@ export const SignUpQuestionnaire: React.FC = () => {
     formState: { errors },
     setError,
     setValue,
+    reset,
   } = useForm<SignUpData>();
   const [, setToken] = useLocalStorage(KEY_TOKEN, "");
   const navigate = useNavigate();
@@ -28,7 +30,56 @@ export const SignUpQuestionnaire: React.FC = () => {
   const { setIsLoginned } = useAppContext();
 
   const onSubmit: SubmitHandler<SignUpData> = (data) => {
-    signUp(data)
+    const trimmedData = { ...data };
+
+    trimmedData.email = data.email.trim();
+    trimmedData.password = data.password.trim();
+    trimmedData.repeatPassword = data.repeatPassword.trim();
+    trimmedData.firstName = data.firstName.trim();
+    trimmedData.lastName = data.lastName.trim();
+    trimmedData.phoneNumber = data.phoneNumber.trim();
+
+    let hasEmpty = false;
+
+    if (trimmedData.email.length === 0) {
+      reset(trimmedData);
+      setError("email", { message: REQUIRED_MESSAGE_ERR });
+      hasEmpty = true;
+    }
+
+    if (trimmedData.password.length === 0) {
+      reset(trimmedData);
+      setError("password", { message: REQUIRED_MESSAGE_ERR });
+      hasEmpty = true;
+    }
+    if (trimmedData.repeatPassword.length === 0) {
+      reset(trimmedData);
+      setError("repeatPassword", { message: REQUIRED_MESSAGE_ERR });
+      hasEmpty = true;
+    }
+
+    if (trimmedData.firstName.length === 0) {
+      reset(trimmedData);
+      setError("firstName", { message: REQUIRED_MESSAGE_ERR });
+      hasEmpty = true;
+    }
+    if (trimmedData.lastName.length === 0) {
+      reset(trimmedData);
+      setError("lastName", { message: REQUIRED_MESSAGE_ERR });
+      hasEmpty = true;
+    }
+
+    if (trimmedData.phoneNumber.length === 0) {
+      reset(trimmedData);
+      setError("phoneNumber", { message: REQUIRED_MESSAGE_ERR });
+      hasEmpty = true;
+    }
+
+    if (hasEmpty) {
+      return;
+    }
+
+    signUp(trimmedData)
       .then(() => {
         console.log(data);
         logIn({

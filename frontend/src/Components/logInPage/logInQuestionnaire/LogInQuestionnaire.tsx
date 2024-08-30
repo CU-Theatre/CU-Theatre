@@ -1,7 +1,10 @@
 import React from "react";
 import "./LogInQuestionnaire.scss";
-import { SubmitHandler, useForm } from "react-hook-form";
-import { EMAIL_REGEX, KEY_TOKEN } from "../../../utils/globalVariables";
+import {
+  SubmitHandler,
+  useForm,
+} from "react-hook-form";
+import { EMAIL_REGEX, KEY_TOKEN, REQUIRED_MESSAGE_ERR } from "../../../utils/globalVariables";
 import { logIn } from "../../../api/authApi";
 import { LoginData } from "../../../types/LogInTypes";
 import { useAppContext } from "../../../AppContext";
@@ -9,6 +12,7 @@ import { useLocalStorage } from "../../../hooks/useLocalStorage";
 import { useNavigateToPreviousOrHomePage } from "../../../hooks/useNavigateToPreviousOrHomePage";
 import { FetchErrorMessage } from "../../../types/FetchErrorMessage";
 import { QuestionnaireRow } from "../questionnaireRow";
+
 
 export const LogInQuestionnaire: React.FC = () => {
   const {
@@ -18,13 +22,37 @@ export const LogInQuestionnaire: React.FC = () => {
     setError,
     clearErrors,
     setValue,
+    reset,
   } = useForm<LoginData>();
   const { setIsLoginned } = useAppContext();
   const [, setToken] = useLocalStorage(KEY_TOKEN, "");
   const navigate = useNavigateToPreviousOrHomePage();
 
   const onSubmit: SubmitHandler<LoginData> = (data) => {
-    logIn(data)
+    const trimmedData = { ...data };
+
+    trimmedData.email = data.email.trim(); 
+    trimmedData.password = data.password.trim(); 
+
+    let hasEmpty = false;
+
+    if (trimmedData.email.length === 0) {
+      reset(trimmedData);
+      setError("email", { message: REQUIRED_MESSAGE_ERR });
+      hasEmpty = true;
+    }
+
+    if (trimmedData.password.length === 0) {
+      reset(trimmedData);
+      setError("password", { message: REQUIRED_MESSAGE_ERR });
+      hasEmpty = true;
+    }
+
+    if (hasEmpty) {
+      return;
+    }
+
+    logIn(trimmedData)
       .then((response) => {
         setIsLoginned(true);
 
