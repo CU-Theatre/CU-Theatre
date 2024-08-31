@@ -1,0 +1,45 @@
+@import '../../../styles/keyframes';
+@import '../../../styles/mixins';
+@import '../../../styles/variables';
+
+
+.dropdown {
+  &__button {
+    background-color: black;
+    color: $white;
+    padding: 10px 20px;
+    border-radius: 10px;
+    transition: background-color 0.3s;
+    width: 100%;
+
+    &:hover {
+      background-color: #4a4a4a;
+    }
+  }
+
+  &__menu {
+    background-color: $white;
+    border-radius: 10px;
+    color: black;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    height: 0;
+
+    &--active {
+      height: fit-content;
+      padding: 10px;
+    }
+  }
+
+  &__item {
+    padding: 5px;
+    border-top: 1px solid #cbc9c9;
+    border-bottom: 1px solid #cbc9c9;
+    cursor: pointer;
+
+    &:hover {
+      background-color: #cbc9c9;
+    }
+  }
+}
