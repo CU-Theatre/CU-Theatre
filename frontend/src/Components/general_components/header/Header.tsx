@@ -34,10 +34,17 @@ export const Header = () => {
               <a
                 href="https://www.instagram.com/cu.theater?igsh=MWpyNGY2ejF6bGhmMQ=="
                 className="header__icon header__icon--inst"
+                target="_blank"
+                rel="noreferrer"
               ></a>
             </li>
             <li className="header__item">
-              <a href="#" className="header__icon header__icon--facebook"></a>
+              <a
+                href="#"
+                className="header__icon header__icon--facebook"
+                target="_blank"
+                rel="noreferrer"
+              ></a>
             </li>
             {isLoginned && (
               <li className="header__item">
