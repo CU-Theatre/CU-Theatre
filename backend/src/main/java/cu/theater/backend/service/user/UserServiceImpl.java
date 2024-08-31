@@ -70,9 +70,10 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserResponseDto updateUserDetails(UpdateUserDto updateUserDto) {
-        User user = userRepository.findByEmail(updateUserDto.email()).orElseThrow(() ->
-                new EntityNotFoundException("Can't find user by id=" + updateUserDto.email()));
+    public UserResponseDto updateUserDetails(Long userId, UpdateUserDto updateUserDto) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(() ->
+                        new EntityNotFoundException("Can't find user with ID: " + userId));
         user.setFirstName(updateUserDto.firstName());
         user.setEmail(updateUserDto.email());
         user.setLastName(updateUserDto.lastName());
