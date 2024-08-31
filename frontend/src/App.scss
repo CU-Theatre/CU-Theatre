@@ -139,3 +139,19 @@ input {
     }
   }
 }
+
+.rbc-toolbar {
+  gap: 15px;
+}
+
+.rbc-btn-group {
+  font-size: 12px;
+}
+
+.rbc-btn-group button:nth-child(1),
+.rbc-btn-group button:nth-child(2),
+.rbc-btn-group button:nth-child(3),
+.rbc-btn-group button:nth-child(4) {
+  font-size: 12px;
+  padding: 8px 4px;
+}

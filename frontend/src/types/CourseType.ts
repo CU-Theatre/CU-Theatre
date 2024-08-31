@@ -1,3 +1,4 @@
+import { CourseEvent } from "./CourseEvent";
 import { RoadmapItem } from "./Rodmap";
 
 export interface CourseType {
@@ -9,4 +10,5 @@ export interface CourseType {
   courseRoadmap: RoadmapItem[];
   courseBackground: string;
   courseDescr: string;
+  courseTime : CourseEvent[];
 }
