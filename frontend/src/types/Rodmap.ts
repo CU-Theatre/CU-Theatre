@@ -1,5 +1,5 @@
 export interface RoadmapItem {
-  roadmapId: number;
+  roadmapId: number | string;
   roadmapTitle: string;
   roadmapText?: string | string[];
   listStyle?: boolean;
