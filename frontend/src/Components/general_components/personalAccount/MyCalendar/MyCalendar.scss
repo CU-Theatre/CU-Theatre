@@ -1,0 +1,38 @@
+@import 'react-big-calendar/lib/sass/styles';
+@import '../../../../styles/keyframes';
+@import '../../../../styles/mixins';
+@import '../../../../styles/variables';
+
+.account-calendar {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+
+  &__wrapper {
+    background-color:$white;
+    padding: 40px 0 0;
+    border-top-right-radius: 28px;
+    border-top-left-radius: 28px;
+
+    @include on-tablet {
+      padding: 40px 20px 0;
+    }
+  }
+
+  &__button {
+    background-color: rgb(119, 17, 57);
+    color: $white;
+    padding: 10px 20px;
+    border-radius: 20px;
+    max-width: fit-content;
+    align-self: flex-end;
+    transition: all 0.3s;
+
+    &:hover {
+      background-color: rgb(81 34 53);
+      color: #c9c1c1;
+    }
+  }
+
+}
