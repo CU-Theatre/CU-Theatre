@@ -1,0 +1,91 @@
+@import '../../../../../styles/keyframes';
+@import '../../../../../styles/variables';
+@import '../../../../../styles/mixins';
+
+.calendar-modal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: rgb(119, 17, 57);
+  color: $white;
+  z-index: 50;
+  transition: transform 0.3s;
+  border-radius: 20px;
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+
+  &__form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    padding: 20px;
+
+    @include on-tablet {
+      gap: 30px;
+    }
+  }
+
+  &__label {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+
+    @include on-tablet {
+      flex-direction: row;
+      align-items: center;
+    }
+  }
+
+  &__input {
+    border-radius: 8px;
+    padding: 5px 10px;
+
+
+    &:focus {
+      outline: none;
+    }
+  }
+
+  &__button {
+    background-color: $white;
+    border-radius: 28px;
+    padding: 10px 20px;
+    border: 1px solid transparent;
+    transition: background-color 0.3s, border 0.3s, color 0.3s;
+
+    &:hover {
+      background-color: black;
+      border: 1px solid $white;
+      color: $white;
+    }
+
+    &:active {
+      opacity: 0.8;
+    }
+  }
+
+  &__error {
+    text-align: center;
+    text-transform: uppercase;
+    color: #ff0000;
+  }
+
+  &__close {
+    display: block;
+    // filter: grayscale(0) brightness(1);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain;
+    transition: all  0.3s;
+    width: 16px;
+    height: 16px;
+    background-image: url('../../../burgerMenu/img/IconClose.svg');
+
+    &:hover {
+      transform: scale(1.05);
+      // filter: grayscale(1) brightness(0.5);
+    }
+  }
+}

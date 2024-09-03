@@ -14,6 +14,7 @@ import { FetchErrorMessage } from "../../../types/FetchErrorMessage";
 import { validEmail } from "../../../utils/validEmail";
 import { CabinetFormInput } from "../../../types/CabinetFormInput";
 import classNames from "classnames";
+import { MyCalendar } from "./MyCalendar";
 
 export const YourAccount: React.FC = () => {
   const { userState, setUserState, setIsLoginned } = useAppContext();
@@ -227,6 +228,10 @@ export const YourAccount: React.FC = () => {
             </div>
           </div>
         )}
+        <div className="cabinet__calendar">
+          <h3 className="cabinet__main-title">Schedule</h3>
+          <MyCalendar />
+        </div>
       </div>
     </section>
   );
