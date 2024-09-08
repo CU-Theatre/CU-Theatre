@@ -8,11 +8,15 @@ import java.util.List;
 
 public interface CourseService {
 
-    CourseDto addCourse(Long userId, CreateCourseRequestDto createCourseRequestDto);
+    CourseDto createCourse(CreateCourseRequestDto createCourseRequestDto, Long userId);
+
+    CourseDto addUserToCourse(Long courseId, Long userId);
 
     CourseDto updateCourseStatus(UpdateCourseDto updateCourseStatusDto, Long courseId);
 
-    List<CourseDto> findAllCourses(Long userId);
+    List<CourseDto> findAllCoursesByUserId(Long userId);
+
+    List<CourseDto> findAllCourses();
 
     CourseDto findCourseById(Long courseId);
 
