@@ -1,11 +1,10 @@
-@import '../../../styles/keyframes';
-@import '../../../styles/mixins';
-@import '../../../styles/variables';
-
+@import "../../../styles/keyframes";
+@import "../../../styles/mixins";
+@import "../../../styles/variables";
 
 .course-window {
   position: fixed;
-  background: linear-gradient(rgb(119, 17, 57),rgb(0, 0, 0) 50.382%);
+  background: linear-gradient(rgb(119, 17, 57), rgb(0, 0, 0) 50.382%);
   top: 0;
   height: 100vh;
   left: 0;
@@ -31,7 +30,7 @@
       row-gap: 70px;
     }
 
-    @include on-desktop{
+    @include on-desktop {
       row-gap: 160px;
     }
   }
@@ -94,8 +93,6 @@
     margin-left: 18px;
   }
 
-
-  
   &__quotes {
     height: $qoute-heigh;
     margin: 0;
@@ -142,10 +139,10 @@
     background-position: center;
     background-repeat: no-repeat;
     background-size: contain;
-    transition: all  0.3s;
+    transition: all 0.3s;
     width: 16px;
     height: 16px;
-    background-image: url('../burgerMenu/img/IconClose.svg');
+    background-image: url("../burgerMenu/img/IconClose.svg");
 
     &:hover {
       filter: grayscale(1) brightness(0.5);
@@ -155,6 +152,24 @@
       width: 18px;
       height: 18px;
     }
+  }
+
+  &__edit-button {
+    position: absolute;
+    right: 0;
+
+    box-sizing: content-box;
+    width: 20px;
+    height: 20px;
+    background-image: url(../../img/icons/edit.svg);
+    background-color: $white;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    border: 5px solid $white;
+    border-radius: 5px;
+
+    font-size: 0;
   }
 
   &__headline {
@@ -170,7 +185,7 @@
       font-size: 32px;
     }
 
-    @include on-desktop{
+    @include on-desktop {
       font-size: 36px;
     }
   }
@@ -283,5 +298,4 @@
       border-bottom-right-radius: 28px;
     }
   }
-
 }

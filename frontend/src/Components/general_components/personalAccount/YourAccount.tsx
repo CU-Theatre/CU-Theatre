@@ -163,6 +163,18 @@ export const YourAccount: React.FC = () => {
                 disabled={isLoading}
               />
             </div>
+            <div className="cabinet__user-item">
+              <label className="cabinet__user-field" htmlFor="userEmail">
+                Phone number
+              </label>
+              <input
+                {...register("phoneNumber", { required: true,  })}
+                id="userEmail"
+                className="cabinet__user-name"
+                type="tel"
+                disabled={isLoading}
+              />
+            </div>
 
             <button
               type="submit"

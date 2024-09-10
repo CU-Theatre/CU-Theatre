@@ -1,8 +1,9 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "./ContactForm.scss";
 import { SubmitHandler, useForm } from "react-hook-form";
 import classNames from "classnames";
 import { EMAIL_REGEX } from "../../../utils/globalVariables";
+import { useAppContext } from "../../../AppContext";
 
 type ContactFormType = {
   name: string;
@@ -16,7 +17,9 @@ export const ContactForm: React.FC = () => {
     register,
     handleSubmit,
     formState: { errors },
+    reset,
   } = useForm<ContactFormType>();
+  const { userState } = useAppContext();
 
   const onSubmit: SubmitHandler<ContactFormType> = (data) => {
     // TODO add submit logic
@@ -25,6 +28,16 @@ export const ContactForm: React.FC = () => {
 
     console.log(jsonData);
   };
+
+  useEffect(() => {
+    const data = {
+      name: userState?.firstName || "",
+      lastName: userState?.lastName || "",
+      email: userState?.email || "",
+    };
+
+    reset(data);
+  }, []);
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="contact-form">
