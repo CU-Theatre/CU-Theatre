@@ -1,0 +1,33 @@
+@import "../../../styles/variables";
+@import "../../../styles/mixins";
+
+.creation-course {
+  display: grid;
+  gap: 30px;
+
+  &__input-cell {
+    display: grid;
+    grid-template-columns: 1fr 6fr;
+    gap: 10px;
+    align-items: center;
+  }
+
+  &__label {
+    color: $white;
+    font-size: 12px;
+
+    @include on-tablet {
+      font-size: 19px;
+
+    }
+  }
+
+  &__input {
+    padding: 10px;
+    border-radius: 4px;
+
+    &--textarea {
+      height: 150px;
+    }
+  }
+}

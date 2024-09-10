@@ -8,4 +8,5 @@ export const user: User = {
   phoneNumber: '',
   dramaCourseFinisher: false,
   currentCourse: [dramaCourse],
+  role: 'admin'
 };
