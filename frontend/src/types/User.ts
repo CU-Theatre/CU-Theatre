@@ -7,4 +7,5 @@ export interface User {
   phoneNumber: string;
   dramaCourseFinisher: boolean;
   currentCourse: CourseType[];
+  role: "admin" | "customer";
 }

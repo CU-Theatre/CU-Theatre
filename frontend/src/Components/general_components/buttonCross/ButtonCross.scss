@@ -1,0 +1,27 @@
+@import "../../../styles/variables";
+@import "../../../styles/mixins";
+
+.button-cross {
+  all: unset;
+  cursor: pointer;
+  font-size: 0;
+  grid-column: 1 / 2;
+  display: block;
+  filter: grayscale(0) brightness(1);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+  transition: all 0.3s;
+  width: 16px;
+  height: 16px;
+  background-image: url("../burgerMenu/img/IconClose.svg");
+
+  &:hover {
+    filter: grayscale(1) brightness(0.5);
+  }
+
+  @include on-tablet {
+    width: 18px;
+    height: 18px;
+  }
+}

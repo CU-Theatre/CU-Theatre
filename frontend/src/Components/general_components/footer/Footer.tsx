@@ -20,7 +20,7 @@ export const Footer: React.FC = () => {
 
           <div className='footer__hours'>
             <h3 className='footer__title'>Hours</h3>
-            <ul className='footer__list'>{/* add work hours */}</ul>
+            <ul className='footer__list'>{/*TODO add work hours */}</ul>
           </div>
 
           <div className='footer__contacts'>
