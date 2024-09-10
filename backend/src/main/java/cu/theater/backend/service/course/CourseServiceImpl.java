@@ -4,12 +4,17 @@ import cu.theater.backend.dto.course.CourseDto;
 import cu.theater.backend.dto.course.CreateCourseRequestDto;
 import cu.theater.backend.dto.course.DeleteDto;
 import cu.theater.backend.dto.course.UpdateCourseDto;
+import cu.theater.backend.dto.roadmap.RoadMapDto;
 import cu.theater.backend.mapper.CourseMapper;
+import cu.theater.backend.mapper.UserCoursesMapper;
 import cu.theater.backend.model.Course;
 import cu.theater.backend.model.Status;
+import cu.theater.backend.model.UserCourses;
 import cu.theater.backend.repository.CourseRepository;
 import cu.theater.backend.repository.UserRepository;
-import java.time.LocalDateTime;
+import cu.theater.backend.repository.UsersCoursesRepository;
+import cu.theater.backend.service.roadmap.RoadMapService;
+import java.util.HashSet;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -21,13 +26,19 @@ public class CourseServiceImpl implements CourseService {
     private final CourseRepository courseRepository;
     private final UserRepository userRepository;
     private final CourseMapper courseMapper;
+    private final UserCoursesMapper userCoursesMapper;
+    private final UsersCoursesRepository usersCoursesRepository;
+    private final RoadMapService roadMapService;
 
-    @Transactional
     @Override
-    public CourseDto addCourse(Long userId,CreateCourseRequestDto createCourseRequestDto) {
-        Course course = createCourse(userId, createCourseRequestDto);
-        courseRepository.save(course);
-        return courseMapper.toDto(course);
+    public CourseDto addUserToCourse(Long courseId, Long userId) {
+        UserCourses userCourses = userCoursesMapper.toModel(courseId, userId);
+        userCourses.setCourse(courseRepository.findById(courseId)
+                .orElseThrow(() -> new IllegalStateException("Course not found")));
+        userCourses.setUser(userRepository.findById(userId)
+                .orElseThrow(() -> new IllegalStateException("User not found")));
+        usersCoursesRepository.save(userCourses);
+        return courseMapper.toDto(userCourses.getCourse());
     }
 
     @Override
@@ -43,15 +54,33 @@ public class CourseServiceImpl implements CourseService {
     }
 
     @Override
-    public List<CourseDto> findAllCourses(Long userId) {
-        return null;
+    public List<CourseDto> findAllCoursesByUserId(Long userId) {
+        return usersCoursesRepository.findAllByUsersId(userId)
+                .stream()
+                .map(courseMapper::toDto)
+                .toList();
+    }
+
+    @Override
+    public List<CourseDto> findAllCourses() {
+        List<CourseDto> list = courseRepository.findAll()
+                .stream()
+                .map(courseMapper::toDto)
+                .toList();
+        list.forEach(courseDto -> addRoadmapAndUsers(courseDto.getId(), courseDto));
+        list.forEach(courseDto -> courseDto.setUsersId(
+                new HashSet<>(usersCoursesRepository
+                        .findUserIdsByCourseId(courseDto.getId()))));
+        return list;
     }
 
     @Override
     public CourseDto findCourseById(Long courseId) {
-        return courseRepository.findById(courseId)
+        CourseDto dto = courseRepository.findById(courseId)
                 .map(courseMapper::toDto)
                 .orElseThrow(() -> new IllegalStateException("Course not found"));
+        addRoadmapAndUsers(courseId, dto);
+        return dto;
     }
 
     @Override
@@ -60,14 +89,34 @@ public class CourseServiceImpl implements CourseService {
         return new DeleteDto(courseId);
     }
 
-    private Course createCourse(Long userId, CreateCourseRequestDto requestDto) {
+    @Transactional
+    @Override
+    public CourseDto createCourse(CreateCourseRequestDto createCourseRequestDto,
+                                  Long userId) {
+        Course course = createCourse(createCourseRequestDto);
+        courseRepository.save(course);
+        CourseDto dto = courseMapper.toDto(course);
+        List<RoadMapDto> allByCourseId = roadMapService.findAllByCourseId(course.getId());
+        dto.setRoadMaps(allByCourseId);
+        return dto;
+    }
+
+    private Course createCourse(CreateCourseRequestDto requestDto) {
         Course course = new Course();
-        course.setName(requestDto.name());
-        course.setDescription(requestDto.description());
+        course.setName(requestDto.getName());
+        course.setDescription(requestDto.getDescription());
         course.setStatus(Status.IN_PROGRESS);
-        course.setStartDate(LocalDateTime.now());
-        course.setImage(requestDto.image());
+        course.setStartDate(requestDto.getStartDate());
+        course.setFinishDate(requestDto.getFinishDate());
+        course.setPrice(requestDto.getPrice());
+        course.setImage(requestDto.getImage());
         return course;
+    }
+
+    private void addRoadmapAndUsers(Long courseId, CourseDto dto) {
+        List<RoadMapDto> allByCourseId = roadMapService.findAllByCourseId(courseId);
+        dto.setRoadMaps(allByCourseId);
+        dto.setUsersId(new HashSet<>(usersCoursesRepository.findUserIdsByCourseId(courseId)));
     }
 
 }

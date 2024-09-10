@@ -7,6 +7,13 @@ databaseChangeLog:
             tableName: users_courses
             columns:
               - column:
+                  name: id
+                  type: bigint
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
                   name: user_id
                   type: bigint
                   constraints:
@@ -22,3 +29,7 @@ databaseChangeLog:
                     nullable: false
                     foreignKeyName: fk_course
                     references: courses(id)
+        - addUniqueConstraint:
+            columnNames: user_id, course_id
+            constraintName: uq_user_course
+            tableName: users_courses
