@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import "./CoursesWindow.scss";
 import classNames from "classnames";
 import { useAppContext } from "../../../AppContext";
@@ -8,6 +8,9 @@ import { Autoplay } from "swiper/modules";
 import { WindowSwiper } from "../ModalWindowSwiper";
 import { CourseRoadmap } from "./courseRodmap";
 import { Footer } from "../footer";
+import { useTokenLocalStorage } from "../../../hooks/useLocalStorage";
+import { getCurrentUser } from "../../../api/userApi";
+import { CourseEditorModal } from "../сourseEditorModal";
 
 export const CoursesWindow: React.FC = () => {
   const courseFor = [
@@ -20,7 +23,40 @@ export const CoursesWindow: React.FC = () => {
     "breathe through expression.",
   ];
 
-  const { courseModal, courseInfo: course, setCourseModal } = useAppContext();
+  const {
+    courseModal,
+    courseInfo: course,
+    setCourseModal,
+    setUserState,
+    setIsLoginned,
+  } = useAppContext();
+
+  const [isAdmin, setIsAdmin] = useState(true);
+  const [isEditingCourse, setIsEditingCourse] = useState(false);
+  const [token] = useTokenLocalStorage();
+
+  useEffect(() => {
+    getCurrentUser(token)
+      .then((user) => {
+        if (user.role === "admin") {
+          setIsAdmin(true);
+        }
+        setUserState(user);
+        setIsLoginned(true);
+      })
+      .catch((err: Error) => {
+        setIsLoginned(false);
+        console.error(err);
+      });
+  }, []);
+
+  const editCourse = () => {
+    setIsEditingCourse(true);
+  };
+
+  const onCloseEditor = () => {
+    setIsEditingCourse(false);
+  };
 
   const onCLoseWindow = () => {
     setCourseModal(false);
@@ -45,7 +81,24 @@ export const CoursesWindow: React.FC = () => {
               className="course-window__close"
             ></button>
             <h2 className="course-window__title title">{course.courseName}</h2>
+
+            {isAdmin && (
+              <>
+                <button
+                  type="button"
+                  className="course-window__edit-button"
+                  onClick={editCourse}
+                >
+                  Edit
+                </button>
+                <CourseEditorModal
+                  isOpen={isEditingCourse}
+                  onClose={onCloseEditor}
+                />
+              </>
+            )}
           </div>
+
           <div className="course-window__image-for">
             <div className="course-window__for">
               <p className="course-window__subtitle">

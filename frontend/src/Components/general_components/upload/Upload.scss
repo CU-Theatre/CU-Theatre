@@ -1,0 +1,31 @@
+@import "../../../styles/variables";
+@import "../../../styles/mixins";
+
+.upload {
+  width: 150px;
+
+  &__label {
+    padding: 10px 20px;
+    width: 100%;
+
+    &--hidden {
+      display: none;
+    }
+  }
+
+  &__input {
+    font-size: 0;
+    width: 0;
+    height: 0;
+    z-index: -100;
+  }
+
+  &__loading {
+    display: flex;
+    gap: 10px;
+
+    width: 100%;
+    justify-content:space-between;
+    align-items: center;
+  }
+}
