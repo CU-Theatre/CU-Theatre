@@ -1,7 +1,7 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { ShowType } from "../../../types/ShowType";
 import { SignButton } from "../signButton";
-import './ShowsWindow.scss';
+import "./ShowsWindow.scss";
 import { useAppContext } from "../../../AppContext";
 import classNames from "classnames";
 
@@ -16,11 +16,21 @@ export const ShowsWindow: React.FC<Props> = ({ show }) => {
     setModalIsOpen(false);
   };
 
+  useEffect(() => {
+    return () => {
+      setModalIsOpen(false);
+    };
+  }, []);
+
   return (
     <div className={classNames("show", { "modal-open": !modalsOpen })}>
       <div className="show__wrapper">
         <div className="show__top">
-          <button onClick={onCloseMenu} type="button" className="show__close"></button>
+          <button
+            onClick={onCloseMenu}
+            type="button"
+            className="show__close"
+          ></button>
           <h2 className="show__title title">{show.showName}</h2>
         </div>
         <div className="show__main">
@@ -30,7 +40,7 @@ export const ShowsWindow: React.FC<Props> = ({ show }) => {
             <div className="show__info">
               <p className="show__date">Time- {show.showDate}</p>
               <p className="show__price">Price- {show.showPrice}</p>
-              <SignButton title="Book a place"/>
+              <SignButton title="Book a place" />
             </div>
           </div>
         </div>
