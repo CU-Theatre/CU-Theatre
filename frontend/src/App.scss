@@ -100,6 +100,10 @@ input {
   transform: translateX(-100%);
 }
 
+.event-open {
+  transform: translateX(100%);
+}
+
 .modal-open {
   transform: scale(0);
 }
@@ -148,10 +152,41 @@ input {
   font-size: 12px;
 }
 
+.rbc-active {
+  background-color: rgb(119, 17, 57)!important;
+  color: $white!important;
+}
+
+.rbc-header span {
+  color:$white;
+}
+
+.rbc-event,.rbc-background-event {
+  background-color: $white!important;
+  color: black!important;
+}
+
 .rbc-btn-group button:nth-child(1),
 .rbc-btn-group button:nth-child(2),
 .rbc-btn-group button:nth-child(3),
 .rbc-btn-group button:nth-child(4) {
+  color: $white;
   font-size: 12px;
   padding: 8px 4px;
+}
+
+.rbc-off-range-bg {
+  background: #292929!important;
+}
+
+.rbc-label {
+  color: $white;
+}
+
+.rbc-today {
+  background-color: rgb(119, 17, 57)!important;
+}
+
+.rbc-date-cell button {
+  color: $white;
 }
