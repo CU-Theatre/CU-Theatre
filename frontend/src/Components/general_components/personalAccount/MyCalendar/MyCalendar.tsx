@@ -10,7 +10,9 @@ import { allCourses } from '../../../../utils/courses';
 import { useMediaQuery } from 'react-responsive';
 import { TABLE_MIN_WIDTH } from '../../../../utils/globalVariables';
 import { CalendarModal } from './CalendarModal';
-import { useState } from 'react';
+import React, { useState } from 'react';
+import { CourseEvent } from '../../../../types/CourseEvent';
+import { useAppContext } from '../../../../AppContext';
 
 const locales = {
   'en-US': enUS,
@@ -24,8 +26,13 @@ const localizer = dateFnsLocalizer({
   locales,
 })
 
-export const MyCalendar = () => {
+interface Props {
+  setCurrentEvent: React.Dispatch<React.SetStateAction<CourseEvent | null>>;
+}
+
+export const MyCalendar: React.FC<Props> = ({ setCurrentEvent }) => {
   const [dramaCourse] = allCourses;
+  const { setEventInfoIsOpen } = useAppContext();
   const [courses, setCourses] = useState(dramaCourse.courseTime);
   const isMobile = useMediaQuery({ query: `(max-width: ${TABLE_MIN_WIDTH}px)` });
   const [modalIsOpen, setModalIsOpen] = useState(false);
@@ -50,6 +57,11 @@ export const MyCalendar = () => {
   });
 
   const { calendarSize} = useCalendarSize();
+  
+  const handleEventClick = (event: CourseEvent) => {
+    setEventInfoIsOpen(false);
+    setCurrentEvent(event)
+  };
 
   return (
     <div className='account-calendar'>
@@ -60,9 +72,7 @@ export const MyCalendar = () => {
       >
         Create new event
       </button>
-      {modalIsOpen && (
-        <CalendarModal setCourses={setCourses} setModalIsOpen={setModalIsOpen}/>
-      )}
+        <CalendarModal setCourses={setCourses} setModalIsOpen={setModalIsOpen} modalIsOpen={modalIsOpen}/>
       <div className='account-calendar__wrapper'>
         <Calendar
           localizer={localizer}
@@ -70,6 +80,7 @@ export const MyCalendar = () => {
           defaultView={isMobile ? 'day' : 'month'}
           views={isMobile ? ['day'] : ['month', 'week', 'day']}
           style={calendarSize}
+          onSelectEvent={handleEventClick}
         />
       </div>
     </div>
