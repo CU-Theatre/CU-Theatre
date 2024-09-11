@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { KEY_TOKEN } from "../utils/globalVariables";
 
 export function useLocalStorage<T>(
   key: string,
@@ -24,4 +25,8 @@ export function useLocalStorage<T>(
   };
 
   return [stateData, save];
+}
+
+export const useTokenLocalStorage = () => {
+  return useLocalStorage(KEY_TOKEN, '');
 }
