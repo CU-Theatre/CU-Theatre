@@ -1,0 +1,14 @@
+@import "../../../styles/variables";
+@import "../../../styles/mixins";
+
+
+.button-edd {
+  grid-column: 1 / -1;
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0.4);
+  margin-bottom: 10px;
+  border-radius: 10px;
+
+  color: $white;
+  font-size: 20px;
+}
