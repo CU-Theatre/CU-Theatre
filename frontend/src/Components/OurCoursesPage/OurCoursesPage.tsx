@@ -7,6 +7,7 @@ import { getCurrentUser } from "../../api/userApi";
 import { useTokenLocalStorage } from "../../hooks/useLocalStorage";
 import { useAppContext } from "../../AppContext";
 import { CourseEditorModal } from "../general_components/сourseEditorModal";
+import { ButtonEdd } from "../general_components/buttonEdd";
 
 export const OurCoursesPage: React.FC = () => {
   const [isAdmin, setIsAdmin] = useState(true);
@@ -35,7 +36,7 @@ export const OurCoursesPage: React.FC = () => {
 
   const onClose = () => {
     setIsCreatingCourse(false);
-  }
+  };
 
   return (
     <main className="our-courses-page">
@@ -44,14 +45,13 @@ export const OurCoursesPage: React.FC = () => {
 
         {isAdmin && (
           <>
-            <button
-              type="button"
-              className="our-courses-page__button"
-              onClick={addNewCourse}
-            >
-              +
-            </button>
-            <CourseEditorModal isOpen={isCreatingCourse} isCreating onClose={onClose} />
+            <ButtonEdd onClick={addNewCourse} />
+
+            <CourseEditorModal
+              isOpen={isCreatingCourse}
+              isCreating
+              onClose={onClose}
+            />
           </>
         )}
 

@@ -12,7 +12,6 @@ export const dramaCourse: CourseType = {
   courseDuration: "21.08 - 12.11",
   courseImg: DramaImg,
   courseBackground: DramaBG,
-  courseLink: 'drama-course',
   coursePrice: '45$',
   courseRoadmap: [
     {
@@ -138,7 +137,6 @@ export const improCourse: CourseType = {
   courseDuration: "21.08 - 12.11",
   courseImg: ImproImg,
   courseBackground: ImproBG,
-  courseLink: 'impro-course',
   coursePrice: '45$',
   courseRoadmap: [
     {
@@ -200,7 +198,6 @@ export const playbackCourse: CourseType = {
   courseDuration: "21.08 - 12.11",
   courseImg: PlaybackImg,
   courseBackground: PlaybackBG,
-  courseLink: 'playback-course',
   coursePrice: '45$',
   courseRoadmap: [
     {
