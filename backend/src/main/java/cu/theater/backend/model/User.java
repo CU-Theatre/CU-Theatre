@@ -56,8 +56,15 @@ public class User implements UserDetails {
     private String phoneNumber;
 
     @JdbcTypeCode(TINYINT)
+    @Column(nullable = false, name = "drama_course_finished")
+    private boolean dramaCourseFinished = false;
+
+    @JdbcTypeCode(TINYINT)
     @Column(nullable = false)
     private boolean isDeleted = false;
+
+    @ManyToMany(mappedBy = "users", fetch = FetchType.EAGER)
+    private Set<Course> courses = new HashSet<>();
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(

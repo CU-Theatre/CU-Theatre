@@ -2,6 +2,7 @@ package cu.theater.backend.model;
 
 import static org.hibernate.type.SqlTypes.TINYINT;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -13,9 +14,13 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -45,6 +50,13 @@ public class Course {
     private String image;
     @Column(nullable = false, name = "start_date")
     private LocalDateTime startDate;
+    @Column(nullable = false, name = "finish_date")
+    private LocalDateTime finishDate;
+    @Column(nullable = false, name = "price")
+    private BigDecimal price;
+
+    @OneToMany(mappedBy = "course", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<RoadMap> roadMaps = new ArrayList<>();
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(

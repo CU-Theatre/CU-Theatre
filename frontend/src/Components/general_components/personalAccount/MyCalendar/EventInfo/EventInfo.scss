@@ -1,0 +1,78 @@
+@import '../../../../../styles/keyframes';
+@import '../../../../../styles/mixins';
+@import '../../../../../styles/variables';
+
+.event-info {
+  background-color: black;
+  color: $white;
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 70;
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+  align-items: center;
+  padding: 20px;
+  transition: transform 0.3s;
+  overflow-y: scroll;
+
+  @include on-tablet {
+    width: 400px;
+    overflow: visible;
+  }
+
+  &__content,
+  &__prepare,
+  &__list {
+    display: flex;
+    flex-direction: column;
+  }
+
+  &__content {
+    align-items: center;
+    gap: 30px;
+  }
+
+  &__top {
+    display: flex;
+    position: relative;
+    width: 100%;
+    justify-content: center;
+  }
+
+  &__close {
+    display: block;
+    position: absolute;
+    right: 0;
+    justify-self: end;
+    filter: grayscale(0) brightness(1);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain;
+    transition: all  0.3s;
+    width: 16px;
+    height: 16px;
+    background-image: url('../../../burgerMenu/img/IconClose.svg');
+
+    &:hover {
+      transform: scale(1.05);
+      filter: grayscale(1) brightness(0.5);
+    }
+  }
+
+  &__prepare {
+    gap: 30px;
+    align-items: center;
+  }
+
+  &__list {
+    gap: 20px;
+    padding-left: 20px;
+  }
+
+  &__item {
+    list-style: disc;
+  }
+}

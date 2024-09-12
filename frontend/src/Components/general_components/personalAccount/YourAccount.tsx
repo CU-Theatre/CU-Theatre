@@ -15,11 +15,14 @@ import { validEmail } from "../../../utils/validEmail";
 import { CabinetFormInput } from "../../../types/CabinetFormInput";
 import classNames from "classnames";
 import { MyCalendar } from "./MyCalendar";
+import { CourseEvent } from "../../../types/CourseEvent";
+import { EventInfo } from "./MyCalendar/EventInfo";
 
 export const YourAccount: React.FC = () => {
-  const { userState, setUserState, setIsLoginned } = useAppContext();
+  const { userState, setUserState, setIsLoginned, eventInfoIsOpen } = useAppContext();
   const [isRootErrShown, setIsRootErrShown] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [currentEvent, setCurrentEvent] = useState<CourseEvent | null>(null);
 
   const navigate = useNavigate();
 
@@ -230,9 +233,10 @@ export const YourAccount: React.FC = () => {
         )}
         <div className="cabinet__calendar">
           <h3 className="cabinet__main-title">Schedule</h3>
-          <MyCalendar />
+          <MyCalendar setCurrentEvent={setCurrentEvent}/>
         </div>
       </div>
+        <EventInfo currentEvent={currentEvent}/>
     </section>
   );
 };
