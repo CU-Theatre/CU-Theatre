@@ -24,6 +24,8 @@ interface AppContextInterface {
   setCourseModal: React.Dispatch<React.SetStateAction<boolean>>;
   courseInfo: CourseType;
   setCourseInfo: React.Dispatch<React.SetStateAction<CourseType>>;
+  eventInfoIsOpen: boolean;
+  setEventInfoIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const AppContext = createContext<AppContextInterface | undefined>(undefined);
@@ -38,6 +40,7 @@ export const AppProvider: React.FC<React.PropsWithChildren<{}>> = ({
   const [userState, setUserState] = useState<User | null>(null);
   const [modalsOpen, setModalIsOpen] = useState(false);
   const [modalInfo, setModalInfo] = useState<ShowType>(liveShow);
+  const [eventInfoIsOpen, setEventInfoIsOpen] = useState(true);
 
   const [token, setToken] = useLocalStorage(KEY_TOKEN, "");
 
@@ -90,6 +93,8 @@ export const AppProvider: React.FC<React.PropsWithChildren<{}>> = ({
         courseModal,
         courseInfo,
         setCourseInfo,
+        eventInfoIsOpen,
+        setEventInfoIsOpen,
       }}
     >
       {children}

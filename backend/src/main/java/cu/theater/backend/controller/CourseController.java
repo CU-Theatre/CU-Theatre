@@ -9,6 +9,7 @@ import cu.theater.backend.service.course.CourseService;
 import io.swagger.v3.oas.annotations.Operation;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -27,21 +28,38 @@ import org.springframework.web.bind.annotation.RestController;
 public class CourseController {
     private final CourseService courseService;
 
-    @Operation(summary = "add course",
-            description = "Return course if course is added")
-    @PostMapping("/add")
-    CourseDto addCourse(Authentication authentication,
-                        @RequestBody CreateCourseRequestDto requestDto) {
+    @Operation(summary = "creates course",
+            description = "Creates course if course")
+    @PostMapping("/create")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    CourseDto createCourse(@RequestBody CreateCourseRequestDto requestDto,
+                           Authentication authentication) {
         User user = (User) authentication.getPrincipal();
-        return courseService.addCourse(user.getId(), requestDto);
+        return courseService.createCourse(requestDto, user.getId());
+    }
+
+    @Operation(summary = "add user to course",
+            description = "Adding user to a Specific course")
+    @PostMapping("/add/{courseId}")
+    CourseDto addUserToCourse(Authentication authentication,
+                              @PathVariable Long courseId) {
+        User user = (User) authentication.getPrincipal();
+        return courseService.addUserToCourse(courseId, user.getId());
     }
 
     @Operation(summary = "Get all courses",
             description = "Return all courses for the current user")
-    @GetMapping("/all")
-    List<CourseDto> getAllCourses(Authentication authentication) {
+    @GetMapping("/allForUser")
+    List<CourseDto> getAllCoursesByUserId(Authentication authentication) {
         User user = (User) authentication.getPrincipal();
-        return courseService.findAllCourses(user.getId());
+        return courseService.findAllCoursesByUserId(user.getId());
+    }
+
+    @Operation(summary = "Get all courses",
+            description = "Return all courses ")
+    @GetMapping("/all")
+    List<CourseDto> getAllCourses() {
+        return courseService.findAllCourses();
     }
 
     @Operation(summary = "Update course status")
@@ -58,6 +76,7 @@ public class CourseController {
     }
 
     @Operation(summary = "Delete course")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @DeleteMapping("/{id}")
     DeleteDto deleteCourse(@PathVariable Long id) {
         return courseService.deleteCourse(id);
