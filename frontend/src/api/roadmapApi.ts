@@ -1,7 +1,7 @@
-import { ServerRoadmapItem, ServerRoadmapItemSend } from "../types/ServerRoadmapItem";
+import { RoadmapItem, RoadmapItemCreate } from "../types/RoadmapItem";
 import { client } from "../utils/fetchClient";
 
-export const addToRoadmap = (data: ServerRoadmapItemSend, token: string) => {
-  return client.post<ServerRoadmapItem>("/roadmaps/add", data, token);
+export const addToRoadmap = (data: RoadmapItemCreate, token: string) => {
+  return client.post<RoadmapItem>("/roadmaps/add", data, token);
 };
 

@@ -1,6 +1,5 @@
 import { CourseEvent } from "./CourseEvent";
-import { RoadmapItem } from "./Rodmap";
-import { ServerRoadmapItem } from "./ServerRoadmapItem";
+import { RoadmapItem } from "./RoadmapItem";
 
 export interface CourseType {
   name: string;

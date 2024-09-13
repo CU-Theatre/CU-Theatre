@@ -1,12 +1,12 @@
 import React from "react";
 import { SubmitHandler, useFieldArray, useForm } from "react-hook-form";
-import { RoadmapItem } from "../../../../types/Rodmap";
+import { RoadmapItem, RoadmapItemCreate } from "../../../../types/RoadmapItem";
 import { ButtonEdd } from "../../buttonEdd";
 import { ButtonCross } from "../../buttonCross";
 import "./CreationRoadmapCourse.scss";
 
 type CreatingRoadmap = {
-  item: Omit<RoadmapItem, "roadmapId">[];
+  item: Omit<RoadmapItemCreate, "courseId">[];
 };
 
 export const CreationRoadmapCourse: React.FC = () => {
@@ -17,7 +17,7 @@ export const CreationRoadmapCourse: React.FC = () => {
     formState: { errors },
   } = useForm<CreatingRoadmap>({
     defaultValues: {
-      item: [{ roadmapTitle: "FFFFFFFFFF", roadmapText: "pes F" }],
+      item: [{ title: "FFFFFFFFFF", text: "pes F" }],
     },
     mode: "onBlur",
   });
@@ -33,8 +33,9 @@ export const CreationRoadmapCourse: React.FC = () => {
 
   const eddItem = () => {
     append({
-      roadmapTitle: "",
-      roadmapText: "",
+      title: "",
+      text: "",
+      mainTitle: "",
     });
   };
 
@@ -53,7 +54,7 @@ export const CreationRoadmapCourse: React.FC = () => {
                 <h4 className="creation-roadmap__input-title">Title</h4>
                 <input
                   type="text"
-                  {...register(`item.${index}.roadmapTitle`)}
+                  {...register(`item.${index}.title`)}
                   className="creation-roadmap__input"
                 />
               </label>
@@ -61,7 +62,7 @@ export const CreationRoadmapCourse: React.FC = () => {
               <label className="creation-roadmap__label">
                 <h4 className="creation-roadmap__input-title">Text</h4>
                 <textarea
-                  {...register(`item.${index}.roadmapText`)}
+                  {...register(`item.${index}.text`)}
                   className="creation-roadmap__input creation-roadmap__input--textarea"
                 />
               </label>

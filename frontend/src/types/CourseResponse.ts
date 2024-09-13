@@ -1,4 +1,4 @@
-import { RoadmapItem } from "./Rodmap"
+import { RoadmapItem } from "./RoadmapItem"
 
 export type CourseResponse = {
   id: number

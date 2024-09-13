@@ -54,6 +54,7 @@ export const CreationCourse: React.FC<Props> = ({
     append({
       title: "",
       text: "",
+      mainTitle: '',
     });
   };
 

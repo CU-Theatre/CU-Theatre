@@ -144,7 +144,7 @@ export const CoursesWindow: React.FC = () => {
             <div className="course-window__info-schedule">
               <p className="course-window__info-title">Dates</p>
               <p className="course-window__info-subtitle">
-                {course.description}
+                {`${course.startDate} - ${course.finishDate}`}
               </p>
             </div>
             <div className="course-window__info-schedule">
