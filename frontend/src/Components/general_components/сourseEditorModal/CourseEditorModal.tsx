@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import "./CourseEditorModal.scss";
 import { CreationCourse } from "../creationCourse";
 import classNames from "classnames";
@@ -23,6 +23,7 @@ export const CourseEditorModal: React.FC<Props> = ({
 }) => {
   const { setModalIsOpen } = useAppContext();
   const [token] = useTokenLocalStorage();
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     setModalIsOpen(isOpen);
@@ -31,10 +32,10 @@ export const CourseEditorModal: React.FC<Props> = ({
   const onCreating: SubmitHandler<CreationCourseFormType> = (data) => {
     const { roadmap, ...sendingData } = data;
 
-    sendingData.image = 'GGFGFGFGFGF';
-
     sendingData.finishDate = new Date(sendingData.finishDate).toJSON();
     sendingData.startDate = new Date(sendingData.startDate).toJSON();
+
+    setIsLoading(true);
 
     createCourse(sendingData, token)
       .then((newCourse) => {
@@ -48,12 +49,12 @@ export const CourseEditorModal: React.FC<Props> = ({
       })
       .then(() => {
         getAllCourse(token).then((res) => {
-          console.log(res);
+          console.log('res', res);
         });
       })
       .catch()
       .finally(() => {
-        // TODO add save screen
+        setIsLoading(false);
       });
 
     console.log("sendingData", sendingData);
@@ -68,9 +69,10 @@ export const CourseEditorModal: React.FC<Props> = ({
     <article
       className={classNames("course-editor-modal", {
         "course-editor-modal--open": isOpen,
+        "course-editor-modal--loading": isLoading,
       })}
     >
-      <ButtonCross onClick={onClose} />
+      <ButtonCross onClick={!isLoading ? onClose : () => {}} />
 
       <h1 className="course-editor-modal__title title">
         {isCreating ? "Create" : "Adit"} course
@@ -80,6 +82,7 @@ export const CourseEditorModal: React.FC<Props> = ({
         isOpen
         onSubmit={isCreating ? onCreating : onEdit}
         isCreating={isCreating}
+        isLoading={isLoading}
       />
     </article>
   );

@@ -12,12 +12,14 @@ type Props = {
   isOpen: boolean;
   onSubmit: SubmitHandler<CreationCourseFormType>;
   isCreating: boolean;
+  isLoading: boolean;
 };
 
 export const CreationCourse: React.FC<Props> = ({
   isOpen,
   onSubmit,
   isCreating,
+  isLoading,
 }) => {
   const {
     register,
@@ -48,7 +50,6 @@ export const CreationCourse: React.FC<Props> = ({
     }
   }, [courseInfo]);
 
-
   const eddItem = () => {
     append({
       title: "",
@@ -72,6 +73,7 @@ export const CreationCourse: React.FC<Props> = ({
             id="course-name"
             className="creation-course__input"
             {...register("name", { required: true })}
+            disabled={isLoading}
           />
         </div>
 
@@ -83,6 +85,7 @@ export const CreationCourse: React.FC<Props> = ({
             id="course-descr"
             className="creation-course__input creation-course__input--textarea"
             {...register("description", { required: true })}
+            disabled={isLoading}
           />
         </div>
 
@@ -94,6 +97,7 @@ export const CreationCourse: React.FC<Props> = ({
             id="course-price"
             className="creation-course__input creation-course__input"
             {...register("price", { required: true })}
+            disabled={isLoading}
           />
         </div>
 
@@ -107,6 +111,7 @@ export const CreationCourse: React.FC<Props> = ({
               id="course-duration"
               className="creation-course__input creation-course__input--date"
               {...register("startDate", { required: true })}
+              disabled={isLoading}
             />
           </div>
 
@@ -119,6 +124,7 @@ export const CreationCourse: React.FC<Props> = ({
               id="course-duration"
               className="creation-course__input creation-course__input--date"
               {...register("finishDate", { required: true })}
+              disabled={isLoading}
             />
           </div>
         </div>
@@ -136,6 +142,7 @@ export const CreationCourse: React.FC<Props> = ({
                   type="text"
                   {...register(`roadmap.${index}.title`)}
                   className="creation-course__input"
+                  disabled={isLoading}
                 />
               </label>
 
@@ -144,6 +151,7 @@ export const CreationCourse: React.FC<Props> = ({
                 <textarea
                   {...register(`roadmap.${index}.text`)}
                   className="creation-course__input creation-course__input--textarea"
+                  disabled={isLoading}
                 />
               </label>
 
@@ -154,11 +162,12 @@ export const CreationCourse: React.FC<Props> = ({
           ))}
         </ul>
 
-        <ButtonEdd onClick={eddItem} />
+        <ButtonEdd onClick={!isLoading ? eddItem : () => {}} />
 
         <button
-          type='submit'
+          type="submit"
           className="creation-course__save-button white-button"
+          disabled={isLoading}
         >
           Save
         </button>
