@@ -38,7 +38,6 @@ async function request<T>(
 
         console.log('response', await response.json());
         
-
         switch (response.status) {
           case 400: {
             const res = await response.text()
@@ -46,7 +45,7 @@ async function request<T>(
           }
           case 500:
           case 0:
-          case 401: {            
+          case 401: {
             const res = await response.json()
             throw new Error(res.error);
           }

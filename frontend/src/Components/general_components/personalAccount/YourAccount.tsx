@@ -226,7 +226,7 @@ export const YourAccount: React.FC = () => {
             <h3 className="cabinet__main-title">Assigned courses:</h3>
             <div className="cabinet__courses">
               {userState?.currentCourse?.map((course) => (
-                <Course key={course.courseName} course={course} />
+                <Course key={course.name} course={course} />
               ))}
             </div>
           </div>

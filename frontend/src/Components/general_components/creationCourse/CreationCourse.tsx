@@ -95,6 +95,7 @@ export const CreationCourse: React.FC<Props> = ({
           </label>
           <input
             id="course-price"
+            type="number"
             className="creation-course__input creation-course__input"
             {...register("price", { required: true })}
             disabled={isLoading}

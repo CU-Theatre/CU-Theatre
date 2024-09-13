@@ -57,7 +57,7 @@ export const OurCoursesPage: React.FC = () => {
 
         <div className="our-courses-page__courses">
           {allCourses.map((course) => (
-            <Course key={course.courseName} course={course} />
+            <Course key={course.name} course={course} />
           ))}
         </div>
       </div>

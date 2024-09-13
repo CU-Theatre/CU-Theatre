@@ -52,7 +52,7 @@ export const About: React.FC = () => {
             <Link
               to={"./our-courses"}
               className={`about__block about__block--3`}
-              key={dramaCourse.courseName}
+              key={dramaCourse.name}
             >
               <h1 className="about__block-title">Drama courses</h1>
               <p className="about__block-subtitle">
