@@ -7,7 +7,7 @@ export type CreationCourseFormType = {
   startDate: string;
   finishDate: string;
   icon: string;
-  price: string;
+  price: number;
   image: string;
   roadmap: Omit<ServerRoadmapItem, "id">[];
 };

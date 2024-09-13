@@ -32,11 +32,12 @@ export const CourseEditorModal: React.FC<Props> = ({
   const onCreating: SubmitHandler<CreationCourseFormType> = (data) => {
     const { roadmap, ...sendingData } = data;
 
+    sendingData.image = 'aaa.jpg'
+
     sendingData.finishDate = new Date(sendingData.finishDate).toJSON();
     sendingData.startDate = new Date(sendingData.startDate).toJSON();
 
     setIsLoading(true);
-
     createCourse(sendingData, token)
       .then((newCourse) => {
         roadmap.forEach((point) => {
@@ -49,7 +50,7 @@ export const CourseEditorModal: React.FC<Props> = ({
       })
       .then(() => {
         getAllCourse(token).then((res) => {
-          console.log('res', res);
+          console.log("res", res);
         });
       })
       .catch()
