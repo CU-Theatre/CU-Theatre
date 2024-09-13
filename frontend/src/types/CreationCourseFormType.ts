@@ -1,5 +1,4 @@
-import { RoadmapItem } from "./Rodmap";
-import { ServerRoadmapItem } from "./ServerRoadmapItem";
+import { RoadmapItemCreate } from "./RoadmapItem";
 
 export type CreationCourseFormType = {
   name: string;
@@ -9,5 +8,5 @@ export type CreationCourseFormType = {
   icon: string;
   price: number;
   image: string;
-  roadmap: Omit<ServerRoadmapItem, "id">[];
+  roadmap: Omit<RoadmapItemCreate, 'courseId'>[];
 };
