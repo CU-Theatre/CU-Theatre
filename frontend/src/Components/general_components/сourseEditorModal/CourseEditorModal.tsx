@@ -30,12 +30,25 @@ export const CourseEditorModal: React.FC<Props> = ({
   }, [isOpen]);
 
   const onCreating: SubmitHandler<CreationCourseFormType> = (data) => {
+    console.log("data", data);
+
     const { roadmap, ...sendingData } = data;
 
-    sendingData.image = 'aaa.jpg'
+    // TODO write a handler save image
+    sendingData.image = "aaa.jpg";
 
-    sendingData.finishDate = new Date(sendingData.finishDate).toJSON();
-    sendingData.startDate = new Date(sendingData.startDate).toJSON();
+    try {
+      if (typeof sendingData.price === 'string') {
+        sendingData.price = parseFloat(sendingData.price);
+      }
+    } catch {
+      // TODO write a errHandler when prise isn't number
+    }
+
+    sendingData.finishDate = new Date(sendingData.finishDate).toISOString();
+    sendingData.finishDate = sendingData.finishDate.split(".")[0];
+    sendingData.startDate = new Date(sendingData.startDate).toISOString();
+    sendingData.startDate = sendingData.startDate.split(".")[0];
 
     setIsLoading(true);
     createCourse(sendingData, token)
