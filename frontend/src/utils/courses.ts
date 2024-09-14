@@ -126,7 +126,7 @@ export const dramaCourse: CourseType = {
         freq: RRule.WEEKLY,  // Повторення щотижня
         interval: 1,         // Кожного тижня
         byweekday: [RRule.SA, RRule.SU],  // Вибираємо день тижня (наприклад, п'ятниця)
-        dtstart: new Date(Date.UTC(2024, 7, 31, 15, 0, 0)), // Початок події
+        dtstart: new Date(Date.UTC(2023, 7, 31, 15, 0, 0)), // Початок події
         until: new Date(Date.UTC(2025, 7, 31, 16, 30, 0)),   // Кінець повторення (опціонально)
       }),
     }
@@ -188,7 +188,7 @@ export const improCourse: CourseType = {
         freq: RRule.WEEKLY,  // Повторення щотижня
         interval: 1,         // Кожного тижня
         byweekday: [RRule.SA],  // Вибираємо день тижня (наприклад, п'ятниця)
-        dtstart: new Date(Date.UTC(2024, 7, 31, 15, 0, 0)), // Початок події
+        dtstart: new Date(Date.UTC(2023, 7, 31, 15, 0, 0)), // Початок події
         until: new Date(Date.UTC(2025, 7, 31, 16, 30, 0)),   // Кінець повторення (опціонально)
       }),
     }
@@ -278,7 +278,7 @@ export const playbackCourse: CourseType = {
           freq: RRule.WEEKLY,  // Повторення щотижня
           interval: 1,         // Кожного тижня
           byweekday: [RRule.SU],  // Вибираємо день тижня (наприклад, п'ятниця)
-          dtstart: new Date(Date.UTC(2024, 7, 31, 15, 0, 0)), // Початок події
+          dtstart: new Date(Date.UTC(2023, 7, 31, 15, 0, 0)), // Початок події
           until: new Date(Date.UTC(2025, 7, 31, 16, 30, 0)),   // Кінець повторення (опціонально)
         }),
       }
