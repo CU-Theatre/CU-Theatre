@@ -102,8 +102,7 @@ export const CoursesWindow: React.FC = () => {
           <div className="course-window__image-for">
             <div className="course-window__for">
               <p className="course-window__subtitle">
-                {" "}
-                This course for those who{" "}
+                This course for those who
               </p>
               <Swiper
                 modules={[Autoplay]}
