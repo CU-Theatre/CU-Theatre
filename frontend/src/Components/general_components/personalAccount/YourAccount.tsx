@@ -5,7 +5,7 @@ import { useAppContext } from "../../../AppContext";
 import { SignButton } from "../signButton";
 import happyMask from "../../img/AccountImg/happymask.svg";
 import { Course } from "../Course";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { KEY_TOKEN } from "../../../utils/globalVariables";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { getCurrentUser, updateUser } from "../../../api/userApi";
@@ -231,6 +231,8 @@ export const YourAccount: React.FC = () => {
             </div>
           </div>
         )}
+        {/* Це тимчасова кнопка щоб просто переходити на сторінку з таблицями для адміна головне не забути переробити */}
+        <Link to={'/users-table'} className="cabinet__VISITtABLEpAGE">VISIT TABLE PAGE</Link>
         <div className="cabinet__calendar">
           <h3 className="cabinet__main-title">Schedule</h3>
           <MyCalendar setCurrentEvent={setCurrentEvent}/>

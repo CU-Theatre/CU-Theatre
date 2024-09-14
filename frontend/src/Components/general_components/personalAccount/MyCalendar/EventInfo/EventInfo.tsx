@@ -4,19 +4,81 @@ import { CourseEvent } from '../../../../../types/CourseEvent';
 import { format } from 'date-fns';
 import { useAppContext } from '../../../../../AppContext';
 import classNames from 'classnames';
+import { events } from '../../../../../utils/events';
 
 interface Props {
   currentEvent: CourseEvent | null;
 }
 
 export const EventInfo: React.FC<Props> = ({ currentEvent }) => {
-  const { setEventInfoIsOpen, eventInfoIsOpen } = useAppContext();
+  const { setEventInfoIsOpen, eventInfoIsOpen, setEventDetailIsOpen, userState } = useAppContext();
+  const classes = ['Heels', 'Exotic', 'Stretching', 'Pole Dance', 'Twerk'];
+  const daysOfWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+
+  const handleCloseClick = () => {
+    setEventDetailIsOpen(false);
+    setEventInfoIsOpen(true);
+  }
+
+  const bookClassPlace = () => {
+    if (currentEvent && userState) {
+  
+      const newDay = String(currentEvent.start.getDate()).padStart(2, '0');
+      const newMonth = String(currentEvent.start.getMonth() + 1).padStart(2, '0');
+      const newDate = `${newDay}.${newMonth}`;
+      const dayOfWeek = daysOfWeek[currentEvent.start.getDay()];
+
+      let newClass;
+
+      const newClassGuest = {
+        id: 0,
+        dayOfWeek: dayOfWeek,
+        date: newDate,
+        guestName: userState?.firstName,
+        guestSurname: userState.lastName,
+        phone: userState?.phoneNumber,
+      };
+
+      switch (currentEvent?.title) {
+        case "Heels":
+          newClass = events.otherClasses.heels;
+          break;
+  
+        case "Pole Dance":
+          newClass = events.otherClasses.poleDance;
+          break;
+  
+        case "Twerk":
+          newClass = events.otherClasses.twerk;
+          break;
+
+        case "Exotic":
+          newClass = events.otherClasses.exotic;
+          break;
+
+        default:
+          newClass = events.otherClasses.stretching;
+          break;
+      }
+
+      const isGuestExists = newClass.some(guest => guest.phone === newClassGuest.phone);
+  
+      if (!isGuestExists) {
+        newClassGuest.id = newClass.length + 1;
+        newClass.push(newClassGuest);
+        console.log("Гостя успішно додано:", newClassGuest);
+      } else {
+        console.log("Гість з таким номером телефону вже існує:", newClassGuest.phone);
+      }
+    }
+  };
+
   return (
     <div className={classNames('event-info', {'event-open' : eventInfoIsOpen})}>
       <div className='event-info__top'>
         <h4 className='event-info__title'>{currentEvent?.title}</h4>
         <button 
-          onClick={() => setEventInfoIsOpen(true)} 
+          onClick={handleCloseClick} 
           type='button' 
           className='event-info__close'></button>
       </div>
@@ -55,6 +117,9 @@ export const EventInfo: React.FC<Props> = ({ currentEvent }) => {
             </li>
           </ul>
         </div>
+        {currentEvent && classes.includes(currentEvent?.title) && (
+          <button onClick={bookClassPlace} className='event-info__button' type='button'>Sign for a course</button>
+        )}
       </div>
     </div>
   );

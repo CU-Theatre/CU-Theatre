@@ -139,4 +139,27 @@
   &__button {
     align-self: center;
   }
+
+  &__close {
+    width: 16px;
+    height: 16px;
+    background-image: url('./img/IconClose.svg');
+    background-repeat: no-repeat;
+    background-size: contain;
+    display: block;
+    filter: grayscale(0) brightness(1);
+    transition: all  0.3s;
+
+
+    @include on-tablet {
+      width: 24px;
+      height: 24px;
+    }
+
+    
+    &:hover {
+      transform: scale(1.05);
+      filter: grayscale(1) brightness(0.5);
+    }
+  }
 }
