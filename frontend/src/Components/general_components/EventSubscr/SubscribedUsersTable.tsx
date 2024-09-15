@@ -107,7 +107,7 @@ export const SubscribedUsersTable: React.FC = () => {
   };
 
   const getUniqueDates = (eventsArray: any[], day: string) => {
-    return [...Array.from(new Set(eventsArray.filter(event => event.dayOfWeek === day).map(event => event.date)))];
+    return [...new Set(eventsArray.filter(event => event.dayOfWeek === day).map(event => event.date))];
   };
 
 

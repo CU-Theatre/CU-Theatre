@@ -205,9 +205,16 @@
     align-items: center;
   }
 
-  &__VISITtABLEpAGE {
+  &__users-table {
     background-color: $white;
+    border-radius: 18px;
     padding: 20px 40px;
+    align-self: flex-end;
+    transition: background-color 0.3s;
+
+    &:hover {
+      background-color: #a7a7a7;
+    }
   }
 
 }
