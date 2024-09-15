@@ -231,10 +231,9 @@ export const YourAccount: React.FC = () => {
             </div>
           </div>
         )}
-        {/* Це тимчасова кнопка щоб просто переходити на сторінку з таблицями для адміна головне не забути переробити */}
-        <Link to={'/users-table'} className="cabinet__VISITtABLEpAGE">VISIT TABLE PAGE</Link>
         <div className="cabinet__calendar">
           <h3 className="cabinet__main-title">Schedule</h3>
+          <Link to={'/users-table'} className="cabinet__users-table">Users table page</Link>
           <MyCalendar setCurrentEvent={setCurrentEvent}/>
         </div>
       </div>
