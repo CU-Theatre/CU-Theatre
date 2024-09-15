@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import './EventInfo.scss';
 import { CourseEvent } from '../../../../../types/CourseEvent';
 import { format } from 'date-fns';
@@ -11,9 +11,62 @@ interface Props {
 }
 
 export const EventInfo: React.FC<Props> = ({ currentEvent }) => {
-  const { setEventInfoIsOpen, eventInfoIsOpen, setEventDetailIsOpen, userState } = useAppContext();
+  const { setEventInfoIsOpen, eventInfoIsOpen, setEventDetailIsOpen, userState, setCourses } = useAppContext();
   const classes = ['Heels', 'Exotic', 'Stretching', 'Pole Dance', 'Twerk'];
+  const someShows = ["Live performance", "Impro shows", "Playback shows"];
   const daysOfWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+  const [alreadyBooked, setAlreadyBooked] = useState(false);
+
+  const newCalendarShow = {
+    title: currentEvent?.title,
+    start: currentEvent?.start,
+    end: currentEvent?.end,
+  };
+
+  const cancelShowBooking = () => {
+    if (currentEvent && userState && currentEvent.start) {
+      let currentShow;
+  
+      switch (currentEvent.title) {
+        case "Live performance":
+          currentShow = events.mainEvents.livePerf;
+          break;
+  
+        case "Impro shows":
+          currentShow = events.mainEvents.impro;
+          break;
+  
+        case "Playback shows":
+          currentShow = events.mainEvents.playback;
+          break;
+  
+        default:
+          console.log("Невідоме шоу.");
+          return;
+      }
+  
+      const guestIndex = currentShow.findIndex(
+        (guest) => guest.phone === userState.phoneNumber && 
+        format(currentEvent.start, 'dd.MM') === guest.date
+      );
+  
+      if (guestIndex !== -1) {
+        currentShow.splice(guestIndex, 1);
+        setCourses((prevEvents) => [...prevEvents]
+          .filter(someEvent => 
+            someEvent.title !== newCalendarShow.title || 
+            (newCalendarShow.start && someEvent.start.getTime() !== newCalendarShow.start.getTime())
+          )
+        );
+        console.log("Бронювання скасовано для:", userState.phoneNumber);
+      } else {
+        console.log("Бронювання не знайдено для цього користувача:", userState.phoneNumber);
+      }
+  
+      setEventDetailIsOpen(false);
+      setEventInfoIsOpen(true);
+    }
+  };
 
   const handleCloseClick = () => {
     setEventDetailIsOpen(false);
@@ -61,17 +114,92 @@ export const EventInfo: React.FC<Props> = ({ currentEvent }) => {
           break;
       }
 
-      const isGuestExists = newClass.some(guest => guest.phone === newClassGuest.phone);
-  
-      if (!isGuestExists) {
-        newClassGuest.id = newClass.length + 1;
-        newClass.push(newClassGuest);
-        console.log("Гостя успішно додано:", newClassGuest);
-      } else {
-        console.log("Гість з таким номером телефону вже існує:", newClassGuest.phone);
-      }
+      newClassGuest.id = newClass.length + 1;
+      newClass.push(newClassGuest);
+
+      setEventDetailIsOpen(false);
+      setEventInfoIsOpen(true);
     }
   };
+
+  const cancelBooking = () => {
+    if (currentEvent && userState) {
+      const newDay = String(currentEvent.start.getDate()).padStart(2, '0');
+      const newMonth = String(currentEvent.start.getMonth() + 1).padStart(2, '0');
+      const newDate = `${newDay}.${newMonth}`;
+  
+      let currentClass;
+  
+      switch (currentEvent?.title) {
+        case "Heels":
+          currentClass = events.otherClasses.heels;
+          break;
+  
+        case "Pole Dance":
+          currentClass = events.otherClasses.poleDance;
+          break;
+  
+        case "Twerk":
+          currentClass = events.otherClasses.twerk;
+          break;
+  
+        case "Exotic":
+          currentClass = events.otherClasses.exotic;
+          break;
+  
+        default:
+          currentClass = events.otherClasses.stretching;
+          break;
+      }
+  
+      const guestIndex = currentClass.findIndex(guest => guest.phone === userState.phoneNumber && guest.date === newDate);
+  
+      if (guestIndex !== -1) {
+        currentClass.splice(guestIndex, 1);
+        console.log("Запис успішно скасовано для:", userState.phoneNumber);
+      } else {
+        console.log("Запис не знайдено для цього користувача:", userState.phoneNumber);
+      }
+  
+      setEventDetailIsOpen(false);
+      setEventInfoIsOpen(true);
+    }
+  };
+
+  useEffect(() => {
+    if (currentEvent && userState) {
+      let newClass;
+      const newDay = String(currentEvent.start.getDate()).padStart(2, '0');
+      const newMonth = String(currentEvent.start.getMonth() + 1).padStart(2, '0');
+      const newDate = `${newDay}.${newMonth}`;
+
+      switch (currentEvent?.title) {
+        case "Heels":
+          newClass = events.otherClasses.heels;
+          break;
+  
+        case "Pole Dance":
+          newClass = events.otherClasses.poleDance;
+          break;
+  
+        case "Twerk":
+          newClass = events.otherClasses.twerk;
+          break;
+
+        case "Exotic":
+          newClass = events.otherClasses.exotic;
+          break;
+
+        default:
+          newClass = events.otherClasses.stretching;
+          break;
+      }
+
+      const isGuestAlreadySigned = newClass.some(guest => guest.phone === userState.phoneNumber && guest.date === newDate);
+
+      setAlreadyBooked(isGuestAlreadySigned);
+    }
+  }, [alreadyBooked, currentEvent, userState]);
 
   return (
     <div className={classNames('event-info', {'event-open' : eventInfoIsOpen})}>
@@ -117,8 +245,15 @@ export const EventInfo: React.FC<Props> = ({ currentEvent }) => {
             </li>
           </ul>
         </div>
+        {currentEvent && someShows.includes(currentEvent?.title) && (
+          <button onClick={cancelShowBooking} className='event-info__button' type='button'>Cancel show booking</button>
+        )}
         {currentEvent && classes.includes(currentEvent?.title) && (
-          <button onClick={bookClassPlace} className='event-info__button' type='button'>Sign for a course</button>
+          alreadyBooked ? (
+            <button onClick={cancelBooking} className='event-info__button' type='button'>Cancel booking</button>
+          ) : (
+            <button onClick={bookClassPlace} className='event-info__button' type='button'>Sign for a course</button>
+          )
         )}
       </div>
     </div>
