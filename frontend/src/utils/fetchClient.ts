@@ -29,6 +29,10 @@ async function request<T>(
 
   options.headers = headers;
 
+  // console.log(options.headers.Authorization);
+  // console.log('options.body', options.body);
+  
+
   return wait(100)
     .then(() => {
       return fetch(BASE_URL + url, options);

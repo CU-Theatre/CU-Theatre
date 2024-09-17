@@ -50,6 +50,8 @@ export const CourseEditorModal: React.FC<Props> = ({
     sendingData.startDate = new Date(sendingData.startDate).toISOString();
     sendingData.startDate = sendingData.startDate.split(".")[0];
 
+    // console.log("sendingData", sendingData);
+
     setIsLoading(true);
     createCourse(sendingData, token)
       .then((newCourse) => {
@@ -70,8 +72,6 @@ export const CourseEditorModal: React.FC<Props> = ({
       .finally(() => {
         setIsLoading(false);
       });
-
-    console.log("sendingData", sendingData);
   };
 
   const onEdit: SubmitHandler<CreationCourseFormType> = (data) => {
