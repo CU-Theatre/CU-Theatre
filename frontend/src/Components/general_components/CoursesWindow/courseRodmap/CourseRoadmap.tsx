@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { CourseType } from "../../../../types/CourseType";
 import "./CourseRodmap.scss";
 import classNames from "classnames";
@@ -8,9 +8,19 @@ interface Props {
 }
 
 export const CourseRoadmap: React.FC<Props> = ({ course }) => {
+  const [sortedRoadmap, setSortedRoadmap] = useState(course.roadmap);
+
+  useEffect(() => {
+    const sortedRoadmap = [...course.roadmap];
+
+    sortedRoadmap.sort((point1, point2) => point1.id - point2.id);
+
+    setSortedRoadmap(sortedRoadmap);
+  }, [course.roadmap]);
+
   return (
     <div className="course-window__roadmap roadmap">
-      {course.roadmap.map((period, index) => (
+      {sortedRoadmap.map((period, index) => (
         <div
           className={classNames(`roadmap__block roadmap__block--${index}`)}
           key={period.id}
