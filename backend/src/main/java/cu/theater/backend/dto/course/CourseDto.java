@@ -13,7 +13,7 @@ public class CourseDto {
     private String status;
     private String startDate;
     private String image;
+    private String icon;
     private List<RoadMapDto> roadMaps;
     private Set<Long> usersId;
-
 }
