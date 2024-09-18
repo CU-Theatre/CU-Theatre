@@ -38,7 +38,8 @@ public class CourseServiceImpl implements CourseService {
         userCourses.setUser(userRepository.findById(userId)
                 .orElseThrow(() -> new IllegalStateException("User not found")));
         usersCoursesRepository.save(userCourses);
-        return courseMapper.toDto(userCourses.getCourse());
+        CourseDto dto = courseMapper.toDto(userCourses.getCourse());
+        return dto;
     }
 
     @Override
@@ -49,6 +50,9 @@ public class CourseServiceImpl implements CourseService {
         course.setStatus(updateCourseStatusDto.status());
         course.setName(updateCourseStatusDto.name());
         course.setDescription(updateCourseStatusDto.description());
+        course.setImage(updateCourseStatusDto.image());
+        course.setIcon(updateCourseStatusDto.icon());
+        course.setPrice(updateCourseStatusDto.price());
         courseRepository.save(course);
         return courseMapper.toDto(course);
     }
@@ -98,6 +102,7 @@ public class CourseServiceImpl implements CourseService {
         CourseDto dto = courseMapper.toDto(course);
         List<RoadMapDto> allByCourseId = roadMapService.findAllByCourseId(course.getId());
         dto.setRoadMaps(allByCourseId);
+        dto.setUsersId(new HashSet<>(usersCoursesRepository.findUserIdsByCourseId(course.getId())));
         return dto;
     }
 
@@ -110,6 +115,7 @@ public class CourseServiceImpl implements CourseService {
         course.setFinishDate(requestDto.getFinishDate());
         course.setPrice(requestDto.getPrice());
         course.setImage(requestDto.getImage());
+        course.setIcon(requestDto.getIcon());
         return course;
     }
 
