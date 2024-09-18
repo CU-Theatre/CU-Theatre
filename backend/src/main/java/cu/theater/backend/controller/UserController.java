@@ -34,11 +34,16 @@ public class UserController {
     @GetMapping("/current-user")
     public CurrentUserResponseDto returnCurrentUser(Authentication authentication) {
         User user = (User) authentication.getPrincipal();
+        UserResponseDto userResponseDto = userService.getById(user.getId());
         return new CurrentUserResponseDto(
+                userResponseDto.getId(),
+                user.getEmail(),
                 user.getFirstName(),
                 user.getLastName(),
-                user.getEmail(),
                 user.getPhoneNumber(),
+                userResponseDto.getRoleName(),
+                userResponseDto.isDramaCourseFinished(),
+                userResponseDto.getCurrentCourses(),
                 emergencyContactService.getEmergencyContact(user.getId()));
     }
 
@@ -56,5 +61,13 @@ public class UserController {
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     public void deleteById(@PathVariable Long id) {
         userService.deleteById(id);
+    }
+
+    @Operation(summary = "Setting user drama course to finished",
+            description = "Setting user drama course to finished")
+    @PutMapping("/finish-drama-course")
+    public void finishDramaCourse(Authentication authentication) {
+        User user = (User) authentication.getPrincipal();
+        userService.finishDramaCourse(user.getId());
     }
 }

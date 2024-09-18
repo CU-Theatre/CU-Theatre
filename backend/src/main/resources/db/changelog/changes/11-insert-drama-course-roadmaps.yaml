@@ -1,0 +1,141 @@
+databaseChangeLog:
+  - changeSet:
+      id: insert-drama-course-1
+      author: me
+      changes:
+        - insert:
+            tableName: roadmaps
+            columns:
+              - column:
+                  name: course_id
+                  value: 1
+              - column:
+                  name: title
+                  value: Getting Acquainted and Building Awareness
+              - column:
+                  name: text
+                  value: Get used to your classmates. Improve your reaction and attentiveness. Try an exercise that each professional actor does.
+  - changeSet:
+      id: insert-drama-course-2
+      author: me
+      changes:
+        - insert:
+            tableName: roadmaps
+            columns:
+              - column:
+                  name: course_id
+                  value: 1
+              - column:
+                  name: title
+                  value: Voice Work and Vocal Confidence
+              - column:
+                  name: text
+                  value: Start working with your voice to sound like a Hollywood star.
+        - insert:
+            tableName: roadmaps
+            columns:
+              - column:
+                  name: course_id
+                  value: 1
+              - column:
+                  name: title
+                  value: Introduction to Acting Terminology and Techniques
+              - column:
+                  name: text
+                  value: Begin learning terminology and become more professional as an actor. Explore concepts like “film vision,” “memory of a physical activity,” and “étude.” Try creating an étude! Practice understanding people without using words.
+        - insert:
+            tableName: roadmaps
+            columns:
+              - column:
+                  name: course_id
+                  value: 1
+              - column:
+                  name: title
+                  value: Improv and Acting Methods Exploration
+              - column:
+                  name: text
+                  value: Improvise! Try laughing with your partners while playing improv games. Learn about terms like “inner monologue” and “through action”. Explore different acting methods to find your preference.
+        - insert:
+            tableName: roadmaps
+            columns:
+              - column:
+                  name: course_id
+                  value: 1
+              - column:
+                  name: title
+                  value: Body Movement and Public Speaking
+              - column:
+                  name: text
+                  value: Work on body movement and plasticity. Enhance your deductive thinking skills. Focus on your voice and learn about public speaking.
+        - insert:
+            tableName: roadmaps
+            columns:
+              - column:
+                  name: course_id
+                  value: 1
+              - column:
+                  name: title
+                  value: Voice Development and Character Exploration
+              - column:
+                  name: text
+                  value: Concentrate on your voice and observe the first results. Engage in improv games and explore the core of character development.
+        - insert:
+            tableName: roadmaps
+            columns:
+              - column:
+                  name: course_id
+                  value: 1
+              - column:
+                  name: title
+                  value: Skill Refinement and Challenges
+              - column:
+                  name: text
+                  value: Sharpen all your new skills, including dance improvisation, plasticity, and voice. Challenge yourself with études.
+        - insert:
+            tableName: roadmaps
+            columns:
+              - column:
+                  name: course_id
+                  value: 1
+              - column:
+                  name: title
+                  value: Silent Acting and Physical Theatre
+              - column:
+                  name: text
+                  value: Experience silence—no words needed. Try a physical theatre workshop.
+        - insert:
+            tableName: roadmaps
+            columns:
+              - column:
+                  name: course_id
+                  value: 1
+              - column:
+                  name: title
+                  value: Etude Preparation and Exam Readiness
+              - column:
+                  name: text
+                  value: Dive into études as you prepare for your exam.
+        - insert:
+            tableName: roadmaps
+            columns:
+              - column:
+                  name: course_id
+                  value: 1
+              - column:
+                  name: title
+                  value: Rehearsal and Final Preparations
+              - column:
+                  name: text
+                  value: Rehearse! Play improv games, warm up your voice, and work on études and short pieces.
+        - insert:
+            tableName: roadmaps
+            columns:
+              - column:
+                  name: course_id
+                  value: 1
+              - column:
+                  name: title
+                  value: Performance and Certification
+              - column:
+                  name: text
+                  value:  It’s exam time! Showcase your études or short pieces in a group or solo performance. Smile and receive your certificates!

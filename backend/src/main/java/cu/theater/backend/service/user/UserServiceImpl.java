@@ -11,6 +11,9 @@ import cu.theater.backend.model.Role;
 import cu.theater.backend.model.User;
 import cu.theater.backend.repository.RoleRepository;
 import cu.theater.backend.repository.UserRepository;
+import cu.theater.backend.repository.UsersCoursesRepository;
+import java.util.ArrayList;
+import java.util.Optional;
 import java.util.Set;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -23,6 +26,7 @@ public class UserServiceImpl implements UserService {
     private final UserMapper userMapper;
     private final PasswordEncoder passwordEncoder;
     private final RoleRepository roleRepository;
+    private final UsersCoursesRepository usersCoursesRepository;
 
     @Override
     public UserResponseDto registerUser(UserRegistrationRequestDto requestDto)
@@ -37,7 +41,7 @@ public class UserServiceImpl implements UserService {
         user.setRoles(Set.of(role));
         user.setPhoneNumber(requestDto.getPhoneNumber());
         UserResponseDto dto = userMapper.toDto(userRepository.save(user));
-        return dto;
+        return setCurrentCourses(dto);
     }
 
     @Override
@@ -52,7 +56,8 @@ public class UserServiceImpl implements UserService {
         if (user.isDeleted()) {
             throw new EntityNotFoundException("Can't find user by id=" + id);
         }
-        return userMapper.toDto(user);
+        UserResponseDto dto = userMapper.toDto(user);
+        return setCurrentCourses(dto);
     }
 
     @Override
@@ -66,7 +71,8 @@ public class UserServiceImpl implements UserService {
         User user = getUserById(userId);
         user.setRoles(Set.of(roleRepository.findByName(requestDto.roleName())));
         User savedUser = userRepository.save(user);
-        return userMapper.toDto(savedUser);
+        UserResponseDto dto = userMapper.toDto(savedUser);
+        return setCurrentCourses(dto);
     }
 
     @Override
@@ -78,13 +84,31 @@ public class UserServiceImpl implements UserService {
         user.setEmail(updateUserDto.email());
         user.setLastName(updateUserDto.lastName());
         user.setPhoneNumber(updateUserDto.phoneNumber());
-        return userMapper.toDto(userRepository.save(user));
+        UserResponseDto dto = userMapper.toDto(userRepository.save(user));
+        return setCurrentCourses(dto);
+    }
+
+    @Override
+    public UserResponseDto finishDramaCourse(Long userId) {
+        User user = getUserById(userId);
+        user.setDramaCourseFinished(true);
+        UserResponseDto dto = userMapper.toDto(userRepository.save(user));
+        return setCurrentCourses(dto);
     }
 
     private User getUserById(Long userId) {
         return userRepository.findById(userId)
                 .orElseThrow(()
                         -> new EntityNotFoundException("Can't find user with ID: " + userId));
+    }
+
+    private UserResponseDto setCurrentCourses(UserResponseDto dto) {
+        User user = getUserById(dto.getId());
+        dto.setCurrentCourses(new ArrayList<>(usersCoursesRepository
+                .findCourseIdsByUserId(user.getId())));
+        Optional<User> userDrama = userRepository.findByIdWhereDramaCourseIsFinished(dto.getId());
+        dto.setDramaCourseFinished(userDrama.isPresent());
+        return dto;
     }
 
 }

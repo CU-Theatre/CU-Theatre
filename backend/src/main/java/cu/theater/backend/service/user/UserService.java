@@ -21,4 +21,6 @@ public interface UserService {
 
     UserResponseDto updateUserDetails(Long userId, UpdateUserDto updateUserDto);
 
+    UserResponseDto finishDramaCourse(Long userId);
+
 }
