@@ -6,7 +6,6 @@ import getDay from 'date-fns/getDay';
 import enUS from 'date-fns/locale/en-US';
 import './MyCalendar.scss';
 import { useCalendarSize } from '../../../../hooks/useCalendarSize';
-import { allCourses } from '../../../../utils/courses';
 import { useMediaQuery } from 'react-responsive';
 import { TABLE_MIN_WIDTH } from '../../../../utils/globalVariables';
 import { CalendarModal } from './CalendarModal';
@@ -31,9 +30,7 @@ interface Props {
 }
 
 export const MyCalendar: React.FC<Props> = ({ setCurrentEvent }) => {
-  const [dramaCourse] = allCourses;
-  const { setEventInfoIsOpen } = useAppContext();
-  const [courses, setCourses] = useState(dramaCourse.courseTime);
+  const { setEventInfoIsOpen, courses, setCourses, setEventDetailIsOpen } = useAppContext();
   const isMobile = useMediaQuery({ query: `(max-width: ${TABLE_MIN_WIDTH}px)` });
   const [modalIsOpen, setModalIsOpen] = useState(false);
 
@@ -60,7 +57,8 @@ export const MyCalendar: React.FC<Props> = ({ setCurrentEvent }) => {
   
   const handleEventClick = (event: CourseEvent) => {
     setEventInfoIsOpen(false);
-    setCurrentEvent(event)
+    setCurrentEvent(event);
+    setEventDetailIsOpen(true);
   };
 
   return (
