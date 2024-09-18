@@ -5,7 +5,7 @@ import { useAppContext } from "../../../AppContext";
 import { SignButton } from "../signButton";
 import happyMask from "../../img/AccountImg/happymask.svg";
 import { Course } from "../Course";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { KEY_TOKEN } from "../../../utils/globalVariables";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { getCurrentUser, updateUser } from "../../../api/userApi";
@@ -233,6 +233,7 @@ export const YourAccount: React.FC = () => {
         )}
         <div className="cabinet__calendar">
           <h3 className="cabinet__main-title">Schedule</h3>
+          <Link to={'/users-table'} className="cabinet__users-table">Users table page</Link>
           <MyCalendar setCurrentEvent={setCurrentEvent}/>
         </div>
       </div>
