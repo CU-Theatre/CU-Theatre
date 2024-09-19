@@ -44,7 +44,7 @@ export const CreationCourse: React.FC<Props> = ({
 
   useEffect(() => {
     if (!isCreating) {
-      // reset(courseInfo);
+      reset(courseInfo);
     } else {
       reset();
     }
@@ -138,6 +138,17 @@ export const CreationCourse: React.FC<Props> = ({
         <ul className="creation-course__roadmap-list">
           {fields.map((field, index) => (
             <li className="creation-course__roadmap-cell" key={field.id}>
+              
+              <label className="creation-course__roadmap-label">
+                <h4 className="creation-course__roadmap-title">Main title</h4>
+                <input
+                  type="text"
+                  {...register(`roadmap.${index}.mainTitle`)}
+                  className="creation-course__input"
+                  disabled={isLoading}
+                />
+              </label>
+
               <label className="creation-course__roadmap-label">
                 <h4 className="creation-course__roadmap-title">Title</h4>
                 <input
