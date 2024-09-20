@@ -46,8 +46,10 @@ public class Course {
     private String name;
     @Column(nullable = false, name = "description")
     private String description;
-    @Column(nullable = false, name = "image")
+    @Column(name = "image")
     private String image;
+    @Column(name = "icon")
+    private String icon;
     @Column(nullable = false, name = "start_date")
     private LocalDateTime startDate;
     @Column(nullable = false, name = "finish_date")
