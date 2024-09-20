@@ -3,6 +3,7 @@ import { CourseEvent } from "../types/CourseEvent";
 
 export const allClasses: CourseEvent[] = [ 
   {
+    id: 0,
     title: 'Heels',
     start: new Date(2024, 9, 15, 16, 30),
     end: new Date(2024, 9, 15, 17, 30),
@@ -15,6 +16,7 @@ export const allClasses: CourseEvent[] = [
     }),
   },
   {
+    id: 1,
     title: 'Heels',
     start: new Date(2024, 9, 18, 14, 15),
     end: new Date(2024, 9, 18, 15, 15),
@@ -27,6 +29,7 @@ export const allClasses: CourseEvent[] = [
     }),
   },
   {
+    id: 2,
     title: 'Pole Dance',
     start: new Date(2024, 9, 15, 17, 30),
     end: new Date(2024, 9, 15, 18, 30),
@@ -39,6 +42,7 @@ export const allClasses: CourseEvent[] = [
     }),
   },
   {
+    id: 3,
     title: 'Twerk',
     start: new Date(2024, 9, 18, 13, 15),
     end: new Date(2024, 9, 18, 14, 15),
@@ -51,6 +55,7 @@ export const allClasses: CourseEvent[] = [
     }),
   },
   {
+    id: 4,
     title: 'Stretching',
     start: new Date(2024, 9, 16, 15, 0),
     end: new Date(2024, 9, 16, 16, 0),
@@ -63,6 +68,7 @@ export const allClasses: CourseEvent[] = [
     }),
   },
   {
+    id: 5,
     title: 'Stretching',
     start: new Date(2024, 9, 19, 16, 0),
     end: new Date(2024, 9, 19, 17, 0),
@@ -75,6 +81,7 @@ export const allClasses: CourseEvent[] = [
     }),
   },
   {
+    id: 6,
     title: 'Stretching',
     start: new Date(2024, 9, 20, 10, 30),
     end: new Date(2024, 9, 20, 11, 30),
@@ -87,6 +94,7 @@ export const allClasses: CourseEvent[] = [
     }),
   },
   {
+    id: 7,
     title: 'Stretching',
     start: new Date(2024, 9, 21, 11, 30),
     end: new Date(2024, 9, 21, 12, 30),
@@ -99,6 +107,7 @@ export const allClasses: CourseEvent[] = [
     }),
   },
   {
+    id: 8,
     title: 'Exotic',
     start: new Date(2024, 9, 21, 16, 0),
     end: new Date(2024, 9, 21, 17, 0),
