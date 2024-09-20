@@ -9,7 +9,7 @@ interface Props {
 
 export const SignButton: React.FC<Props> = ({ title, path }) => {
   let currantPath =
-    path ? path : title.toLowerCase().includes("course") ? "/our-courses" : "";
+    path ? path : title.toLowerCase().includes("course") ? "/our-courses" : "/classes";
 
   return (
       <Link to={currantPath} className="sign-button">
