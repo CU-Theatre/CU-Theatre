@@ -40,7 +40,7 @@ export const ShowsWindow: React.FC<Props> = ({ show }) => {
             <div className="show__info">
               <p className="show__date">Time- {show.showDate}</p>
               <p className="show__price">Price- {show.showPrice}</p>
-              <SignButton title="Book a place" path="subscribe-for-event" />
+              <SignButton title="Book a place" show={show}/>
             </div>
           </div>
         </div>
