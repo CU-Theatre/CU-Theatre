@@ -28,7 +28,8 @@
   }
 
   &__shows,
-  &__classes {
+  &__classes,
+  &__current-tickets {
     grid-column: 1 / -1;
   }
 
@@ -80,5 +81,87 @@
       color: $white;
       border: 1px solid $white;
     }
+  }
+
+  &__tickets {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 20px 0;
+  }
+
+  &__changing-count {
+    width: 24px;
+    height: 24px;
+    border-radius: 3px;
+    background-color: black;
+    color: $white;
+  }
+
+  &__current-tickets {
+    color: $white;
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+    align-items: center;
+  }
+
+  &__current-ticket {
+    color: black;
+    display: flex;
+    font-size: 12px;
+    justify-content: space-between;
+    gap: 8px;
+    align-items: center;
+    background-color: $white;
+    padding: 10px;
+    border-radius: 8px;
+
+  }
+
+  &__delete {
+    min-width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background-color: black;
+    position: relative;
+    transition: transform .3s,  opacity .3s;
+
+    &::before,
+    &::after {
+      content: '';
+      display: block;
+      position: absolute;
+      background-color: $white;
+      top: 50%;
+      left: 50%;
+      width: 12px;
+      height: 1.5px;
+      border-radius: 2px;
+    }
+
+    &::before {
+      transform: translate(-50%, -50%) rotate(45deg);
+    }
+
+    &::after {
+      transform: translate(-50%, -50%) rotate(-45deg);
+    }
+
+    &:hover {
+      transform: scale(1.05);
+    }
+
+    &:active {
+      opacity: 0.7;
+    }
+  }
+
+  &__current-group {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    align-items: center;
   }
 }

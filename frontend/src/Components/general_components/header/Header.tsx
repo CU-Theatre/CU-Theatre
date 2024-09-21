@@ -7,7 +7,7 @@ import cn from "classnames";
 import { pages } from "../../../utils/pagesArray";
 import { useAppContext } from "../../../AppContext";
 
-export const Header = () => {
+export const Header: React.FC = () => {
   const { setIsOpen, isLoginned } = useAppContext();
 
   return (
@@ -61,12 +61,13 @@ export const Header = () => {
           </ul>
         </nav>
         <nav className="header__buttons">
-          <button
+          <Link
+            to={'/subscribe-for-event'}
             type="button"
             className="header__button header__button--book white-button"
           >
             Book place
-          </button>
+          </Link>
           {!isLoginned && (
             <Link
               to={"/log-in"}
