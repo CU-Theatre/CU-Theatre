@@ -38,20 +38,24 @@
     font-weight: 700;
   }
 
+  &__buttons {
+    display: flex;
+    gap: 20px;
+  }
+
   &__button {
     padding: 10px 15px;
     background-color: $black;
     color: $white;
     border-radius: 8px;
-    width: 100%;
     cursor: pointer;
     transition: all $effectDuration;
     border: 2px solid $black;
     font-weight: normal;
 
-    @include on-tablet {
-      width: 370px;
-    }
+    // @include on-tablet {
+    //   width: 370px;
+    // }
 
     @media (hover: hover) {
       &:hover {

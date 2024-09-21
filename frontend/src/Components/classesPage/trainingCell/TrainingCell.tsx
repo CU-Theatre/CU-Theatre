@@ -21,32 +21,32 @@ export const TrainingCell: React.FC<Props> = ({
   const { setEventInfoIsOpen, setEventDetailIsOpen } = useAppContext();
   const [isError, setIsError] = useState(false);
   const [token] = useTokenLocalStorage();
-  const navigate = useNavigate()
-  
+  const navigate = useNavigate();
 
   const { title, description, icon, dates } = training;
 
   const openClassDetails = (id: number) => {
-    getCurrentUser(token).then(() => {
-      getCurrentTraining(id)
-      .then((currentTraining) => {
-        if (currentTraining) {
-          setCurrentEvent(currentTraining);
-          setEventInfoIsOpen(false);
-          setEventDetailIsOpen(true);
-        } else {
-          setIsError(true);
-          console.log('currentTraining', currentTraining);
-          
-        }
+    getCurrentUser(token)
+      .then(() => {
+        getCurrentTraining(id)
+          .then((currentTraining) => {
+            if (currentTraining) {
+              setCurrentEvent(currentTraining);
+              setEventInfoIsOpen(false);
+              setEventDetailIsOpen(true);
+            } else {
+              setIsError(true);
+              console.log("currentTraining", currentTraining);
+            }
+          })
+          .catch((err: Error) => {
+            setIsError(true);
+            console.log(err.message);
+          });
       })
-      .catch((err: Error) => {
-        setIsError(true);
-        console.log(err.message);
+      .catch(() => {
+        navigate("/log-in");
       });
-    }).catch(() => {
-      navigate('/log-in')
-    })
   };
 
   return (
@@ -56,15 +56,17 @@ export const TrainingCell: React.FC<Props> = ({
         <h3 className="training-cell__title">{title}</h3>
         <p className="training-cell__description">{description}</p>
 
-        {dates.map((date) => (
-          <button
-            key={date.lessonId}
-            className="training-cell__button"
-            onClick={() => openClassDetails(date.lessonId)}
-          >
-            {date.date.getDate()}
-          </button>
-        ))}
+        <div className="training-cell__buttons">
+          {dates.map((date) => (
+            <button
+              key={date.lessonId}
+              className="training-cell__button"
+              onClick={() => openClassDetails(date.lessonId)}
+            >
+              {date.date.getDate()}
+            </button>
+          ))}
+        </div>
       </div>
       <div className="training-cell__error">
         {isError && (
