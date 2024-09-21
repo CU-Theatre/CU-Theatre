@@ -129,6 +129,19 @@ export const CreationCourse: React.FC<Props> = ({
               disabled={isLoading}
             />
           </div>
+
+          <div className="creation-course__input-cell">
+            <label htmlFor="course-number-people" className="creation-course__label">
+              Max number of people
+            </label>
+            <input
+              type="number"
+              id="course-number-people"
+              className="creation-course__input creation-course__input--date"
+              {...register('maxPeople', { required: true })}
+              disabled={isLoading}
+            />
+          </div>
         </div>
 
         <Upload onUpload={onUploadIcon} />

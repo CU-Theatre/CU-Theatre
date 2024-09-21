@@ -32,15 +32,20 @@ export const CourseEditorModal: React.FC<Props> = ({
   const onCreating: SubmitHandler<CreationCourseFormType> = (data) => {
     console.log("data", data);
 
-    const { roadmap, ...sendingData } = data;
+    const { roadmap, maxPeople, subscribed, ...sendingData } = data;
 
     // TODO write a handler save image
     sendingData.image = "aaa.jpg";
 
     try {
-      if (typeof sendingData.price === 'string') {
+      if (typeof sendingData.price === "string") {
         sendingData.price = parseFloat(sendingData.price);
+        sendingData.price = Math.abs(sendingData.price);
       }
+      // if (typeof sendingData.maxPeople === "string") {
+      //   sendingData.maxPeople = parseFloat(sendingData.maxPeople);
+      //   sendingData.maxPeople = Math.abs(sendingData.maxPeople);
+      // }
     } catch {
       // TODO write a errHandler when prise isn't number
     }

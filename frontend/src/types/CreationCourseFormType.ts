@@ -9,4 +9,6 @@ export type CreationCourseFormType = {
   price: number | string;
   image: string;
   roadmap: Omit<RoadmapItemCreate, 'courseId'>[];
+  maxPeople?: number | string;
+  subscribed?: { name: string; phoneNumber: string }[];
 };
