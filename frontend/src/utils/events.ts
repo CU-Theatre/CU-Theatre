@@ -1,4 +1,6 @@
-export const events = {
+import { Events } from "../types/Events";
+
+export const events: Events = {
   mainEvents: {
     impro: [
       {
