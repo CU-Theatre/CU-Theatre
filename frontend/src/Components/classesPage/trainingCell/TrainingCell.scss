@@ -1,0 +1,68 @@
+@import "../../../styles/variables.scss";
+@import "../../../styles/mixins.scss";
+
+.training-cell {
+  background-color: $white;
+  border-radius: 30px;
+  padding: 16px;
+
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+
+  @include on-tablet {
+    padding: 30px;
+    flex-direction: row;
+    align-items: flex-start;
+  }
+
+  &__icon {
+    width: 58px;
+  }
+
+  &__main {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+
+    align-items: center;
+
+    @include on-tablet {
+      align-items: flex-start;
+      gap: 44px;
+    }
+  }
+
+  &__title {
+    font-size: 24px;
+    font-weight: 700;
+  }
+
+  &__buttons {
+    display: flex;
+    gap: 20px;
+  }
+
+  &__button {
+    padding: 10px 15px;
+    background-color: $black;
+    color: $white;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all $effectDuration;
+    border: 2px solid $black;
+    font-weight: normal;
+
+    // @include on-tablet {
+    //   width: 370px;
+    // }
+
+    @media (hover: hover) {
+      &:hover {
+        background-color: $white;
+        color: $black;
+        font-weight: bold;
+      }
+    }
+  }
+}

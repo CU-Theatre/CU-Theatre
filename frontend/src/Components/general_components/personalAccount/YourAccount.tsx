@@ -13,16 +13,18 @@ import { useLocalStorage } from "../../../hooks/useLocalStorage";
 import { FetchErrorMessage } from "../../../types/FetchErrorMessage";
 import { validEmail } from "../../../utils/validEmail";
 import { CabinetFormInput } from "../../../types/CabinetFormInput";
-import classNames from "classnames";
 import { MyCalendar } from "./MyCalendar";
 import { CourseEvent } from "../../../types/CourseEvent";
 import { EventInfo } from "./MyCalendar/EventInfo";
+import { ErrorNotification } from "../errorNotification";
 
 export const YourAccount: React.FC = () => {
-  const { userState, setUserState, setIsLoginned, eventInfoIsOpen } = useAppContext();
+  const { userState, setUserState, setIsLoginned, eventInfoIsOpen } =
+    useAppContext();
   const [isRootErrShown, setIsRootErrShown] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [currentEvent, setCurrentEvent] = useState<CourseEvent | null>(null);
+  const [errorMessage, setErrorMessage] = useState("");
 
   const navigate = useNavigate();
 
@@ -31,30 +33,9 @@ export const YourAccount: React.FC = () => {
     handleSubmit,
     reset,
     formState: { errors },
-    setError,
-    clearErrors,
   } = useForm<CabinetFormInput>();
 
   const [token] = useLocalStorage(KEY_TOKEN, "");
-
-  const setRootError = (str: string) => {
-    setError("root", {
-      message: str,
-      type: "manual",
-    });
-
-    setTimeout(() => {
-      setIsRootErrShown(true);
-    }, 0);
-
-    setTimeout(() => {
-      setIsRootErrShown(false);
-    }, 2000);
-
-    setTimeout(() => {
-      clearErrors("root");
-    }, 2500);
-  };
 
   useEffect(() => {
     setIsLoading(true);
@@ -73,7 +54,8 @@ export const YourAccount: React.FC = () => {
 
           default:
             console.error(err);
-            setRootError("Something went wrong. Reload the page.");
+            setErrorMessage("Something went wrong. Reload the page.");
+            setIsRootErrShown(true);
             break;
         }
       })
@@ -85,7 +67,8 @@ export const YourAccount: React.FC = () => {
   const handleSave: SubmitHandler<CabinetFormInput> = (data) => {
     console.log(data);
     setIsLoading(true);
-    setRootError("Something went wrong. Your changes did not save.");
+    setErrorMessage("Something went wrong. Your changes did not save.");
+    setIsRootErrShown(true);
     // TODO add params
     // updateUser()
     //   .then()
@@ -171,7 +154,7 @@ export const YourAccount: React.FC = () => {
                 Phone number
               </label>
               <input
-                {...register("phoneNumber", { required: true,  })}
+                {...register("phoneNumber", { required: true })}
                 id="userEmail"
                 className="cabinet__user-name"
                 type="tel"
@@ -196,14 +179,11 @@ export const YourAccount: React.FC = () => {
               Log Out
             </button>
 
-            {errors.root && (
-              <div
-                className={classNames("cabinet__err", {
-                  'cabinet__err--active': isRootErrShown,
-                })}
-              >
-                <p className="cabinet__err-text">{errors.root?.message}</p>
-              </div>
+            {isRootErrShown && (
+              <ErrorNotification
+                message={errorMessage}
+                setIsError={setIsRootErrShown}
+              />
             )}
           </form>
 
@@ -233,11 +213,14 @@ export const YourAccount: React.FC = () => {
         )}
         <div className="cabinet__calendar">
           <h3 className="cabinet__main-title">Schedule</h3>
-          <Link to={'/users-table'} className="cabinet__users-table">Users table page</Link>
-          <MyCalendar setCurrentEvent={setCurrentEvent}/>
+          <Link to={"/users-table"} className="cabinet__users-table">
+            Users table page
+          </Link>
+          <MyCalendar setCurrentEvent={setCurrentEvent} />
         </div>
       </div>
-        <EventInfo currentEvent={currentEvent}/>
+      setCurrentEvent(null);
+      <EventInfo currentEvent={currentEvent} setCurrentEvent={setCurrentEvent} />
     </section>
   );
 };

@@ -8,9 +8,10 @@ import { events } from '../../../../../utils/events';
 
 interface Props {
   currentEvent: CourseEvent | null;
+  setCurrentEvent: (a: CourseEvent | null) => void;
 }
 
-export const EventInfo: React.FC<Props> = ({ currentEvent }) => {
+export const EventInfo: React.FC<Props> = ({ currentEvent, setCurrentEvent }) => {
   const { setEventInfoIsOpen, eventInfoIsOpen, setEventDetailIsOpen, userState, setCourses } = useAppContext();
   const classes = ['Heels', 'Exotic', 'Stretching', 'Pole Dance', 'Twerk'];
   const someShows = ["Live performance", "Impro shows", "Playback shows"];
@@ -65,12 +66,14 @@ export const EventInfo: React.FC<Props> = ({ currentEvent }) => {
   
       setEventDetailIsOpen(false);
       setEventInfoIsOpen(true);
+      setCurrentEvent(null);
     }
   };
 
   const handleCloseClick = () => {
     setEventDetailIsOpen(false);
     setEventInfoIsOpen(true);
+    setCurrentEvent(null);
   }
 
   const bookClassPlace = () => {
@@ -119,6 +122,7 @@ export const EventInfo: React.FC<Props> = ({ currentEvent }) => {
 
       setEventDetailIsOpen(false);
       setEventInfoIsOpen(true);
+      setCurrentEvent(null);
     }
   };
 
@@ -163,6 +167,7 @@ export const EventInfo: React.FC<Props> = ({ currentEvent }) => {
   
       setEventDetailIsOpen(false);
       setEventInfoIsOpen(true);
+      setCurrentEvent(null);
     }
   };
 
