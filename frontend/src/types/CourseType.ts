@@ -10,5 +10,7 @@ export interface CourseType {
   image: string;
   roadmap: RoadmapItem[];
   description: string;
+  maxPeople: number;
+  subscribed: { name: string; phoneNumber: string }[];
   courseTime: CourseEvent[];
 }

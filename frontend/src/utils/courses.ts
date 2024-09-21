@@ -14,6 +14,8 @@ export const dramaCourse: CourseType = {
   icon: DramaImg,
   image: DramaBG,
   price: 45,
+  maxPeople: 15,
+  subscribed: [{ name: 'Jone', phoneNumber: '+12345678' }],
   roadmap: [
     {
       id: 1,
@@ -107,6 +109,8 @@ export const improCourse: CourseType = {
   icon: ImproImg,
   image: ImproBG,
   price: 45,
+  maxPeople: 15,
+  subscribed: [{ name: 'Jone', phoneNumber: '+12345678' }],
   roadmap: [
     {
       id: 1,
@@ -176,6 +180,8 @@ export const playbackCourse: CourseType = {
   icon: PlaybackImg,
   image: PlaybackBG,
   price: 45,
+  maxPeople: 15,
+  subscribed: [{ name: 'Jone', phoneNumber: '+12345678' }],
   roadmap: [
     {
       id: 1,
