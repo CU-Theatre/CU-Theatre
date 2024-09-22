@@ -199,7 +199,7 @@ export const TimeTable: React.FC = () => {
           </div>
           <img className="schedule__masks" src={masks} alt="" />
         </div>
-        <SignButton title="More classes" />
+        <SignButton title="More classes"  path="/classes"/>
         <h2 className="schedule__title title">Pricelist</h2>
         <div className="schedule__pricelist">
           {courses.map((course) => (
@@ -213,7 +213,7 @@ export const TimeTable: React.FC = () => {
             </div>
           ))}
         </div>
-        <SignButton title="Sign for a course" />
+        <SignButton title="Sign for a course" path="/our-courses" />
         <div className="schedule__calendar">
           <h3 className="schedule__main-title">Schedule</h3>
           <MyCalendar setCurrentEvent={setCurrentEvent} />

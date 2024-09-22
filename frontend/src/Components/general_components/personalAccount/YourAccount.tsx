@@ -197,7 +197,7 @@ export const YourAccount: React.FC = () => {
             <h3 className="cabinet__main-title">
               {"You are not subscribed to any course yet :("}
             </h3>
-            <SignButton title="Sign for a course?" />
+            <SignButton title="Sign for a course?" path="/our-courses"/>
           </div>
         ) : (
           <div className="cabinet__main">
