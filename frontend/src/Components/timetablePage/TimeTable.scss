@@ -157,4 +157,12 @@
   &__pricelist-price {
     font-size: 12px;
   }
+
+  &__calendar {
+    grid-column: 1 / -1;
+    display: flex;
+    flex-direction: column;
+    gap: 50px;
+    align-items: center;
+  }
 }

@@ -285,7 +285,7 @@ export const SubscribeForEvents: React.FC = () => {
           ) : (
             <button 
             type="submit" 
-            className="subscribe-for-event__button"
+            className={classNames('subscribe-for-event__button', {'subscribe-for-event__button--disabled': !selectedShow})}
             onClick={() => bookShowPlace(selectedShow)}
           >
             Book a place
