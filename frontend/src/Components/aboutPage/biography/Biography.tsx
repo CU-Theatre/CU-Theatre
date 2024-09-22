@@ -34,7 +34,7 @@ export const Biography: React.FC = () => {
           </p>
         </div>
 
-        <SignButton title="Sign for a course" />
+        <SignButton title="Sign for a course" path="/our-courses"/>
       </div>
     </section>
   );
