@@ -18,6 +18,7 @@ import {
 } from "../../../utils/globalVariables";
 import { useFadeIn } from "../../../hooks/useFadeIn";
 import { SwiperNavigation } from "../../general_components/swiperNavigation";
+import { SignButton } from "../../general_components/signButton";
 
 const classesArr = [
   {
@@ -87,14 +88,7 @@ export const MoreClasses: React.FC = () => {
                   alt={`from ${training.title}`}
                   className={style.classes__img}
                 />
-                <button
-                  type="button"
-                  className={`${style.classes__button} ${
-                    i % 2 === 0 || style["classes__button--white"]
-                  }`}
-                >
-                  Sign for a class
-                </button>
+                <SignButton title="Sign for a class" path="/classes"/>
               </SwiperSlide>
             ))}
 
