@@ -4,6 +4,7 @@ import { SignButton } from "../signButton";
 import "./ShowsWindow.scss";
 import { useAppContext } from "../../../AppContext";
 import classNames from "classnames";
+import { BookingButton } from "../bookingButton";
 
 interface Props {
   show: ShowType;
@@ -40,7 +41,7 @@ export const ShowsWindow: React.FC<Props> = ({ show }) => {
             <div className="show__info">
               <p className="show__date">Time- {show.showDate}</p>
               <p className="show__price">Price- {show.showPrice}</p>
-              <SignButton title="Book a place" show={show}/>
+              <BookingButton title="Book a place" show={show}/>
             </div>
           </div>
         </div>

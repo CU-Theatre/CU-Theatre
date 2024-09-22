@@ -61,7 +61,7 @@ export const About: React.FC = () => {
               </p>
             </Link>
           </div>
-          <SignButton title="Sign for a class" />
+          <SignButton title="Sign for a class" path="/classes"/>
         </div>
       </div>
       <ShowsWindow show={modalInfo} />
