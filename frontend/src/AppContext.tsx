@@ -62,7 +62,6 @@ export const AppProvider: React.FC<React.PropsWithChildren<{}>> = ({
       .then((newUser) => {
         setUserState(newUser);
         setIsLoginned(true);
-        console.log(newUser);
       })
       .catch((err: Error) => {
         switch (err.message) {
@@ -89,10 +88,6 @@ export const AppProvider: React.FC<React.PropsWithChildren<{}>> = ({
       document.body.style.overflow = '';
     }
   }, [modalsOpen, isOpen, courseModal, eventDetailIsOpen]);
-
-  useEffect(() => {
-      console.log(eventList);
-  }, []);
 
   return (
     <AppContext.Provider
