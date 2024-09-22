@@ -5,6 +5,7 @@ import { format } from 'date-fns';
 import { useAppContext } from '../../../../../AppContext';
 import classNames from 'classnames';
 import { events } from '../../../../../utils/events';
+import { allShows } from '../../../../../utils/allShows';
 
 interface Props {
   currentEvent: CourseEvent | null;
@@ -222,7 +223,12 @@ export const EventInfo: React.FC<Props> = ({ currentEvent, setCurrentEvent }) =>
         <p className='event-info__duration'>
           Event duration - {currentEvent && format(currentEvent.start, 'HH:mm')} - {currentEvent && format(currentEvent.end, 'HH:mm')}
         </p>
-        <div className='event-info__prepare'>
+        {currentEvent && someShows.includes(currentEvent?.title) ? (
+          <div className='event-info__description'>
+            {allShows[allShows.findIndex(show => show.showName === currentEvent.title)].showTitle}
+          </div>
+        ) : (
+          <div className='event-info__prepare'>
           <h5 className='event-info__prepare-text'>Dont forget to take with you</h5>
           <ul className='event-info__list'>
             <li className='event-info__item'>
@@ -250,6 +256,7 @@ export const EventInfo: React.FC<Props> = ({ currentEvent, setCurrentEvent }) =>
             </li>
           </ul>
         </div>
+        )}
         {currentEvent && someShows.includes(currentEvent?.title) && (
           <button onClick={cancelShowBooking} className='event-info__button' type='button'>Cancel show booking</button>
         )}
