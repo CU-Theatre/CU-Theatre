@@ -3,6 +3,9 @@ import "./TimeTable.scss";
 import cn from "classnames";
 import { SignButton } from "../general_components/signButton";
 import masks from "../img/timetable/masks.png";
+import { MyCalendar } from "../general_components/personalAccount/MyCalendar";
+import { EventInfo } from "../general_components/personalAccount/MyCalendar/EventInfo";
+import { CourseEvent } from "../../types/CourseEvent";
 
 export const TimeTable: React.FC = () => {
   const days = [
@@ -144,6 +147,7 @@ export const TimeTable: React.FC = () => {
     },
   ];
   const [activeDay, setActiveDay] = useState<string | null>("Tuesday");
+  const [currentEvent, setCurrentEvent] = useState<CourseEvent | null>(null);
 
   useEffect(() => {
     const currentData = new Date();
@@ -210,7 +214,12 @@ export const TimeTable: React.FC = () => {
           ))}
         </div>
         <SignButton title="Sign for a course" />
+        <div className="schedule__calendar">
+          <h3 className="schedule__main-title">Schedule</h3>
+          <MyCalendar setCurrentEvent={setCurrentEvent} />
+        </div>
       </div>
+      <EventInfo currentEvent={currentEvent} setCurrentEvent={setCurrentEvent} />
     </div>
   );
 };

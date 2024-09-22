@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import "./LogInQuestionnaire.scss";
 import {
   SubmitHandler,
@@ -12,6 +12,7 @@ import { useLocalStorage } from "../../../hooks/useLocalStorage";
 import { useNavigateToPreviousOrHomePage } from "../../../hooks/useNavigateToPreviousOrHomePage";
 import { FetchErrorMessage } from "../../../types/FetchErrorMessage";
 import { QuestionnaireRow } from "../questionnaireRow";
+import { LoaderButton } from "../../general_components/Loader/LoaderButton";
 
 
 export const LogInQuestionnaire: React.FC = () => {
@@ -27,6 +28,7 @@ export const LogInQuestionnaire: React.FC = () => {
   const { setIsLoginned } = useAppContext();
   const [, setToken] = useLocalStorage(KEY_TOKEN, "");
   const navigate = useNavigateToPreviousOrHomePage();
+  const [loadingButton, setLoadingButton] = useState(false);
 
   const onSubmit: SubmitHandler<LoginData> = (data) => {
     const trimmedData = { ...data };
@@ -52,6 +54,8 @@ export const LogInQuestionnaire: React.FC = () => {
       return;
     }
 
+    setLoadingButton(true);
+
     logIn(trimmedData)
       .then((response) => {
         setIsLoginned(true);
@@ -70,6 +74,9 @@ export const LogInQuestionnaire: React.FC = () => {
             setError("root", { message: "Oops, something's wrong" });
             break;
         }
+      })
+      .finally(() => {
+        setLoadingButton(false);
       });
   };
 
@@ -112,10 +119,13 @@ export const LogInQuestionnaire: React.FC = () => {
           <p className="questionnaire__error">{errors.root.message}</p>
         )}
       </div>
-
-      <button type="submit" className="questionnaire__button white-button">
-        Submit
-      </button>
+      {loadingButton ? (
+        <LoaderButton />
+      ) : (
+        <button type="submit" className="questionnaire__button white-button">
+          Submit
+        </button>
+      )}
     </form>
   );
 };
