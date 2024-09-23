@@ -20,6 +20,46 @@
     row-gap: 40px;
   }
 
+  &__week-navigation {
+    grid-column: 1 / -1;
+    color: $white;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    justify-self: center;
+
+    @include on-tablet {
+      gap: 10px;
+    }
+  }
+
+  &__nav-button {
+    background-color: $white;
+    border-radius: 8px;
+    padding: 8px 14px;
+    font-size: 12px;
+    border: 1px solid black;
+    transition: background-color .3s, color .3s, border .3s;
+
+    &:hover {
+      background-color: black;
+      color: $white;
+      border: 1px solid $white;
+    }
+
+    @include on-tablet {
+      font-size: 16px;
+    }
+  }
+
+  &__dates {
+    font-size: 12px;
+
+    @include on-tablet {
+      font-size: 16px;
+    }
+  }
+
   &__title {
     color: $white;
     grid-column: 1 / -1;
