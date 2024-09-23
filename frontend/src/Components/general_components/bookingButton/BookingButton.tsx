@@ -3,6 +3,7 @@ import "./BookingButton.scss";
 import { ShowType } from "../../../types/ShowType";
 import { useAppContext } from "../../../AppContext";
 import { Guest } from "../../../types/Events";
+import classNames from "classnames";
 
 interface Props {
   title: string;
@@ -12,6 +13,7 @@ interface Props {
 export const BookingButton: React.FC<Props> = ({ title, show }) => {
   const { userState, setCourses, eventList, setEventList } = useAppContext();
   const [isGuestExists, setIsGuestExists] = useState(false);
+  const [noTickets, setNoTickets] = useState(false);
 
   useEffect(() => {
     if (!show || !eventList || !eventList.mainEvents) return;
@@ -32,6 +34,14 @@ export const BookingButton: React.FC<Props> = ({ title, show }) => {
         console.log('No matching events');
         return;
     }
+
+    if (currentEventList.length === 30) {
+      setNoTickets(true)
+
+      return
+    }
+
+    setNoTickets(false);
 
     const guestExists = currentEventList.some(
       (guest) => guest.phone === userState?.phoneNumber
@@ -103,7 +113,6 @@ export const BookingButton: React.FC<Props> = ({ title, show }) => {
 
     let updatedEventList = { ...eventList };
 
-    // Видаляємо гостя на основі типу шоу
     switch (selectedShow.showName) {
       case 'Live performance':
         updatedEventList.mainEvents.livePerf = eventList.mainEvents.livePerf.filter(
@@ -149,8 +158,10 @@ export const BookingButton: React.FC<Props> = ({ title, show }) => {
     ) : (
       <button
         type="button" 
-        className="booking-button" 
-        onClick={() => bookShowPlace(show)}>
+        className={classNames("booking-button", {"booking-button--disabled": noTickets})}
+        onClick={() => bookShowPlace(show)}
+        disabled={noTickets}
+      >
         {title}
       </button>
     )

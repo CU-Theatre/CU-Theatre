@@ -1,6 +1,5 @@
 import React, { useEffect } from "react";
 import { ShowType } from "../../../types/ShowType";
-import { SignButton } from "../signButton";
 import "./ShowsWindow.scss";
 import { useAppContext } from "../../../AppContext";
 import classNames from "classnames";
@@ -11,7 +10,7 @@ interface Props {
 }
 
 export const ShowsWindow: React.FC<Props> = ({ show }) => {
-  const { setModalIsOpen, modalsOpen } = useAppContext();
+  const { setModalIsOpen, modalsOpen, eventList } = useAppContext();
 
   const onCloseMenu = () => {
     setModalIsOpen(false);
@@ -22,6 +21,34 @@ export const ShowsWindow: React.FC<Props> = ({ show }) => {
       setModalIsOpen(false);
     };
   }, [setModalIsOpen]);
+
+  const detectShow = (someShowName: string) => {
+    if (!eventList?.mainEvents) return;
+
+    let chosedShow;
+
+    switch (someShowName) {
+      case 'Live performance':
+        chosedShow = eventList.mainEvents.livePerf;
+        break;
+      case 'Impro shows':
+        chosedShow = eventList.mainEvents.impro;
+        break;
+      default:
+        chosedShow = eventList.mainEvents.playback;
+        break;
+    }
+
+    return chosedShow;
+  };
+
+  const countTicketsLeft = (someShowName: string) => {
+    const lookingShow = detectShow(someShowName);
+
+    if (!lookingShow) return;
+
+    return 30 - lookingShow?.length;
+  }
 
   return (
     <div className={classNames("show", { "modal-open": !modalsOpen })}>
@@ -41,7 +68,12 @@ export const ShowsWindow: React.FC<Props> = ({ show }) => {
             <div className="show__info">
               <p className="show__date">Time- {show.showDate}</p>
               <p className="show__price">Price- {show.showPrice}</p>
-              <BookingButton title="Book a place" show={show}/>
+              {countTicketsLeft(show.showName) === 0 ? (
+                <p className="show__tickets-left show__error">There are no tickets left</p>
+              ) : (
+                <p className="show__tickets-left">Tickets left- {countTicketsLeft(show.showName)}</p>
+              )}
+              <BookingButton title="Book a place" show={show} />
             </div>
           </div>
         </div>

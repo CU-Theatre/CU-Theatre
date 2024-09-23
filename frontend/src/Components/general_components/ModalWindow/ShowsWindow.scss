@@ -12,6 +12,7 @@
   bottom: 0;
   z-index: 50;
   transition: transform 0.3s;
+  overflow-y: scroll;
 
   &__wrapper,
   &__main,
@@ -161,5 +162,11 @@
       transform: scale(1.05);
       filter: grayscale(1) brightness(0.5);
     }
+  }
+
+  &__error {
+    color: red;
+    font-weight: 700;
+    font-style: 16;
   }
 }
