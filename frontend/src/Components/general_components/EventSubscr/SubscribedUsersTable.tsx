@@ -4,110 +4,35 @@ import { allShows } from '../../../utils/allShows';
 import { events } from '../../../utils/events';
 import classNames from 'classnames';
 import { DayOfWeek } from '../../../types/DayOfWeek';
+import { useHiddenColumns } from '../../../hooks/useHiddenColumns';
+import { useHiddenClassColumns } from '../../../hooks/useHiddenClassColumns';
+import { addWeeks, formatDate, getWeek } from './utils';
 
 export const SubscribedUsersTable: React.FC = () => {
   const daysOfWeek: DayOfWeek[] = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
   const classes = ['Heels', 'Pole Dance', 'Twerk', 'Exotic', 'Stretching'];
-  const [hiddenColumns, setHiddenColumns] =  useState<Record<'impro' | 'playback' | 'livePerf', Record<DayOfWeek, boolean>>>({
-    impro: {
-      Monday: true,
-      Tuesday: true,
-      Wednesday: true,
-      Thursday: true,
-      Friday: true,
-      Saturday: true,
-      Sunday: true,
-    },
-    playback: {
-      Monday: true,
-      Tuesday: true,
-      Wednesday: true,
-      Thursday: true,
-      Friday: true,
-      Saturday: true,
-      Sunday: true,
-    },
-    livePerf: {
-      Monday: true,
-      Tuesday: true,
-      Wednesday: true,
-      Thursday: true,
-      Friday: true,
-      Saturday: true,
-      Sunday: true,
-    },
-  });
-  
-  const [hiddenClassColumns, setHiddenClassColumns] = useState<Record<'heels' | 'poleDance' | 'twerk' | 'exotic' | 'stretching', Record<DayOfWeek, boolean>>>({
-    heels: {
-      Monday: true,
-      Tuesday: true,
-      Wednesday: true,
-      Thursday: true,
-      Friday: true,
-      Saturday: true,
-      Sunday: true,
-    },
-    poleDance: {
-      Monday: true,
-      Tuesday: true,
-      Wednesday: true,
-      Thursday: true,
-      Friday: true,
-      Saturday: true,
-      Sunday: true,
-    },
-    twerk: {
-      Monday: true,
-      Tuesday: true,
-      Wednesday: true,
-      Thursday: true,
-      Friday: true,
-      Saturday: true,
-      Sunday: true,
-    },
-    exotic: {
-      Monday: true,
-      Tuesday: true,
-      Wednesday: true,
-      Thursday: true,
-      Friday: true,
-      Saturday: true,
-      Sunday: true,
-    },
-    stretching: {
-      Monday: true,
-      Tuesday: true,
-      Wednesday: true,
-      Thursday: true,
-      Friday: true,
-      Saturday: true,
-      Sunday: true,
-    },
-  });
+  const { hiddenColumns, toggleColumnVisibility } = useHiddenColumns();
+  const { hiddenClassColumns, toggleClassColumnVisibility } = useHiddenClassColumns();
+  const [currentWeek, setCurrentWeek] = useState(getWeek(new Date()));
 
-  const toggleColumnVisibility = (column: 'impro' | 'playback' | 'livePerf', day: DayOfWeek) => {
-    setHiddenColumns(prevState => ({
-      ...prevState,
-      [column]: {
-        ...prevState[column],
-        [day]: !prevState[column][day],
-      },
-    }));
+  const handlePrevWeek = () => {
+    setCurrentWeek(prevWeek => addWeeks(prevWeek, -1));
   };
-  
-  const toggleClassColumnVisibility = (column: keyof typeof hiddenClassColumns, day: DayOfWeek) => {
-    setHiddenClassColumns(prevState => ({
-      ...prevState,
-      [column]: {
-        ...prevState[column],
-        [day]: !prevState[column][day],
-      },
-    }));
+
+  const handleNextWeek = () => {
+    setCurrentWeek(prevWeek => addWeeks(prevWeek, 1));
   };
 
   const getUniqueDates = (eventsArray: any[], day: string) => {
     return [...new Set(eventsArray.filter(event => event.dayOfWeek === day).map(event => event.date))];
+  };
+
+  const isInCurrentWeek = (date: string) => {
+    const currentYear = new Date().getFullYear();
+    const [day, month] = date.split('.');
+    const eventDate = new Date(`${currentYear}-${month}-${day}`);
+  
+    return eventDate >= currentWeek.start && eventDate <= currentWeek.end;
   };
 
 
@@ -115,6 +40,13 @@ export const SubscribedUsersTable: React.FC = () => {
     <div className='subscribed-users'>
       <div className='subscribed-users__container'>
         <h2 className='subscribed-users__title title'>Subscribed users</h2>
+
+        <div className='subscribed-users__week-navigation'>
+          <button className='subscribed-users__nav-button' type='button' onClick={handlePrevWeek}>Previous</button>
+          <span className='subscribed-users__dates'>Dates: {formatDate(currentWeek.start)} - {formatDate(currentWeek.end)}</span>
+          <button className='subscribed-users__nav-button' type='button' onClick={handleNextWeek}>Next</button>
+        </div>
+
         <div className='subscribed-users__events'>
           <table className='subscribed-users__shows'>
             <caption className='subscribed-users__caption'>Shows</caption>
@@ -128,9 +60,9 @@ export const SubscribedUsersTable: React.FC = () => {
             </thead>
             <tbody>
               {daysOfWeek.map(day => {
-                const uniqueImproDates = getUniqueDates(events.mainEvents.impro, day);
-                const uniquePlaybackDates = getUniqueDates(events.mainEvents.playback, day);
-                const uniqueLivePerfDates = getUniqueDates(events.mainEvents.livePerf, day);
+                const uniqueImproDates = getUniqueDates(events.mainEvents.impro, day).filter(isInCurrentWeek);
+                const uniquePlaybackDates = getUniqueDates(events.mainEvents.playback, day).filter(isInCurrentWeek);
+                const uniqueLivePerfDates = getUniqueDates(events.mainEvents.livePerf, day).filter(isInCurrentWeek);
                 const uniqueDates = Array.from(new Set([...uniqueImproDates, ...uniquePlaybackDates, ...uniqueLivePerfDates]));
 
                 return uniqueDates.map(date => {
@@ -247,11 +179,11 @@ export const SubscribedUsersTable: React.FC = () => {
             </thead>
             <tbody>
               {daysOfWeek.map((day: DayOfWeek) => {
-                const uniqueHeelsDates = getUniqueDates(events.otherClasses.heels, day);
-                const uniqueTwerkDates = getUniqueDates(events.otherClasses.twerk, day);
-                const uniqueExoticDates = getUniqueDates(events.otherClasses.exotic, day);
-                const uniquePoleDanceDates = getUniqueDates(events.otherClasses.poleDance, day);
-                const uniqueStretchingDates = getUniqueDates(events.otherClasses.stretching, day);
+                const uniqueHeelsDates = getUniqueDates(events.otherClasses.heels, day).filter(isInCurrentWeek);
+                const uniqueTwerkDates = getUniqueDates(events.otherClasses.twerk, day).filter(isInCurrentWeek);
+                const uniqueExoticDates = getUniqueDates(events.otherClasses.exotic, day).filter(isInCurrentWeek);
+                const uniquePoleDanceDates = getUniqueDates(events.otherClasses.poleDance, day).filter(isInCurrentWeek);
+                const uniqueStretchingDates = getUniqueDates(events.otherClasses.stretching, day).filter(isInCurrentWeek);
                 const uniqueDates = Array.from(new Set([...uniqueHeelsDates, ...uniqueTwerkDates, ...uniqueExoticDates, ...uniquePoleDanceDates, ...uniqueStretchingDates]));
 
                 return uniqueDates.map(date => {

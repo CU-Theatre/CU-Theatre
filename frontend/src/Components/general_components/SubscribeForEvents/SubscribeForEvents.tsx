@@ -17,11 +17,39 @@ const getFromLocalStorage = (key: string) => {
 
 export const SubscribeForEvents: React.FC = () => {
   const [selectedShow, setSelectedShow] = useState<ShowType | undefined>();
-  const [showAlreadyBooked, setShowAlreadyBooked] = useState(false);
   const { userState, setCourses, eventList, setEventList } = useAppContext();
+  const [errors, setErrors] = useState<Record<string, string>>({});
   const [ticketCount, setTicketCount] = useState<Record<string, number>>(() => {
     return getFromLocalStorage('ticketCount') || {};
   });
+
+  const detectShow = (someShowName: string) => {
+    if (!eventList?.mainEvents) return;
+
+    let chosedShow;
+
+    switch (someShowName) {
+      case 'Live performance':
+        chosedShow = eventList.mainEvents.livePerf;
+        break;
+      case 'Impro shows':
+        chosedShow = eventList.mainEvents.impro;
+        break;
+      default:
+        chosedShow = eventList.mainEvents.playback;
+        break;
+    }
+
+    return chosedShow;
+  };
+
+  const countTicketsLeft = (someShowName: string) => {
+    const lookingShow = detectShow(someShowName);
+
+    if (!lookingShow) return;
+
+    return 30 - lookingShow?.length;
+  }
 
   useEffect(() => {
     saveToLocalStorage('ticketCount', ticketCount);
@@ -61,11 +89,18 @@ export const SubscribeForEvents: React.FC = () => {
       case 'Impro shows':
         currentShow = eventList.mainEvents.impro;
         break;
-      case 'Playback shows':
+      default:
         currentShow = eventList.mainEvents.playback;
         break;
-      default:
-        return;
+    }
+
+    const availableTickets = 30 - currentShow.length;
+    if (ticketNumber > availableTickets) {
+      setErrors(prevErrors => ({
+        ...prevErrors,
+        [selectedShow.showName]: "There is not enough tickets",
+      }));
+      return;
     }
 
     const mainShowGuests: Guest = {
@@ -76,6 +111,7 @@ export const SubscribeForEvents: React.FC = () => {
       guestSurname: userState.lastName,
       phone: userState.phoneNumber,
     };
+    
 
     const additionalGuests: Guest[] = ticketNumber > 1
     ? Array.from({ length: ticketNumber - 1 }, (_, idx) => ({
@@ -115,6 +151,7 @@ export const SubscribeForEvents: React.FC = () => {
 
     setEventList(updatedEventList);
     console.log(updatedEventList);
+    setErrors({});
     setCourses((prevCourses) => [...prevCourses, newCalendarShow]);
     setTicketCount((prevCounts) => {
       if (prevCounts[selectedShow.showName] > 0) {
@@ -126,47 +163,6 @@ export const SubscribeForEvents: React.FC = () => {
       return prevCounts;
     });
     console.log("Гостя успішно додано:", newShowGuest);
-  };
-
-  const cancelShowBooking = (selectedShow: ShowType | undefined) => {
-    if (!selectedShow || !userState || !eventList?.mainEvents) return;
-
-    const showDateString = selectedShow.showDate.split('-')[0];
-    const [day, month] = showDateString.split('.').map(Number);
-
-    let updatedEventList = { ...eventList };
-
-    switch (selectedShow.showName) {
-      case 'Live performance':
-        updatedEventList.mainEvents.livePerf = eventList.mainEvents.livePerf.filter(
-          (guest) => guest.phone !== userState.phoneNumber
-        );
-        break;
-      case 'Impro shows':
-        updatedEventList.mainEvents.impro = eventList.mainEvents.impro.filter(
-          (guest) => guest.phone !== userState.phoneNumber
-        );
-        break;
-      case 'Playback shows':
-        updatedEventList.mainEvents.playback = eventList.mainEvents.playback.filter(
-          (guest) => guest.phone !== userState.phoneNumber
-        );
-        break;
-      default:
-        return;
-    }
-
-    setEventList(updatedEventList);
-    setCourses((prevCourses) =>
-      prevCourses.filter(
-        (course) =>
-          course.title !== selectedShow.showName ||
-          course.start.toString() !==
-            new Date(2024, month - 1, day, 17, 0).toString()
-      )
-    );
-
-    console.log("Бронювання скасовано:", userState.phoneNumber);
   };
 
   const deleteTicket = (guestIndex: number, show: ShowType) => {
@@ -202,29 +198,6 @@ export const SubscribeForEvents: React.FC = () => {
     console.log(guestIndex)
   };
 
-
-  useEffect(() => {
-    let otherList;
-  
-    switch (selectedShow?.showName) {
-      case "Live performance":
-        otherList = eventList && eventList.mainEvents.livePerf;
-        break;
-
-      case "Impro shows":
-        otherList = eventList && eventList.mainEvents.impro;
-        break;
-
-      default:
-        otherList = eventList && eventList.mainEvents.playback;
-        break;
-    }
-
-    const isGuestExists = otherList ? otherList.some(guest => guest.phone === userState?.phoneNumber) : false
-  
-      setShowAlreadyBooked(isGuestExists);
-  }, [eventList, selectedShow?.showName, userState?.phoneNumber])
-
   const increment = (showName: string) => {
     setTicketCount((prevCounts) => ({
       ...prevCounts,
@@ -257,6 +230,10 @@ export const SubscribeForEvents: React.FC = () => {
                   <p className="subscribe-for-event__showdate">Show date: {show.showDate}</p>
                   <p className="subscribe-for-event__showprice">Show price: {show.showPrice}</p>
                   <p className="subscribe-for-event__showprice">Total: {parseInt(show.showPrice) * (ticketCount[show.showName] || 0)}$</p>
+                  <p className="subscribe-for-event__left">Ticket`s left: {countTicketsLeft(show.showName)}</p>
+                  {errors[show.showName] && (
+                    <p className="subscribe-for-event__error">{errors[show.showName]}</p>
+                  )}
                 </div>
                 <div className="subscribe-for-event__tickets" onClick={() => setSelectedShow(show)}>
                     <button 
@@ -270,27 +247,17 @@ export const SubscribeForEvents: React.FC = () => {
                       className="subscribe-for-event__changing-count"
                       onClick={() => increment(show.showName)}
                       >+</button>
-                  </div>
+                </div>
               </div>
             ))}
           </div>
-          {showAlreadyBooked && selectedShow !== null ? (
-            <button 
-              type="submit" 
-              className="subscribe-for-event__button"
-              onClick={() => cancelShowBooking(selectedShow)}
-            >
-              Cancel Booking
-            </button>
-          ) : (
-            <button 
+          <button 
             type="submit" 
             className={classNames('subscribe-for-event__button', {'subscribe-for-event__button--disabled': !selectedShow})}
             onClick={() => bookShowPlace(selectedShow)}
           >
             Book a place
           </button>
-          )}
         </div>
         <div className="subscribe-for-event__current-tickets">
           <div className="subscribe-for-event__current-group">
