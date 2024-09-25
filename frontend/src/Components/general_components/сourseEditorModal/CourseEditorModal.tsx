@@ -60,10 +60,12 @@ export const CourseEditorModal: React.FC<Props> = ({
     setIsLoading(true);
     createCourse(sendingData, token)
       .then((newCourse) => {
-        console.log('roadmap', roadmap);
+        console.log('newCourse', newCourse);
 
         if (roadmap) {
           roadmap.forEach((point) => {
+            console.log({ ...point, courseId: newCourse.id });
+            
             addToRoadmap({ ...point, courseId: newCourse.id }, token).catch(
               (err) => {
                 console.log("ERROR when addToRoadmap");
@@ -73,9 +75,9 @@ export const CourseEditorModal: React.FC<Props> = ({
         }
       })
       .then(() => {
-        getAllCourse(token).then((res) => {
-          console.log("res", res);
-        });
+        // getAllCourse(token).then((res) => {
+        //   console.log("res", res);
+        // });
       })
       .catch()
       .finally(() => {
