@@ -5,6 +5,7 @@ import cu.theater.backend.dto.roadmap.RoadMapDto;
 import cu.theater.backend.service.roadmap.RoadMapService;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -25,6 +26,7 @@ public class RoadMapController {
     private final RoadMapService roadMapService;
 
     @PostMapping("/add")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public RoadMapDto addRoadMapToCourse(@RequestBody CreateRoadMapDto requestDto) {
         return roadMapService.create(requestDto);
     }
