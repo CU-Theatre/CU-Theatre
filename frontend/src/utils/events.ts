@@ -1,38 +1,33 @@
-export const events = {
+import { Events } from "../types/Events";
+
+export const events: Events = {
   mainEvents: {
     impro: [
       {
         id: 1,
         dayOfWeek: 'Monday',
-        date: '16.09',
-        guestName: 'John',
-        guestSurname: 'Doe',
-        phone: '+123456719',
-      },
-      {
-        id: 2,
-        dayOfWeek: 'Monday',
-        date: '16.09',
-        guestName: 'John',
-        guestSurname: 'Doe',
-        phone: '+1234567239',
-      },
-      {
-        id: 3,
-        dayOfWeek: 'Monday',
-        date: '16.09',
-        guestName: 'John',
-        guestSurname: 'Doe',
-        phone: '+12345671231239',
-      },
-      {
-        id: 4,
-        dayOfWeek: 'Sunday',
-        date: '21.09',
+        date: '23.09',
         guestName: 'John',
         guestSurname: 'Doe',
         phone: '+123456721312349',
       },
+      {
+        id: 2,
+        dayOfWeek: 'Tuesday',
+        date: '22.09',
+        guestName: 'John',
+        guestSurname: 'Doe',
+        phone: '+123456712349',
+      },
+      {
+        id: 3,
+        dayOfWeek: 'Monday',
+        date: '23.09',
+        guestName: 'John',
+        guestSurname: 'Doe',
+        phone: '+3456721312349',
+      },
+
     ],
     playback: [
       {
@@ -169,27 +164,11 @@ export const events = {
       },
       {
         id: 2,
-        dayOfWeek: 'Monday',
-        date: '16.09',
+        dayOfWeek: 'Tuesday',
+        date: '24.09',
         guestName: 'John',
         guestSurname: 'Doe',
-        phone: '+1243456789',
-      },
-      {
-        id: 3,
-        dayOfWeek: 'Monday',
-        date: '16.09',
-        guestName: 'John',
-        guestSurname: 'Doe',
-        phone: '+121233456789',
-      },
-      {
-        id: 4,
-        dayOfWeek: 'Sunday',
-        date: '21.09',
-        guestName: 'John',
-        guestSurname: 'Doe',
-        phone: '+121233456789',
+        phone: '+12434564789',
       },
     ],
     stretching: [

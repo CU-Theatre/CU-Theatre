@@ -3,6 +3,10 @@ import "./TimeTable.scss";
 import cn from "classnames";
 import { SignButton } from "../general_components/signButton";
 import masks from "../img/timetable/masks.png";
+import { MyCalendar } from "../general_components/personalAccount/MyCalendar";
+import { EventInfo } from "../general_components/personalAccount/MyCalendar/EventInfo";
+import { CourseEvent } from "../../types/CourseEvent";
+import { Link } from "react-router-dom";
 
 export const TimeTable: React.FC = () => {
   const days = [
@@ -144,6 +148,7 @@ export const TimeTable: React.FC = () => {
     },
   ];
   const [activeDay, setActiveDay] = useState<string | null>("Tuesday");
+  const [currentEvent, setCurrentEvent] = useState<CourseEvent | null>(null);
 
   useEffect(() => {
     const currentData = new Date();
@@ -195,7 +200,7 @@ export const TimeTable: React.FC = () => {
           </div>
           <img className="schedule__masks" src={masks} alt="" />
         </div>
-        <SignButton title="More classes" />
+        <SignButton title="More classes" path="/classes" />
         <h2 className="schedule__title title">Pricelist</h2>
         <div className="schedule__pricelist">
           {courses.map((course) => (
@@ -209,8 +214,20 @@ export const TimeTable: React.FC = () => {
             </div>
           ))}
         </div>
-        <SignButton title="Sign for a course" />
+        <SignButton title="Sign for a course" path="/our-courses" />
+        <div className="schedule__calendar">
+          <h3 className="schedule__main-title">Schedule</h3>
+          <MyCalendar setCurrentEvent={setCurrentEvent} />
+        </div>
       </div>
+      <EventInfo
+        currentEvent={currentEvent}
+        setCurrentEvent={setCurrentEvent}
+      />
+
+      <Link to="/users-table" className="white-button">
+        users-table
+      </Link>
     </div>
   );
 };

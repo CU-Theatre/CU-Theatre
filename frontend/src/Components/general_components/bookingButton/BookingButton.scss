@@ -1,19 +1,18 @@
 @import "../../../styles/variables";
 @import "../../../styles/mixins";
 
-.sign-button {
+.booking-button {
   width: 100%;
   max-width: 280px;
   height: 64px;
   border-radius: 28px;
-  color: black;
   background-color: $white;
   font-size: 12px;
   line-height: 16px;
   position: relative;
   grid-column: 1 / -1;
   justify-self: center;
-  border: 1px solid black;
+  border: 1px solid transparent;
   transition: all 0.3s;
   cursor: pointer;
   display: flex;
@@ -25,7 +24,7 @@
     font-size: 16px;
   }
 
-  @include on-tablet {
+  @include on-desktop {
     font-size: 20px;
   }
 
@@ -43,7 +42,7 @@
     background-image: url("./signShooe.svg");
   }
 
-  &:hover {
+  &:not(&--disabled):hover {
     background-color: black;
     color: $white;
     border: 1px solid $white;
@@ -51,5 +50,10 @@
     &::before {
       background-image: url("./whiteShoe.svg");
     }
+  }
+
+  &--disabled {
+    cursor: not-allowed;
+    background: gray;
   }
 }

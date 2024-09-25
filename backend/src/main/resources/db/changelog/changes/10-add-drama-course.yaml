@@ -1,0 +1,35 @@
+databaseChangeLog:
+  - changeSet:
+      id: insert-drama-course
+      author: me
+      changes:
+        - insert:
+            tableName: courses
+            columns:
+              - column:
+                  name: course_name
+                  value: Drama course
+              - column:
+                  name: image
+                  value: drama.jpg
+              - column:
+                  name: icon
+                  value: drama_icon.jpg
+              - column:
+                  name: start_date
+                  value: 2024-08-21 01:00:00
+              - column:
+                  name: finish_date
+                  value: 2024-11-12 01:00:00
+              - column:
+                  name: description
+                  value: Discover the world of storytelling and emotion in our Drama course, where you'll master acting techniques, character development, and stage presence, all while building confidence and creativity. Join us and bring your inner performer to life!
+              - column:
+                  name: price
+                  value: 45.00
+              - column:
+                  name: status
+                  value: NOT_STARTED
+              - column:
+                  name: is_deleted
+                  value: 0
