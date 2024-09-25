@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import './EventInfo.scss';
 import { CourseEvent } from '../../../../../types/CourseEvent';
-import { format } from 'date-fns';
+import { format, isBefore } from 'date-fns';
 import { useAppContext } from '../../../../../AppContext';
 import classNames from 'classnames';
 import { events } from '../../../../../utils/events';
@@ -18,6 +18,15 @@ export const EventInfo: React.FC<Props> = ({ currentEvent, setCurrentEvent }) =>
   const someShows = ["Live performance", "Impro shows", "Playback shows"];
   const daysOfWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
   const [alreadyBooked, setAlreadyBooked] = useState(false);
+  const [isPastEvent, setIsPastEvent] = useState(false);
+
+  useEffect(() => {
+    if (currentEvent) {
+      const now = new Date();
+      const isPast = isBefore(currentEvent.start, now);
+      setIsPastEvent(isPast);
+    }
+  }, [currentEvent]);
 
   const newCalendarShow = {
     title: currentEvent?.title,
@@ -78,7 +87,7 @@ export const EventInfo: React.FC<Props> = ({ currentEvent, setCurrentEvent }) =>
   }
 
   const bookClassPlace = () => {
-    if (currentEvent && userState) {
+    if (currentEvent && userState && !isPastEvent) {
   
       const newDay = String(currentEvent.start.getDate()).padStart(2, '0');
       const newMonth = String(currentEvent.start.getMonth() + 1).padStart(2, '0');
@@ -264,7 +273,7 @@ export const EventInfo: React.FC<Props> = ({ currentEvent, setCurrentEvent }) =>
           alreadyBooked ? (
             <button onClick={cancelBooking} className='event-info__button' type='button'>Cancel booking</button>
           ) : (
-            <button onClick={bookClassPlace} className='event-info__button' type='button'>Sign for a course</button>
+            <button onClick={bookClassPlace} className='event-info__button' type='button' disabled={isPastEvent}>Sign for a course</button>
           )
         )}
       </div>
