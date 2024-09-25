@@ -52,10 +52,12 @@ export const CourseEditorModal: React.FC<Props> = ({
 
     sendingData.finishDate = new Date(sendingData.finishDate).toISOString();
     sendingData.finishDate = sendingData.finishDate.split(".")[0];
+    sendingData.finishDate = sendingData.finishDate.split("T").join(' ');
     sendingData.startDate = new Date(sendingData.startDate).toISOString();
     sendingData.startDate = sendingData.startDate.split(".")[0];
+    sendingData.startDate = sendingData.startDate.split("T").join(' ');
 
-    // console.log("sendingData", sendingData);
+    console.log("sendingData", sendingData);
 
     setIsLoading(true);
     createCourse(sendingData, token)
@@ -75,9 +77,9 @@ export const CourseEditorModal: React.FC<Props> = ({
         }
       })
       .then(() => {
-        // getAllCourse(token).then((res) => {
-        //   console.log("res", res);
-        // });
+        getAllCourse(token).then((res) => {
+          console.log("res", res);
+        });
       })
       .catch()
       .finally(() => {
