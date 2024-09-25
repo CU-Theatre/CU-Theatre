@@ -116,17 +116,17 @@ export const BookingButton: React.FC<Props> = ({ title, show }) => {
     switch (selectedShow.showName) {
       case 'Live performance':
         updatedEventList.mainEvents.livePerf = eventList.mainEvents.livePerf.filter(
-          (guest) => guest.phone !== userState.phoneNumber
+          (guest: Guest) => guest.phone !== userState.phoneNumber
         );
         break;
       case 'Impro shows':
         updatedEventList.mainEvents.impro = eventList.mainEvents.impro.filter(
-          (guest) => guest.phone !== userState.phoneNumber
+          (guest: Guest) => guest.phone !== userState.phoneNumber
         );
         break;
       case 'Playback shows':
         updatedEventList.mainEvents.playback = eventList.mainEvents.playback.filter(
-          (guest) => guest.phone !== userState.phoneNumber
+          (guest: Guest) => guest.phone !== userState.phoneNumber
         );
         break;
       default:

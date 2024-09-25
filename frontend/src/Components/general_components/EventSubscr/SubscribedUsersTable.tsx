@@ -7,6 +7,7 @@ import { DayOfWeek } from '../../../types/DayOfWeek';
 import { useHiddenColumns } from '../../../hooks/useHiddenColumns';
 import { useHiddenClassColumns } from '../../../hooks/useHiddenClassColumns';
 import { addWeeks, formatDate, getWeek } from './utils';
+import { Guest } from '../../../types/Events';
 
 export const SubscribedUsersTable: React.FC = () => {
   const daysOfWeek: DayOfWeek[] = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
@@ -72,9 +73,9 @@ export const SubscribedUsersTable: React.FC = () => {
                 const uniqueDates = Array.from(new Set([...uniqueImproDates, ...uniquePlaybackDates, ...uniqueLivePerfDates]));
 
                 return uniqueDates.map(date => {
-                  const improEvents = events.mainEvents.impro.filter(event => event.dayOfWeek === day && event.date === date);
-                  const playbackEvents = events.mainEvents.playback.filter(event => event.dayOfWeek === day && event.date === date);
-                  const livePerfEvents = events.mainEvents.livePerf.filter(event => event.dayOfWeek === day && event.date === date);
+                  const improEvents = events.mainEvents.impro.filter((event: Guest) => event.dayOfWeek === day && event.date === date);
+                  const playbackEvents = events.mainEvents.playback.filter((event: Guest) => event.dayOfWeek === day && event.date === date);
+                  const livePerfEvents = events.mainEvents.livePerf.filter((event: Guest) => event.dayOfWeek === day && event.date === date);
 
                   return (
                     <tr key={`${day}-${date}`} className='subscribed-users__table-row'>
