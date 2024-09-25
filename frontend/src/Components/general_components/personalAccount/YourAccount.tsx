@@ -14,7 +14,6 @@ import { FetchErrorMessage } from "../../../types/FetchErrorMessage";
 import { validEmail } from "../../../utils/validEmail";
 import { CabinetFormInput } from "../../../types/CabinetFormInput";
 import { MyCalendar } from "./MyCalendar";
-import { CourseEvent } from "../../../types/CourseEvent";
 import { EventInfo } from "./MyCalendar/EventInfo";
 import { ErrorNotification } from "../errorNotification";
 
@@ -23,7 +22,6 @@ export const YourAccount: React.FC = () => {
     useAppContext();
   const [isRootErrShown, setIsRootErrShown] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const [currentEvent, setCurrentEvent] = useState<CourseEvent | null>(null);
   const [errorMessage, setErrorMessage] = useState("");
 
   const navigate = useNavigate();
@@ -199,7 +197,7 @@ export const YourAccount: React.FC = () => {
             <h3 className="cabinet__main-title">
               {"You are not subscribed to any course yet :("}
             </h3>
-            <SignButton title="Sign for a course?" />
+            <SignButton title="Sign for a course?" path="/our-courses"/>
           </div>
         ) : (
           <div className="cabinet__main">
@@ -211,16 +209,10 @@ export const YourAccount: React.FC = () => {
             </div>
           </div>
         )}
-        <div className="cabinet__calendar">
-          <h3 className="cabinet__main-title">Schedule</h3>
-          <Link to={"/users-table"} className="cabinet__users-table">
-            Users table page
-          </Link>
-          <MyCalendar setCurrentEvent={setCurrentEvent} />
-        </div>
+        <Link to={"/users-table"} className="cabinet__users-table">
+          Users table page
+        </Link>
       </div>
-      setCurrentEvent(null);
-      <EventInfo currentEvent={currentEvent} setCurrentEvent={setCurrentEvent} />
     </section>
   );
 };

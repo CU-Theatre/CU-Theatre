@@ -166,23 +166,25 @@
     }
   }
 
-  &__calendar {
-    grid-column: 1 / -1;
-    display: flex;
-    flex-direction: column;
-    gap: 50px;
-    align-items: center;
-  }
-
   &__users-table {
     background-color: $white;
+    grid-column: 1 / -1;
+    text-align: center;
     border-radius: 18px;
     padding: 20px 40px;
-    align-self: flex-end;
     transition: background-color 0.3s;
 
     &:hover {
       background-color: #a7a7a7;
+    }
+
+
+    @include on-tablet {
+      grid-column: 3 / 5;
+    }
+
+    @include on-desktop {
+      grid-column: 6 / 9;
     }
   }
 

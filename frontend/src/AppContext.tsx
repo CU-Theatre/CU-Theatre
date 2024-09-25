@@ -10,6 +10,8 @@ import { allCourses } from "./utils/courses";
 import { CourseType } from "./types/CourseType";
 import { CourseEvent } from "./types/CourseEvent";
 import { allClasses } from "./utils/allClasses";
+import { Events } from "./types/Events";
+import { events } from "./utils/events";
 
 interface AppContextInterface {
   isOpen: boolean;
@@ -32,6 +34,8 @@ interface AppContextInterface {
   setCourses: React.Dispatch<React.SetStateAction<CourseEvent[]>>;
   eventDetailIsOpen: boolean;
   setEventDetailIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  eventList: Events | undefined;
+  setEventList: React.Dispatch<React.SetStateAction<Events | undefined>>;
 }
 
 const AppContext = createContext<AppContextInterface | undefined>(undefined);
@@ -48,6 +52,7 @@ export const AppProvider: React.FC<React.PropsWithChildren<{}>> = ({
   const [eventDetailIsOpen, setEventDetailIsOpen] = useState(false);
   const [modalInfo, setModalInfo] = useState<ShowType>(liveShow);
   const [eventInfoIsOpen, setEventInfoIsOpen] = useState(true);
+  const [eventList, setEventList] = useState<Events | undefined>(events);
   const [courses, setCourses] = useState<CourseEvent[] | []>([...allClasses, ...dramaCourse.courseTime]);
 
   const [token, setToken] = useLocalStorage(KEY_TOKEN, "");
@@ -107,6 +112,8 @@ export const AppProvider: React.FC<React.PropsWithChildren<{}>> = ({
         setCourses,
         eventDetailIsOpen,
         setEventDetailIsOpen,
+        eventList,
+        setEventList,
       }}
     >
       {children}
