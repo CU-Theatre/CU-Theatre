@@ -6,6 +6,7 @@ import { useAppContext } from '../../../../../AppContext';
 import classNames from 'classnames';
 import { events } from '../../../../../utils/events';
 import { allShows } from '../../../../../utils/allShows';
+import { Guest } from '../../../../../types/Events';
 
 interface Props {
   currentEvent: CourseEvent | null;
@@ -57,7 +58,7 @@ export const EventInfo: React.FC<Props> = ({ currentEvent, setCurrentEvent }) =>
       }
   
       const guestIndex = currentShow.findIndex(
-        (guest) => guest.phone === userState.phoneNumber && 
+        (guest: Guest) => guest.phone === userState.phoneNumber && 
         format(currentEvent.start, 'dd.MM') === guest.date
       );
   
