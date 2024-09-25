@@ -60,13 +60,17 @@ export const CourseEditorModal: React.FC<Props> = ({
     setIsLoading(true);
     createCourse(sendingData, token)
       .then((newCourse) => {
-        roadmap.forEach((point) => {
-          addToRoadmap({ ...point, courseId: newCourse.id }, token).catch(
-            (err) => {
-              console.log("ERROR when addToRoadmap");
-            }
-          );
-        });
+        console.log('roadmap', roadmap);
+
+        if (roadmap) {
+          roadmap.forEach((point) => {
+            addToRoadmap({ ...point, courseId: newCourse.id }, token).catch(
+              (err) => {
+                console.log("ERROR when addToRoadmap");
+              }
+            );
+          });
+        }
       })
       .then(() => {
         getAllCourse(token).then((res) => {
