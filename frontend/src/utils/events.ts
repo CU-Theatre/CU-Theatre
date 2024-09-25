@@ -13,7 +13,7 @@ export const events: Events = {
       },
       {
         id: 2,
-        dayOfWeek: 'Tuesday',
+        dayOfWeek: 'Sunday',
         date: '22.09',
         guestName: 'John',
         guestSurname: 'Doe',
@@ -78,7 +78,7 @@ export const events: Events = {
       },
       {
         id: 4,
-        dayOfWeek: 'Sunday',
+        dayOfWeek: 'Saturday',
         date: '21.09',
         guestName: 'John',
         guestSurname: 'Doe',
@@ -112,7 +112,7 @@ export const events: Events = {
       },
       {
         id: 4,
-        dayOfWeek: 'Sunday',
+        dayOfWeek: 'Saturday',
         date: '21.09',
         guestName: 'John',
         guestSurname: 'Doe',
@@ -146,7 +146,7 @@ export const events: Events = {
       },
       {
         id: 4,
-        dayOfWeek: 'Sunday',
+        dayOfWeek: 'Saturday',
         date: '21.09',
         guestName: 'John',
         guestSurname: 'Doe',
@@ -198,7 +198,7 @@ export const events: Events = {
       },
       {
         id: 4,
-        dayOfWeek: 'Sunday',
+        dayOfWeek: 'Saturday',
         date: '21.09',
         guestName: 'John',
         guestSurname: 'Doe',
