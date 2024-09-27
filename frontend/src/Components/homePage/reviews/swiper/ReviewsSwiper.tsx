@@ -10,6 +10,7 @@ import {
   TABLE_MIN_WIDTH,
 } from "../../../../utils/globalVariables";
 import { SwiperNavigation } from "../../../general_components/swiperNavigation";
+import { Link } from "react-router-dom";
 
 export const ReviewsSwiper = () => {
   const reviews = [
@@ -65,9 +66,9 @@ export const ReviewsSwiper = () => {
             <div className={styles["swiper__content"]}>
               <h3 className={styles["swiper__title"]}>{review.author}</h3>
               <p className={styles["swiper__text"]}>{review.quote}</p>
-              <button className={styles["swiper__button"]}>
+              <Link to={'/classes'} className={styles["swiper__button"]}>
                 Choose your class
-              </button>
+              </Link>
             </div>
           </SwiperSlide>
         ))}

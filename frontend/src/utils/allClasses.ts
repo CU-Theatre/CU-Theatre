@@ -1,4 +1,3 @@
-import { RRule } from "rrule";
 import { CourseEvent } from "../types/CourseEvent";
 import heelsIcon from "../Components/img/shoe.webp";
 import poleDanceIcon from "../Components/img/icons/pole-dance.webp";
@@ -15,9 +14,9 @@ export const allClasses: CourseEvent[] = [
     description: "",
     icon: heelsIcon,
     rule: {
-      freq: 'WEEKLY', // Повторення щотижня
+      freq: "WEEKLY", // Повторення щотижня
       interval: 1, // Кожного тижня
-      day: ['SU'], // Вибираємо день тижня (наприклад, п'ятниця)
+      day: ["SU"], // Вибираємо день тижня (наприклад, п'ятниця)
       start: new Date(Date.UTC(2023, 9, 15, 16, 30, 0)).toString(), // Початок події
       finish: new Date(Date.UTC(2025, 9, 15, 17, 30, 0)).toString(), // Кінець повторення (опціонально)
     },
@@ -30,9 +29,9 @@ export const allClasses: CourseEvent[] = [
     description: "",
     icon: heelsIcon,
     rule: {
-      freq: 'WEEKLY', // Повторення щотижня
+      freq: "WEEKLY", // Повторення щотижня
       interval: 1, // Кожного тижня
-      day: ['WE'], // Вибираємо день тижня (наприклад, п'ятниця)
+      day: ["WE"], // Вибираємо день тижня (наприклад, п'ятниця)
       start: new Date(Date.UTC(2023, 9, 18, 14, 0, 0)).toString(), // Початок події
       finish: new Date(Date.UTC(2025, 9, 18, 15, 0, 0)).toString(), // Кінець повторення (опціонально)
     },
@@ -46,9 +45,9 @@ export const allClasses: CourseEvent[] = [
     description:
       "Pole dance is a fitness and performance art that combines acrobatic movements with strength, flexibility, and dance, using a vertical pole. It builds upper body strength, core stability, and coordination while allowing for creative expression.",
     rule: {
-      freq: 'WEEKLY', // Повторення щотижня
+      freq: "WEEKLY", // Повторення щотижня
       interval: 1, // Кожного тижня
-      day: ['SU'], // Вибираємо день тижня (наприклад, п'ятниця)
+      day: ["SU"], // Вибираємо день тижня (наприклад, п'ятниця)
       start: new Date(Date.UTC(2023, 9, 15, 17, 30, 0)).toString(), // Початок події
       finish: new Date(Date.UTC(2025, 9, 15, 18, 30, 0)).toString(), // Кінець повторення (опціонально)
     },
@@ -62,9 +61,9 @@ export const allClasses: CourseEvent[] = [
     description:
       "Twerk is an energetic dance style focused on rhythmic hip movements and isolation of the lower body. It combines elements of hip-hop and African dance, improving coordination, core strength, and flexibility. Twerk classes are a fun way to build confidence, express yourself, and get a full-body workout.",
     rule: {
-      freq: 'WEEKLY', // Повторення щотижня
+      freq: "WEEKLY", // Повторення щотижня
       interval: 1, // Кожного тижня
-      day: ['WE'], // Вибираємо день тижня (наприклад, п'ятниця)
+      day: ["WE"], // Вибираємо день тижня (наприклад, п'ятниця)
       start: new Date(Date.UTC(2023, 9, 18, 13, 15, 0)).toString(), // Початок події
       finish: new Date(Date.UTC(2025, 9, 18, 14, 15, 0)).toString(), // Кінець повторення (опціонально)
     },
@@ -78,9 +77,9 @@ export const allClasses: CourseEvent[] = [
     description:
       "Stretching is a flexibility-focused class that helps improve range of motion, posture, and muscle recovery. Through a series of gentle exercises, it targets muscles and joints, promoting relaxation and reducing the risk of injury. Ideal for all fitness levels, stretching enhances mobility and supports overall well-being.",
     rule: {
-      freq: 'WEEKLY', // Повторення щотижня
+      freq: "WEEKLY", // Повторення щотижня
       interval: 1, // Кожного тижня
-      day: ['MO'], // Вибираємо день тижня (наприклад, п'ятниця)
+      day: ["MO"], // Вибираємо день тижня (наприклад, п'ятниця)
       start: new Date(Date.UTC(2023, 9, 16, 15, 0, 0)).toString(), // Початок події
       finish: new Date(Date.UTC(2025, 9, 16, 16, 0, 0)).toString(), // Кінець повторення (опціонально)
     },
@@ -94,9 +93,9 @@ export const allClasses: CourseEvent[] = [
     description:
       "Stretching is a flexibility-focused class that helps improve range of motion, posture, and muscle recovery. Through a series of gentle exercises, it targets muscles and joints, promoting relaxation and reducing the risk of injury. Ideal for all fitness levels, stretching enhances mobility and supports overall well-being.",
     rule: {
-      freq: 'WEEKLY', // Повторення щотижня
+      freq: "WEEKLY", // Повторення щотижня
       interval: 1, // Кожного тижня
-      day: ['TH'], // Вибираємо день тижня (наприклад, п'ятниця)
+      day: ["TH"], // Вибираємо день тижня (наприклад, п'ятниця)
       start: new Date(Date.UTC(2023, 9, 19, 16, 0, 0)).toString(), // Початок події
       finish: new Date(Date.UTC(2025, 9, 19, 17, 0, 0)).toString(), // Кінець повторення (опціонально)
     },
@@ -110,9 +109,9 @@ export const allClasses: CourseEvent[] = [
     description:
       "Stretching is a flexibility-focused class that helps improve range of motion, posture, and muscle recovery. Through a series of gentle exercises, it targets muscles and joints, promoting relaxation and reducing the risk of injury. Ideal for all fitness levels, stretching enhances mobility and supports overall well-being.",
     rule: {
-      freq: 'WEEKLY', // Повторення щотижня
+      freq: "WEEKLY", // Повторення щотижня
       interval: 1, // Кожного тижня
-      day: ['FR'], // Вибираємо день тижня (наприклад, п'ятниця)
+      day: ["FR"], // Вибираємо день тижня (наприклад, п'ятниця)
       start: new Date(Date.UTC(2023, 9, 20, 10, 30, 0)).toString(), // Початок події
       finish: new Date(Date.UTC(2025, 9, 20, 11, 30, 0)).toString(), // Кінець повторення (опціонально)
     },
@@ -126,9 +125,9 @@ export const allClasses: CourseEvent[] = [
     description:
       "Stretching is a flexibility-focused class that helps improve range of motion, posture, and muscle recovery. Through a series of gentle exercises, it targets muscles and joints, promoting relaxation and reducing the risk of injury. Ideal for all fitness levels, stretching enhances mobility and supports overall well-being.",
     rule: {
-      freq: 'WEEKLY', // Повторення щотижня
+      freq: "WEEKLY", // Повторення щотижня
       interval: 1, // Кожного тижня
-      day: ['SA'], // Вибираємо день тижня (наприклад, п'ятниця)
+      day: ["SA"], // Вибираємо день тижня (наприклад, п'ятниця)
       start: new Date(Date.UTC(2023, 9, 21, 11, 30, 0)).toString(), // Початок події
       finish: new Date(Date.UTC(2025, 9, 21, 12, 30, 0)).toString(), // Кінець повторення (опціонально)
     },
@@ -141,12 +140,11 @@ export const allClasses: CourseEvent[] = [
     description: "",
     icon: exoticcIcon,
     rule: {
-      freq: 'WEEKLY', // Повторення щотижня
+      freq: "WEEKLY", // Повторення щотижня
       interval: 1, // Кожного тижня
-      day: ['SA'], // Вибираємо день тижня (наприклад, п'ятниця)
+      day: ["SA"], // Вибираємо день тижня (наприклад, п'ятниця)
       start: new Date(Date.UTC(2023, 9, 21, 16, 0, 0)).toString(), // Початок події
       finish: new Date(Date.UTC(2025, 9, 21, 17, 0, 0)).toString(), // Кінець повторення (опціонально)
     },
-
   },
 ];
