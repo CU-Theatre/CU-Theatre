@@ -2,15 +2,17 @@ import { CourseEvent } from "./CourseEvent";
 import { RoadmapItem } from "./RoadmapItem";
 
 export interface CourseType {
+  id: number;
   name: string;
-  startDate: string;
-  finishDate: string;
-  icon: string;
-  price: number;
-  image: string;
-  roadmap: RoadmapItem[];
   description: string;
+  status: "IN_PROGRESS" | "NOT_STARTED";
+  startDate: string;
+  image: string;
+  icon: string;
+  roadmap: RoadmapItem[];
+  usersId?: null | number[];
+  finishDate: string;
+  price: number;
   maxPeople: number;
-  subscribed: { name: string; phoneNumber: string }[];
   courseTime: CourseEvent[];
 }

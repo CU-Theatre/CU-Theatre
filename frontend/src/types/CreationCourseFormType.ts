@@ -1,3 +1,4 @@
+import { EventRule } from "./EventRule";
 import { RoadmapItemCreate } from "./RoadmapItem";
 
 export type CreationCourseFormType = {
@@ -8,7 +9,7 @@ export type CreationCourseFormType = {
   icon: string;
   price: number | string;
   image: string;
-  roadmap: Omit<RoadmapItemCreate, 'courseId'>[];
+  roadmap: Omit<RoadmapItemCreate, "courseId">[];
   maxPeople?: number | string;
-  subscribed?: { name: string; phoneNumber: string }[];
+  classTime: EventRule[];
 };

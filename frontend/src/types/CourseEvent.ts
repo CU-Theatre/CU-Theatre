@@ -1,4 +1,4 @@
-import { RRule } from "rrule";
+import { Rule } from "./Rule";
 
 export interface CourseEvent {
   title: string;
@@ -7,5 +7,5 @@ export interface CourseEvent {
   description?: string;
   id?: number;
   icon?: string;
-  rrule?: RRule;
+  rule?: Rule;
 }

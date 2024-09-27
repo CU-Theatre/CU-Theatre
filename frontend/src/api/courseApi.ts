@@ -3,7 +3,7 @@ import { CreationCourseFormType } from "../types/CreationCourseFormType";
 import { client } from "../utils/fetchClient";
 
 export const createCourse = (
-  data: Omit<CreationCourseFormType, "roadmap">,
+  data: Omit<CreationCourseFormType, "roadmap" | "classTime">,
   token: string
 ) => {
   return client.post<CourseResponse>("/courses/create", data, token);

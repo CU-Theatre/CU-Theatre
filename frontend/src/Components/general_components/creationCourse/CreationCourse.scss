@@ -17,7 +17,7 @@
     color: $white;
     font-size: 12px;
     margin-bottom: 5px;
-    
+
     @include on-tablet {
       font-size: 19px;
     }
@@ -31,6 +31,47 @@
     &--textarea {
       height: 150px;
       resize: none;
+    }
+  }
+
+  &__classes-time-list {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    margin: 10px 0 30px 10px;
+
+    @include on-tablet {
+      margin-left: 30px;
+    }
+  }
+
+  &__classes-time-cell {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+
+    @include on-tablet {
+      flex-direction: row;
+      gap: 20px;
+    }
+  }
+
+  &__classes-time-label {
+    display: grid;
+    grid-template-columns: 1fr 4fr;
+    gap: 5px;
+
+    @include on-tablet {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  &__classes-time-title {
+    color: $white;
+    font-size: 12px;
+
+    @include on-tablet {
+      font-size: 16px;
     }
   }
 
