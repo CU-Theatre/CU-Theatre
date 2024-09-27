@@ -7,10 +7,11 @@ import { DayOfWeek } from '../../../types/DayOfWeek';
 import { useHiddenColumns } from '../../../hooks/useHiddenColumns';
 import { useHiddenClassColumns } from '../../../hooks/useHiddenClassColumns';
 import { addWeeks, formatDate, getWeek } from './utils';
+import { Guest } from '../../../types/Events';
 
 export const SubscribedUsersTable: React.FC = () => {
-  const daysOfWeek: DayOfWeek[] = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
-  const classes = ['Heels', 'Pole Dance', 'Twerk', 'Exotic', 'Stretching'];
+  const daysOfWeek: DayOfWeek[] = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+  const classes = ['Heels', 'Twerk', 'Exotic',  'Pole Dance','Stretching'];
   const { hiddenColumns, toggleColumnVisibility } = useHiddenColumns();
   const { hiddenClassColumns, toggleClassColumnVisibility } = useHiddenClassColumns();
   const [currentWeek, setCurrentWeek] = useState(getWeek(new Date()));
@@ -28,11 +29,17 @@ export const SubscribedUsersTable: React.FC = () => {
   };
 
   const isInCurrentWeek = (date: string) => {
-    const currentYear = new Date().getFullYear();
-    const [day, month] = date.split('.');
-    const eventDate = new Date(`${currentYear}-${month}-${day}`);
-  
-    return eventDate >= currentWeek.start && eventDate <= currentWeek.end;
+    const [day, month] = date.split('.').map(Number);
+    const startDay = currentWeek.start.getDate();
+    const startMonth = currentWeek.start.getMonth() + 1;
+    const endDay = currentWeek.end.getDate();
+    const endMonth = currentWeek.end.getMonth() + 1;
+
+    if (startMonth === endMonth) {
+      return (month === startMonth && day >= startDay && day <= endDay);
+    } else {
+      return (month === startMonth && day >= startDay) || (month === endMonth && day <= endDay);
+    }
   };
 
 
@@ -66,9 +73,9 @@ export const SubscribedUsersTable: React.FC = () => {
                 const uniqueDates = Array.from(new Set([...uniqueImproDates, ...uniquePlaybackDates, ...uniqueLivePerfDates]));
 
                 return uniqueDates.map(date => {
-                  const improEvents = events.mainEvents.impro.filter(event => event.dayOfWeek === day && event.date === date);
-                  const playbackEvents = events.mainEvents.playback.filter(event => event.dayOfWeek === day && event.date === date);
-                  const livePerfEvents = events.mainEvents.livePerf.filter(event => event.dayOfWeek === day && event.date === date);
+                  const improEvents = events.mainEvents.impro.filter((event: Guest) => event.dayOfWeek === day && event.date === date);
+                  const playbackEvents = events.mainEvents.playback.filter((event: Guest) => event.dayOfWeek === day && event.date === date);
+                  const livePerfEvents = events.mainEvents.livePerf.filter((event: Guest) => event.dayOfWeek === day && event.date === date);
 
                   return (
                     <tr key={`${day}-${date}`} className='subscribed-users__table-row'>
