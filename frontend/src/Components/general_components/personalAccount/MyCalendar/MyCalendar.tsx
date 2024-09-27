@@ -12,6 +12,7 @@ import { CalendarModal } from './CalendarModal';
 import React, { useState } from 'react';
 import { CourseEvent } from '../../../../types/CourseEvent';
 import { useAppContext } from '../../../../AppContext';
+import { createRrule } from '../../../../utils/createRrule';
 
 const locales = {
   'en-US': enUS,
@@ -35,8 +36,8 @@ export const MyCalendar: React.FC<Props> = ({ setCurrentEvent }) => {
   const [modalIsOpen, setModalIsOpen] = useState(false);
 
   const recurringEvents = courses.flatMap(event => {
-    if (event.rrule) {
-      const rule = event.rrule;
+    if (event.rule) {
+      const rule = createRrule(event.rule);
       return rule.all().map(date => {
         const start = new Date(date);
         start.setHours(event.start.getHours(), event.start.getMinutes());

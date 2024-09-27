@@ -5,9 +5,10 @@ import { CourseType } from "../types/CourseType";
 import DramaBG from "../Components/img/courses/DramaBG.png";
 import ImproBG from "../Components/img/courses/ImproBG.png";
 import PlaybackBG from "../Components/img/courses/PlaybackBG.png";
-import { RRule } from "rrule";
 
 export const dramaCourse: CourseType = {
+  id: 1,
+  status: "IN_PROGRESS",
   name: "Drama course",
   startDate: "2024-09-08T17:57:31",
   finishDate: "2024-10-08T17:52:08",
@@ -15,7 +16,7 @@ export const dramaCourse: CourseType = {
   image: DramaBG,
   price: 45,
   maxPeople: 15,
-  subscribed: [{ name: 'Jone', phoneNumber: '+12345678' }],
+  // subscribed: [{ name: 'Jone', phoneNumber: '+12345678' }],
   roadmap: [
     {
       id: 1,
@@ -91,18 +92,32 @@ export const dramaCourse: CourseType = {
       title: "Drama lesson",
       start: new Date(2024, 7, 31, 15, 0),
       end: new Date(2024, 7, 31, 16, 30),
-      rrule: new RRule({
-        freq: RRule.WEEKLY, // Повторення щотижня
+      rule: {
+        freq: 'WEEKLY', // Повторення щотижня
         interval: 1, // Кожного тижня
-        byweekday: [RRule.SA, RRule.SU], // Вибираємо день тижня (наприклад, п'ятниця)
-        dtstart: new Date(Date.UTC(2024, 7, 31, 15, 0, 0)), // Початок події
-        until: new Date(Date.UTC(2025, 7, 31, 16, 30, 0)), // Кінець повторення (опціонально)
-      }),
+        day: ['SA'], // Вибираємо день тижня (наприклад, п'ятниця)
+        start: new Date(Date.UTC(2024, 7, 31, 15, 0, 0)).toString(), // Початок події
+        finish: new Date(Date.UTC(2025, 7, 31, 16, 30, 0)).toString(), // Кінець повторення (опціонально)
+      },
+    },
+    {
+      title: "Drama lesson",
+      start: new Date(2024, 7, 31, 15, 0),
+      end: new Date(2024, 7, 31, 16, 30),
+      rule: {
+        freq: 'WEEKLY', // Повторення щотижня
+        interval: 1, // Кожного тижня
+        day: ['SA'], // Вибираємо день тижня (наприклад, п'ятниця)
+        start: new Date(Date.UTC(2024, 7, 31, 15, 0, 0)).toString(), // Початок події
+        finish: new Date(Date.UTC(2025, 7, 31, 16, 30, 0)).toString(), // Кінець повторення (опціонально)
+      },
     },
   ],
 };
 
 export const improCourse: CourseType = {
+  id: 2,
+  status: "IN_PROGRESS",
   name: "Impro course",
   startDate: "2024-09-08T17:57:31",
   finishDate: "2024-10-08T17:52:08",
@@ -110,7 +125,7 @@ export const improCourse: CourseType = {
   image: ImproBG,
   price: 45,
   maxPeople: 15,
-  subscribed: [{ name: 'Jone', phoneNumber: '+12345678' }],
+  // subscribed: [{ name: 'Jone', phoneNumber: '+12345678' }],
   roadmap: [
     {
       id: 1,
@@ -162,18 +177,20 @@ export const improCourse: CourseType = {
       title: "Impro lesson",
       start: new Date(2024, 7, 31, 16, 30),
       end: new Date(2024, 7, 31, 18, 0),
-      rrule: new RRule({
-        freq: RRule.WEEKLY, // Повторення щотижня
+      rule: {
+        freq: 'WEEKLY', // Повторення щотижня
         interval: 1, // Кожного тижня
-        byweekday: [RRule.SA], // Вибираємо день тижня (наприклад, п'ятниця)
-        dtstart: new Date(Date.UTC(2024, 7, 31, 15, 0, 0)), // Початок події
-        until: new Date(Date.UTC(2025, 7, 31, 16, 30, 0)), // Кінець повторення (опціонально)
-      }),
+        day: ['SA'], // Вибираємо день тижня (наприклад, п'ятниця)
+        start: new Date(Date.UTC(2024, 7, 31, 15, 0, 0)).toString(), // Початок події
+        finish: new Date(Date.UTC(2025, 7, 31, 16, 30, 0)).toString(), // Кінець повторення (опціонально)
+      },
     },
   ],
 };
 
 export const playbackCourse: CourseType = {
+  id: 3,
+  status: "IN_PROGRESS",
   name: "Playback course",
   startDate: "2024-09-08T17:57:31",
   finishDate: "2024-10-08T17:52:08",
@@ -181,7 +198,7 @@ export const playbackCourse: CourseType = {
   image: PlaybackBG,
   price: 45,
   maxPeople: 15,
-  subscribed: [{ name: 'Jone', phoneNumber: '+12345678' }],
+  // subscribed: [{ name: 'Jone', phoneNumber: '+12345678' }],
   roadmap: [
     {
       id: 1,
@@ -237,13 +254,13 @@ export const playbackCourse: CourseType = {
       title: "Impro lesson",
       start: new Date(2024, 7, 31, 13, 30),
       end: new Date(2024, 7, 31, 15, 0),
-      rrule: new RRule({
-        freq: RRule.WEEKLY, // Повторення щотижня
+      rule: {
+        freq: 'WEEKLY', // Повторення щотижня
         interval: 1, // Кожного тижня
-        byweekday: [RRule.SU], // Вибираємо день тижня (наприклад, п'ятниця)
-        dtstart: new Date(Date.UTC(2024, 7, 31, 15, 0, 0)), // Початок події
-        until: new Date(Date.UTC(2025, 7, 31, 16, 30, 0)), // Кінець повторення (опціонально)
-      }),
+        day: ['SA'], // Вибираємо день тижня (наприклад, п'ятниця)
+        start: new Date(Date.UTC(2024, 7, 31, 15, 0, 0)).toString(), // Початок події
+        finish: new Date(Date.UTC(2025, 7, 31, 16, 30, 0)).toString(), // Кінець повторення (опціонально)
+      },
     },
   ],
 };

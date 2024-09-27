@@ -2,38 +2,47 @@ import { SubmitHandler, useFieldArray, useForm } from "react-hook-form";
 import { Upload } from "../upload/Upload";
 import "./CreationCourse.scss";
 import { CreationCourseFormType } from "../../../types/CreationCourseFormType";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useAppContext } from "../../../AppContext";
 import { CreationRoadmapCourse } from "./CreationRoadmapCourse";
 import { ButtonEdd } from "../buttonEdd";
 import { ButtonCross } from "../buttonCross";
 
 type Props = {
-  isOpen: boolean;
   onSubmit: SubmitHandler<CreationCourseFormType>;
   isCreating: boolean;
   isLoading: boolean;
 };
 
 export const CreationCourse: React.FC<Props> = ({
-  isOpen,
   onSubmit,
   isCreating,
   isLoading,
 }) => {
-  const {
-    register,
-    control,
-    handleSubmit: handleSubmitForm1,
-    reset,
-  } = useForm<CreationCourseFormType>();
+  const { register, control, handleSubmit, reset } =
+    useForm<CreationCourseFormType>();
 
-  const { fields, append, remove } = useFieldArray({
+  const {
+    fields: fieldsRoadmap,
+    append: appendRoadmap,
+    remove: removeRoadmap,
+  } = useFieldArray({
     control,
     name: "roadmap",
   });
 
+  const {
+    fields: fieldsClassTime,
+    append: appendClassTime,
+    replace: replaceClassTime,
+  } = useFieldArray({
+    control,
+    name: "classTime",
+  });
+
   const { courseInfo } = useAppContext();
+
+  const [classesPerWeek, setClassesPerWeek] = useState(0);
 
   const onUploadIcon = (data: unknown) => {
     // TODO wrote function after upload photo
@@ -51,20 +60,39 @@ export const CreationCourse: React.FC<Props> = ({
   }, [courseInfo]);
 
   const eddItem = () => {
-    append({
+    appendRoadmap({
       title: "",
       text: "",
-      mainTitle: '',
+      mainTitle: "",
     });
   };
 
   const delItem = (index: number) => {
-    remove(index);
+    removeRoadmap(index);
+  };
+
+  const onChangeClassesPerWeek = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const newClassPerWeek = +e.target.value;
+
+    setClassesPerWeek(newClassPerWeek);
+
+    replaceClassTime([]);
+
+    const newFieldArr = Array(newClassPerWeek).fill({
+      day: "-1",
+      start: "",
+      finish: "",
+      end: "",
+      freq: "WEEKLY",
+      interval: 1,
+    });
+
+    appendClassTime(newFieldArr);
   };
 
   return (
     <>
-      <form onSubmit={handleSubmitForm1(onSubmit)} className="creation-course">
+      <form onSubmit={handleSubmit(onSubmit)} className="creation-course">
         <div className="creation-course__input-cell">
           <label htmlFor="course-name" className="creation-course__label">
             Course's name
@@ -131,14 +159,98 @@ export const CreationCourse: React.FC<Props> = ({
           </div>
 
           <div className="creation-course__input-cell">
-            <label htmlFor="course-number-people" className="creation-course__label">
+            <label
+              htmlFor="classes-per-week"
+              className="creation-course__label"
+            >
+              Number of classes per week
+            </label>
+            <select
+              name="classes-per-week"
+              id="classes-per-week"
+              value={classesPerWeek}
+              onChange={onChangeClassesPerWeek}
+            >
+              <option value="0" disabled>
+                Choose number of classes
+              </option>
+              <option value="1">1</option>
+              <option value="2">2</option>
+              <option value="3">3</option>
+              <option value="4">4</option>
+              <option value="5">5</option>
+              <option value="6">6</option>
+              <option value="7">7</option>
+            </select>
+          </div>
+
+          <ul className="creation-course__classes-time-list">
+            {fieldsClassTime.map((field, index) => (
+              <li className="creation-course__classes-time-cell" key={field.id}>
+                <label
+                  htmlFor={`day-of-week-${field.id}`}
+                  className="creation-course__classes-time-label"
+                >
+                  <h4 className="creation-course__classes-time-title">
+                    Day of week
+                  </h4>
+                  <select
+                    id={`day-of-week-${field.id}`}
+                    {...register(`classTime.${index}.day`)}
+                  >
+                    <option value="-1" disabled>
+                      Choose day of week
+                    </option>
+                    <option value="MO">Monday</option>
+                    <option value="TU">Tuesday</option>
+                    <option value="WE">Wednesday</option>
+                    <option value="TH">Thursday</option>
+                    <option value="FR">Friday</option>
+                    <option value="SA">Sunday</option>
+                    <option value="SU">Saturday</option>
+                  </select>
+                </label>
+
+                <label className="creation-course__classes-time-label">
+                  <h4 className="creation-course__classes-time-title">
+                    Start time
+                  </h4>
+                  <input
+                    type="time"
+                    {...register(`classTime.${index}.start`)}
+                    className="creation-course__classes-time"
+                    disabled={isLoading}
+                  />
+                </label>
+
+                <label className="creation-course__classes-time-label">
+                  <h4 className="creation-course__classes-time-title">
+                    Finish time
+                  </h4>
+
+                  <input
+                    type="time"
+                    {...register(`classTime.${index}.end`)}
+                    className="creation-course__classes-time"
+                    disabled={isLoading}
+                  />
+                </label>
+              </li>
+            ))}
+          </ul>
+
+          <div className="creation-course__input-cell">
+            <label
+              htmlFor="course-number-people"
+              className="creation-course__label"
+            >
               Max number of people
             </label>
             <input
               type="number"
               id="course-number-people"
               className="creation-course__input creation-course__input--date"
-              {...register('maxPeople', { required: true })}
+              {...register("maxPeople", { required: true })}
               disabled={isLoading}
             />
           </div>
@@ -149,9 +261,8 @@ export const CreationCourse: React.FC<Props> = ({
         <Upload onUpload={onUploadImg} />
 
         <ul className="creation-course__roadmap-list">
-          {fields.map((field, index) => (
+          {fieldsRoadmap.map((field, index) => (
             <li className="creation-course__roadmap-cell" key={field.id}>
-              
               <label className="creation-course__roadmap-label">
                 <h4 className="creation-course__roadmap-title">Main title</h4>
                 <input
