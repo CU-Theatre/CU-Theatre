@@ -107,7 +107,7 @@ export const dramaCourse: CourseType = {
       rule: {
         freq: 'WEEKLY', // Повторення щотижня
         interval: 1, // Кожного тижня
-        day: ['SA'], // Вибираємо день тижня (наприклад, п'ятниця)
+        day: ['SU'], // Вибираємо день тижня (наприклад, п'ятниця)
         start: new Date(Date.UTC(2024, 7, 31, 15, 0, 0)).toString(), // Початок події
         finish: new Date(Date.UTC(2025, 7, 31, 16, 30, 0)).toString(), // Кінець повторення (опціонально)
       },
