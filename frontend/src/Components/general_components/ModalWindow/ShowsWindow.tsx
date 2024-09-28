@@ -69,11 +69,13 @@ export const ShowsWindow: React.FC<Props> = ({ show }) => {
               <p className="show__date">Time- {show.showDate}</p>
               <p className="show__price">Price- {show.showPrice}</p>
               {countTicketsLeft(show.showName) === 0 ? (
-                <p className="show__tickets-left show__error">There are no tickets left</p>
+                <p className="show__tickets-left show__error">There are no tickets left 😢</p>
               ) : (
-                <p className="show__tickets-left">Tickets left- {countTicketsLeft(show.showName)}</p>
+                <p className="show__tickets-left">Tickets left - {countTicketsLeft(show.showName)}</p>
               )}
-              <BookingButton title="Book a place" show={show} />
+              {countTicketsLeft(show.showName) !== 0 && (
+                <BookingButton title="Book a place" show={show} />
+              )}
             </div>
           </div>
         </div>

@@ -5,6 +5,7 @@ export interface Guest {
   guestName: string;
   guestSurname?: string;
   phone?: string;
+  friend?: string,
 }
 
 export interface MainEvents {

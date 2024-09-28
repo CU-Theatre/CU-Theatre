@@ -168,5 +168,19 @@
     color: red;
     font-weight: 700;
     font-style: 16;
+    font-size: 22px;
+  }
+
+  &__tickets-left {
+    background-color: $white;
+    padding: 8px 10px;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 700;
+
+    @include on-tablet {
+      font-size: 22px;
+      padding: 12px 16px;
+    }
   }
 }
