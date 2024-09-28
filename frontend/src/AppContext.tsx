@@ -53,7 +53,7 @@ export const AppProvider: React.FC<React.PropsWithChildren<{}>> = ({
   const [modalInfo, setModalInfo] = useState<ShowType>(liveShow);
   const [eventInfoIsOpen, setEventInfoIsOpen] = useState(true);
   const [eventList, setEventList] = useState<Events | undefined>(events);
-  const [courses, setCourses] = useState<CourseEvent[] | []>([...allClasses, ...dramaCourse.courseTime]);
+  const [courses, setCourses] = useState<CourseEvent[] | []>([...allClasses, ...dramaCourse.courseTime ]);
 
   const [token, setToken] = useLocalStorage(KEY_TOKEN, "");
 

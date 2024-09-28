@@ -18,6 +18,9 @@ const getFromLocalStorage = (key: string) => {
 export const SubscribeForEvents: React.FC = () => {
   const [selectedShow, setSelectedShow] = useState<ShowType | undefined>();
   const { userState, setCourses, eventList, setEventList } = useAppContext();
+  const userEventListImpro = eventList?.mainEvents.impro.filter(us => us.phone === userState?.phoneNumber || us.friend === userState?.phoneNumber);
+  const userEventListPlayback = eventList?.mainEvents.playback.filter(us => us.phone === userState?.phoneNumber || us.friend === userState?.phoneNumber);
+  const userEventListLivePerf = eventList?.mainEvents.livePerf.filter(us => us.phone === userState?.phoneNumber || us.friend === userState?.phoneNumber);
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [ticketCount, setTicketCount] = useState<Record<string, number>>(() => {
     return getFromLocalStorage('ticketCount') || {};
@@ -120,6 +123,7 @@ export const SubscribeForEvents: React.FC = () => {
         date: showDateString,
         guestName: `${userState.firstName} ${userState.lastName}  friend ${idx + 1}`,
         phone: `${userState.phoneNumber} - ${idx}`,
+        friend: userState.phoneNumber,
       }))
     : [];
 
@@ -262,7 +266,7 @@ export const SubscribeForEvents: React.FC = () => {
         <div className="subscribe-for-event__current-tickets">
           <div className="subscribe-for-event__current-group">
             <h4 className="subscribe-for-event__current-title">Impro shows</h4>
-            {eventList?.mainEvents.impro.map(user => 
+            {userEventListImpro && userEventListImpro.map(user => 
             <div className="subscribe-for-event__current-ticket" key={user.id}>
               <p>Your ticket: {user.guestName} {user.guestSurname && user.guestSurname} {user.date} {user.dayOfWeek}</p>
               <button type="button" className="subscribe-for-event__delete" onClick={() => deleteTicket(user.id, improShow)}>X</button>
@@ -272,7 +276,7 @@ export const SubscribeForEvents: React.FC = () => {
           </div>
           <div className="subscribe-for-event__current-group">
             <h4 className="subscribe-for-event__current-title">Playback shows</h4>
-            {eventList?.mainEvents.playback.map(user => 
+            {userEventListPlayback && userEventListPlayback.map(user => 
             <div className="subscribe-for-event__current-ticket" key={user.id}>
               <p>Your ticket: {user.guestName} {user.guestSurname && user.guestSurname} {user.date} {user.dayOfWeek}</p>
               <button type="button" className="subscribe-for-event__delete" onClick={() => deleteTicket(user.id, playbackShow)}>X</button>
@@ -281,7 +285,7 @@ export const SubscribeForEvents: React.FC = () => {
           </div>
           <div className="subscribe-for-event__current-group">
             <h4 className="subscribe-for-event__current-title">Live performance</h4>
-            {eventList?.mainEvents.livePerf.map(user => 
+            {userEventListLivePerf && userEventListLivePerf.map(user => 
             <div className="subscribe-for-event__current-ticket" key={user.id}>
               <p>Your ticket: {user.guestName} {user.guestSurname && user.guestSurname} {user.date} {user.dayOfWeek}</p>
               <button type="button" className="subscribe-for-event__delete" onClick={() => deleteTicket(user.id, liveShow)}>X</button>
