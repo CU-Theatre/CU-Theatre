@@ -7,7 +7,8 @@ import { DayOfWeek } from '../../../types/DayOfWeek';
 import { useHiddenColumns } from '../../../hooks/useHiddenColumns';
 import { useHiddenClassColumns } from '../../../hooks/useHiddenClassColumns';
 import { addWeeks, formatDate, getWeek } from './utils';
-import { Guest } from '../../../types/Events';
+import { Events, Guest, MainEvents, OtherClasses } from '../../../types/Events';
+import { useAppContext } from '../../../AppContext';
 
 export const SubscribedUsersTable: React.FC = () => {
   const daysOfWeek: DayOfWeek[] = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
@@ -15,6 +16,7 @@ export const SubscribedUsersTable: React.FC = () => {
   const { hiddenColumns, toggleColumnVisibility } = useHiddenColumns();
   const { hiddenClassColumns, toggleClassColumnVisibility } = useHiddenClassColumns();
   const [currentWeek, setCurrentWeek] = useState(getWeek(new Date()));
+  const { setEventList } = useAppContext();
 
   const handlePrevWeek = () => {
     setCurrentWeek(prevWeek => addWeeks(prevWeek, -1));
@@ -40,6 +42,46 @@ export const SubscribedUsersTable: React.FC = () => {
     } else {
       return (month === startMonth && day >= startDay) || (month === endMonth && day <= endDay);
     }
+  };
+
+  const handleDeleteUserFromShow = (
+    phone: string | undefined, 
+    category: keyof MainEvents, 
+    day: DayOfWeek, 
+    date: string
+  ) => {
+    setEventList(prevEvents => {
+      if (!prevEvents) return prevEvents;
+  
+      const updatedEvents: Events = { ...prevEvents };
+
+      updatedEvents.mainEvents[category] = updatedEvents.mainEvents[category].filter(
+        (event: Guest) => !(event.dayOfWeek === day && event.date === date && event.phone === phone)
+      );
+
+  
+      return updatedEvents;
+    });
+  };
+
+  const handleDeleteUserFromClass = (
+    phone: string | undefined, 
+    category: keyof OtherClasses,
+    day: DayOfWeek, 
+    date: string
+  ) => {
+    setEventList(prevEvents => {
+      if (!prevEvents) return prevEvents;
+  
+      const updatedEvents: Events = { ...prevEvents };
+
+      updatedEvents.otherClasses[category] = updatedEvents.otherClasses[category].filter(
+        (event: Guest) => !(event.dayOfWeek === day && event.date === date && event.phone === phone)
+      );
+
+  
+      return updatedEvents;
+    });
   };
 
 
@@ -103,12 +145,17 @@ export const SubscribedUsersTable: React.FC = () => {
                           {'subscribed-users__users--hidden': hiddenColumns.impro[day]})}
                         >
                           {improEvents.map(event => (
-                            <p 
-                              className='subscribed-users__user' 
+                            <div className='subscribed-users__user'>
+                            <p
                               key={event.phone}
                             >
                               {event.guestName} ({event.phone})
                             </p>
+                            <button 
+                              onClick={() => handleDeleteUserFromShow(event.phone, 'impro', day, date)} 
+                              type='button' 
+                              className='subscribed-users__delete'></button>
+                          </div>
                           ))}
                         </div>
                       </td>
@@ -131,12 +178,17 @@ export const SubscribedUsersTable: React.FC = () => {
                           {'subscribed-users__users--hidden': hiddenColumns.playback[day]})}
                         >
                           {playbackEvents.map(event => (
-                            <p 
-                              className='subscribed-users__user' 
-                              key={event.phone}
-                            >
-                              {event.guestName} ({event.phone})
-                            </p>
+                            <div className='subscribed-users__user'>
+                              <p
+                                key={event.phone}
+                              >
+                                {event.guestName} ({event.phone})
+                              </p>
+                              <button
+                                onClick={() => handleDeleteUserFromShow(event.phone, 'playback', day, date)} 
+                                type='button' 
+                                className='subscribed-users__delete'></button>
+                            </div>
                           ))}
                         </div>
                       </td>
@@ -159,12 +211,16 @@ export const SubscribedUsersTable: React.FC = () => {
                           {'subscribed-users__users--hidden': hiddenColumns.livePerf[day]})}
                         >
                           {livePerfEvents.map(event => (
-                            <p 
-                              className='subscribed-users__user' 
+                            <div className='subscribed-users__user'>
+                            <p
                               key={event.phone}
                             >
                               {event.guestName} ({event.phone})
                             </p>
+                            <button
+                              onClick={() => handleDeleteUserFromShow(event.phone, 'livePerf', day, date)}
+                              type='button' className='subscribed-users__delete'></button>
+                          </div>
                           ))}
                         </div>
                       </td>
@@ -224,9 +280,16 @@ export const SubscribedUsersTable: React.FC = () => {
                         )}
                         <div className={classNames('subscribed-users__users', {'subscribed-users__users--hidden': hiddenClassColumns.heels[day]})}>
                           {heelsEvents.map(event => (
-                            <p className='subscribed-users__user' key={event.phone}>
-                              {event.guestName} ({event.phone})
-                            </p>
+                            <div className='subscribed-users__user'>
+                              <p
+                                key={event.phone}
+                              >
+                                {event.guestName} ({event.phone})
+                              </p>
+                              <button
+                                onClick={() => handleDeleteUserFromClass(event.phone, 'heels', day, date)}
+                                type='button' className='subscribed-users__delete'></button>
+                          </div>
                           ))}
                         </div>
                       </td>
@@ -247,9 +310,16 @@ export const SubscribedUsersTable: React.FC = () => {
                         )}
                         <div className={classNames('subscribed-users__users', {'subscribed-users__users--hidden': hiddenClassColumns.twerk[day]})}>
                           {twerkEvents.map(event => (
-                            <p className='subscribed-users__user' key={event.phone}>
-                              {event.guestName} ({event.phone})
-                            </p>
+                            <div className='subscribed-users__user'>
+                              <p
+                                key={event.phone}
+                              >
+                                {event.guestName} ({event.phone})
+                              </p>
+                              <button
+                                onClick={() => handleDeleteUserFromClass(event.phone, 'twerk', day, date)}
+                                type='button' className='subscribed-users__delete'></button>
+                            </div>
                           ))}
                         </div>
                       </td>
@@ -270,9 +340,16 @@ export const SubscribedUsersTable: React.FC = () => {
                         )}
                         <div className={classNames('subscribed-users__users', {'subscribed-users__users--hidden': hiddenClassColumns.exotic[day]})}>
                           {exoticEvents.map(event => (
-                            <p className='subscribed-users__user' key={event.phone}>
-                              {event.guestName} ({event.phone})
-                            </p>
+                            <div className='subscribed-users__user'>
+                                <p
+                                  key={event.phone}
+                                >
+                                  {event.guestName} ({event.phone})
+                                </p>
+                                <button
+                                  onClick={() => handleDeleteUserFromClass(event.phone, 'exotic', day, date)}
+                                  type='button' className='subscribed-users__delete'></button>
+                            </div>
                           ))}
                         </div>
                       </td>
@@ -293,9 +370,16 @@ export const SubscribedUsersTable: React.FC = () => {
                         )}
                         <div className={classNames('subscribed-users__users', {'subscribed-users__users--hidden': hiddenClassColumns.poleDance[day]})}>
                           {poleDanceEvents.map(event => (
-                            <p className='subscribed-users__user' key={event.phone}>
-                              {event.guestName} ({event.phone})
-                            </p>
+                            <div className='subscribed-users__user'>
+                              <p
+                                key={event.phone}
+                              >
+                                {event.guestName} ({event.phone})
+                              </p>
+                              <button
+                                onClick={() => handleDeleteUserFromClass(event.phone, 'poleDance', day, date)}
+                                type='button' className='subscribed-users__delete'></button>
+                            </div>
                           ))}
                         </div>
                       </td>
@@ -316,9 +400,16 @@ export const SubscribedUsersTable: React.FC = () => {
                         )}
                         <div className={classNames('subscribed-users__users', {'subscribed-users__users--hidden': hiddenClassColumns.stretching[day]})}>
                           {stretchingEvents.map(event => (
-                            <p className='subscribed-users__user' key={event.phone}>
-                              {event.guestName} ({event.phone})
-                            </p>
+                            <div className='subscribed-users__user'>
+                              <p
+                                key={event.phone}
+                              >
+                                {event.guestName} ({event.phone})
+                              </p>
+                              <button
+                                onClick={() => handleDeleteUserFromClass(event.phone, 'stretching', day, date)}
+                                type='button' className='subscribed-users__delete'></button>
+                            </div>
                           ))}
                         </div>
                       </td>
