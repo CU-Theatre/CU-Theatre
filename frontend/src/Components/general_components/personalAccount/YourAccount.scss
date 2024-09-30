@@ -188,4 +188,128 @@
     }
   }
 
+  &__shows,
+  &__allShows {
+    @include page-grid;
+
+    grid-column: 1 / -1;
+  }
+
+  &__shows {
+    row-gap: 50px;
+  }
+
+  &__title,
+  &__show {
+    grid-column: 1 / -1;
+  }
+
+  &__show {
+    width: 100%;
+    display: flex;
+    padding: 20px 10px;
+    border-radius: 8px;
+    flex-direction: column;
+    gap: 20px;
+    background-color: rgb(119, 17, 57);
+    color: $white;
+    justify-content: space-between;
+
+
+    @include on-tablet {
+      grid-column: span 3;
+      padding: 20px;
+    }
+
+    @include on-desktop{
+      grid-column: span 4;
+    }
+  }
+
+  &__show-img {
+    width: 100%;
+    height: 150px;
+    cursor: pointer;
+    transition: opacity .3s;
+
+    &:hover {
+      opacity: 0.8;
+    }
+
+    @include on-tablet {
+      height: 190px;
+    }
+  }
+
+  &__allShows {
+    row-gap: 30px;
+  }
+
+  &__show-label {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  &__show-input {
+    padding: 5px 10px;
+    border-radius: 8px;
+    outline: none;
+  }
+
+  &__show-submit {
+    color: black;
+    background-color: $white;
+    padding: 10px 20px;
+    border-radius: 8px;
+    transition: background-color .3s, color .3s;
+
+    &:hover {
+      background-color: black;
+      color: $white;
+    }
+  }
+
+  &__modal {
+    position: fixed;
+    top: 0;
+    right: 0;
+    background-color: $white;
+    color: black;
+    padding: 20px;
+    border-radius: 5px;
+    font-size: 14px;
+    z-index: 1000;
+    transition: opacity 0.3s ease-in-out;
+
+    @include on-tablet {
+      padding: 40px;
+      font-size: 22px;
+    }
+  }
+  
+  &__modal-content {
+    display: flex;
+    align-items: center;
+    position: relative;
+    justify-content: center;
+  }
+  
+  &__modal p {
+    margin: 0;
+  }
+
+  &__progress-bar {
+    width: 100%;
+    height: 5px;
+    background-color: orange;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    animation: progressBarAnimation 3s linear forwards; /* Анімація прогрес-бару */
+  }
+  
+
+
 }

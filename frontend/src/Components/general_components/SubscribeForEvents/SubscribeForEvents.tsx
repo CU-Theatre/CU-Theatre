@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { allShows, improShow, liveShow, playbackShow } from "../../../utils/allShows";
 import './SubscribeForEvents.scss';
 import { ShowType } from "../../../types/ShowType";
 import classNames from "classnames";
@@ -17,7 +16,7 @@ const getFromLocalStorage = (key: string) => {
 
 export const SubscribeForEvents: React.FC = () => {
   const [selectedShow, setSelectedShow] = useState<ShowType | undefined>();
-  const { userState, setCourses, eventList, setEventList } = useAppContext();
+  const { userState, setCourses, eventList, setEventList, currentShows } = useAppContext();
   const userEventListImpro = eventList?.mainEvents.impro.filter(us => us.phone === userState?.phoneNumber || us.friend === userState?.phoneNumber);
   const userEventListPlayback = eventList?.mainEvents.playback.filter(us => us.phone === userState?.phoneNumber || us.friend === userState?.phoneNumber);
   const userEventListLivePerf = eventList?.mainEvents.livePerf.filter(us => us.phone === userState?.phoneNumber || us.friend === userState?.phoneNumber);
@@ -169,12 +168,12 @@ export const SubscribeForEvents: React.FC = () => {
     console.log("Гостя успішно додано:", newShowGuest);
   };
 
-  const deleteTicket = (guestIndex: number, show: ShowType) => {
+  const deleteTicket = (guestIndex: number, showName: string) => {
     if (!eventList || !userState) return;
 
     let updatedEventList = { ...eventList };
     
-    switch (show.showName) {
+    switch (showName) {
       case 'Live performance':
         updatedEventList.mainEvents.livePerf = updatedEventList.mainEvents.livePerf.filter(
           guest => guest.id !== guestIndex
@@ -197,7 +196,7 @@ export const SubscribeForEvents: React.FC = () => {
     setEventList(updatedEventList);
     setTicketCount((prevCounts) => ({
       ...prevCounts,
-      [show.showName]: Math.max(0, prevCounts[show.showName] - 1),
+      [showName]: Math.max(0, prevCounts[showName] - 1),
     }));
     console.log(guestIndex)
   };
@@ -222,7 +221,7 @@ export const SubscribeForEvents: React.FC = () => {
         <div className="subscribe-for-event__shows">
           <h2 className="subscribe-for-event__title title">Choose your show!</h2>
           <div className="subscribe-for-event__selection">
-            {allShows.map(show => (
+            {currentShows.map(show => (
               <div className='subscribe-for-event__wrapper' key={show.showName}>
                 <div 
                   className={classNames("subscribe-for-event__show", {
@@ -269,7 +268,7 @@ export const SubscribeForEvents: React.FC = () => {
             {userEventListImpro && userEventListImpro.map(user => 
             <div className="subscribe-for-event__current-ticket" key={user.id}>
               <p>Your ticket: {user.guestName} {user.guestSurname && user.guestSurname} {user.date} {user.dayOfWeek}</p>
-              <button type="button" className="subscribe-for-event__delete" onClick={() => deleteTicket(user.id, improShow)}>X</button>
+              <button type="button" className="subscribe-for-event__delete" onClick={() => deleteTicket(user.id, 'Impro shows')}>X</button>
             </div>
             )}
 
@@ -279,7 +278,7 @@ export const SubscribeForEvents: React.FC = () => {
             {userEventListPlayback && userEventListPlayback.map(user => 
             <div className="subscribe-for-event__current-ticket" key={user.id}>
               <p>Your ticket: {user.guestName} {user.guestSurname && user.guestSurname} {user.date} {user.dayOfWeek}</p>
-              <button type="button" className="subscribe-for-event__delete" onClick={() => deleteTicket(user.id, playbackShow)}>X</button>
+              <button type="button" className="subscribe-for-event__delete" onClick={() => deleteTicket(user.id, 'Playback shows')}>X</button>
             </div>
             )}
           </div>
@@ -288,7 +287,7 @@ export const SubscribeForEvents: React.FC = () => {
             {userEventListLivePerf && userEventListLivePerf.map(user => 
             <div className="subscribe-for-event__current-ticket" key={user.id}>
               <p>Your ticket: {user.guestName} {user.guestSurname && user.guestSurname} {user.date} {user.dayOfWeek}</p>
-              <button type="button" className="subscribe-for-event__delete" onClick={() => deleteTicket(user.id, liveShow)}>X</button>
+              <button type="button" className="subscribe-for-event__delete" onClick={() => deleteTicket(user.id, 'Live performance')}>X</button>
             </div>
             )}
           </div>

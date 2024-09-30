@@ -13,16 +13,17 @@ import { useLocalStorage } from "../../../hooks/useLocalStorage";
 import { FetchErrorMessage } from "../../../types/FetchErrorMessage";
 import { validEmail } from "../../../utils/validEmail";
 import { CabinetFormInput } from "../../../types/CabinetFormInput";
-import { MyCalendar } from "./MyCalendar";
-import { EventInfo } from "./MyCalendar/EventInfo";
 import { ErrorNotification } from "../errorNotification";
+import { ShowType } from "../../../types/ShowType";
 
 export const YourAccount: React.FC = () => {
-  const { userState, setUserState, setIsLoginned, eventInfoIsOpen } =
+  const { userState, setUserState, setIsLoginned, currentShows, setCurrentShows } =
     useAppContext();
   const [isRootErrShown, setIsRootErrShown] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
+  const [temporaryShows, setTemporaryShows] = useState<ShowType[]>(currentShows);
+  const [isModalVisible, setIsModalVisible] = useState(false);
 
   const navigate = useNavigate();
 
@@ -93,6 +94,38 @@ export const YourAccount: React.FC = () => {
     setUserState(null);
 
     window.localStorage.removeItem(KEY_TOKEN);
+  };
+
+  const handleShowChange = (index: number, field: keyof ShowType, value: string) => {
+    const updatedShows = [...temporaryShows];
+    updatedShows[index] = {
+      ...updatedShows[index],
+      [field]: value,
+    };
+
+    setTemporaryShows(updatedShows);
+  };
+
+  const handleImageUpload = (index: number, file: File) => {
+    const reader = new FileReader();
+    reader.onload = (event) => {
+      const updatedShows = [...temporaryShows];
+      updatedShows[index] = {
+        ...updatedShows[index],
+        showImg: event.target?.result as string,
+      };
+      setTemporaryShows(updatedShows);
+    };
+    reader.readAsDataURL(file);
+  };
+
+  const handleSubmitShowChanges = (e: React.FormEvent<HTMLFormElement>, index: number) => {
+    e.preventDefault();
+    setCurrentShows(temporaryShows);
+    setIsModalVisible(true);
+    setTimeout(() => {
+      setIsModalVisible(false);
+    }, 3000);
   };
 
   return (
@@ -212,6 +245,87 @@ export const YourAccount: React.FC = () => {
         <Link to={"/users-table"} className="cabinet__users-table">
           Users table page
         </Link>
+        <div className="cabinet__shows">
+          <h2 className="cabinet__title title">Shows editor</h2>
+          <div className="cabinet__allShows">
+            {temporaryShows.map((someShow, index) => (
+              <form 
+                className="cabinet__show" 
+                key={index} 
+                onSubmit={(e) => {
+                  handleSubmitShowChanges(e, index);
+                }}
+              >
+                <label className="cabinet__show-label">
+                  Show name:
+                  <input 
+                    type="text"
+                    className="cabinet__show-input"
+                    value={someShow.showName}
+                    onChange={(e) => handleShowChange(index, "showName", e.target.value)}
+                    readOnly={true}
+                  />
+                </label>
+                <label className="cabinet__show-label">
+                  Show date:
+                  <input 
+                    type="text"
+                    className="cabinet__show-input"
+                    value={someShow.showDate}
+                    onChange={(e) => handleShowChange(index, "showDate", e.target.value)}
+                  />
+                </label>
+                <label>
+                  Show image:
+                  <img
+                    className="cabinet__show-img"
+                    src={someShow.showImg}
+                    alt="showImage"
+                    onClick={() => document.getElementById(`file-input-${index}`)?.click()}
+                  />
+                  <input
+                    type="file"
+                    id={`file-input-${index}`}
+                    style={{ display: "none" }}
+                    accept="image/*"
+                    onChange={(e) =>
+                      e.target.files && handleImageUpload(index, e.target.files[0])
+                    }
+                  />
+                </label>
+                <label className="cabinet__show-label">
+                  Show price: 
+                  <input 
+                    type="text"
+                    className="cabinet__show-input"
+                    value={someShow.showPrice}
+                    onChange={(e) => handleShowChange(index, "showPrice", e.target.value)}
+                    />
+                </label>
+                <label className="cabinet__show-label">
+                  Show title:
+                  <input 
+                    type="text"
+                    className="cabinet__show-input"
+                    value={someShow.showTitle}
+                    onChange={(e) => handleShowChange(index, "showTitle", e.target.value)}
+                    />
+                </label>
+
+                <button className="cabinet__show-submit" type="submit">Submit changes</button>
+              </form>
+            ))}
+          </div>
+        </div>
+
+        {isModalVisible && (
+          <div className="cabinet__modal">
+            <div className="cabinet__modal-content">
+              <p>Changes saved successfully!</p>
+            </div>
+            <div className="cabinet__progress-bar"></div>
+          </div>
+        )}
       </div>
     </section>
   );
