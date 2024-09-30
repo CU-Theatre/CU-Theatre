@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import './SubscribedUsersTable.scss';
-import { allShows } from '../../../utils/allShows';
 import { events } from '../../../utils/events';
 import classNames from 'classnames';
 import { DayOfWeek } from '../../../types/DayOfWeek';
@@ -16,7 +15,7 @@ export const SubscribedUsersTable: React.FC = () => {
   const { hiddenColumns, toggleColumnVisibility } = useHiddenColumns();
   const { hiddenClassColumns, toggleClassColumnVisibility } = useHiddenClassColumns();
   const [currentWeek, setCurrentWeek] = useState(getWeek(new Date()));
-  const { setEventList } = useAppContext();
+  const { setEventList, currentShows } = useAppContext();
 
   const handlePrevWeek = () => {
     setCurrentWeek(prevWeek => addWeeks(prevWeek, -1));
@@ -102,7 +101,7 @@ export const SubscribedUsersTable: React.FC = () => {
             <thead>
               <tr className='subscribed-users__table-head'>
                 <th className='subscribed-users__table-titles'>Day of the week</th>
-                {allShows.map(show => (
+                {currentShows.map(show => (
                   <th className='subscribed-users__table-titles' key={show.showName}>{show.showName}</th>
                 ))}
               </tr>

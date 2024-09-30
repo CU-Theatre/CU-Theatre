@@ -5,7 +5,6 @@ import { format, isBefore } from 'date-fns';
 import { useAppContext } from '../../../../../AppContext';
 import classNames from 'classnames';
 import { events } from '../../../../../utils/events';
-import { allShows } from '../../../../../utils/allShows';
 import { Guest } from '../../../../../types/Events';
 
 interface Props {
@@ -14,7 +13,7 @@ interface Props {
 }
 
 export const EventInfo: React.FC<Props> = ({ currentEvent, setCurrentEvent }) => {
-  const { setEventInfoIsOpen, eventInfoIsOpen, setEventDetailIsOpen, userState, setCourses } = useAppContext();
+  const { setEventInfoIsOpen, eventInfoIsOpen, setEventDetailIsOpen, userState, setCourses, currentShows } = useAppContext();
   const classes = ['Heels', 'Exotic', 'Stretching', 'Pole Dance', 'Twerk'];
   const someShows = ["Live performance", "Impro shows", "Playback shows"];
   const daysOfWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
@@ -235,7 +234,7 @@ export const EventInfo: React.FC<Props> = ({ currentEvent, setCurrentEvent }) =>
         </p>
         {currentEvent && someShows.includes(currentEvent?.title) ? (
           <div className='event-info__description'>
-            {allShows[allShows.findIndex(show => show.showName === currentEvent.title)].showTitle}
+            {currentShows[currentShows.findIndex(show => show.showName === currentEvent.title)].showTitle}
           </div>
         ) : (
           <div className='event-info__prepare'>

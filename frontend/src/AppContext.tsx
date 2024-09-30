@@ -36,6 +36,8 @@ interface AppContextInterface {
   setEventDetailIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
   eventList: Events | undefined;
   setEventList: React.Dispatch<React.SetStateAction<Events | undefined>>;
+  currentShows: ShowType[];
+  setCurrentShows: React.Dispatch<React.SetStateAction<ShowType[]>>;
 }
 
 const AppContext = createContext<AppContextInterface | undefined>(undefined);
@@ -43,7 +45,8 @@ const AppContext = createContext<AppContextInterface | undefined>(undefined);
 export const AppProvider: React.FC<React.PropsWithChildren<{}>> = ({
   children,
 }) => {
-  const [liveShow] = allShows;
+  const [currentShows, setCurrentShows] = useState<ShowType[]>(allShows);
+  const [liveShow] = currentShows;
   const [ dramaCourse ] = allCourses;
   const [isOpen, setIsOpen] = useState(false);
   const [isLoginned, setIsLoginned] = useState(false);
@@ -115,6 +118,8 @@ export const AppProvider: React.FC<React.PropsWithChildren<{}>> = ({
         setEventDetailIsOpen,
         eventList,
         setEventList,
+        currentShows,
+        setCurrentShows,
       }}
     >
       {children}

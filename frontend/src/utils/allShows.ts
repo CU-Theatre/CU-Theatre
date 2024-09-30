@@ -7,7 +7,7 @@ export const improShow: ShowType = {
   showName: "Impro shows",
   showTitle: 'Fun, comedy live show where actors don’t have prepared scripts but want to make you laugh.',
   showImg: impro,
-  showDate: '18.09-Wednesday',
+  showDate: '01.10-Wednesday',
   showPrice: '45$',
   link: 'impro-shows',
 };

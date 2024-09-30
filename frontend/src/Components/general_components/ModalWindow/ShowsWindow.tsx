@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { ShowType } from "../../../types/ShowType";
 import "./ShowsWindow.scss";
 import { useAppContext } from "../../../AppContext";
@@ -11,6 +11,7 @@ interface Props {
 
 export const ShowsWindow: React.FC<Props> = ({ show }) => {
   const { setModalIsOpen, modalsOpen, eventList } = useAppContext();
+  const [isPastShow, setIsPastShow] = useState(false);
 
   const onCloseMenu = () => {
     setModalIsOpen(false);
@@ -21,6 +22,16 @@ export const ShowsWindow: React.FC<Props> = ({ show }) => {
       setModalIsOpen(false);
     };
   }, [setModalIsOpen]);
+
+  useEffect(() => {
+    const showDateString = show?.showDate.split('-')[0];
+    const [day, month] = showDateString.split('.').map(Number);
+    const showYear = 2024;
+    const showDate = new Date(showYear, month - 1, day);
+    const currentDate = new Date();
+  
+    setIsPastShow(showDate < currentDate);
+  }, [show?.showDate]);
 
   const detectShow = (someShowName: string) => {
     if (!eventList?.mainEvents) return;
@@ -74,7 +85,12 @@ export const ShowsWindow: React.FC<Props> = ({ show }) => {
                 <p className="show__tickets-left">Tickets left - {countTicketsLeft(show.showName)}</p>
               )}
               {countTicketsLeft(show.showName) !== 0 && (
-                <BookingButton title="Book a place" show={show} />
+
+                isPastShow ? (
+                  <div className="show__end-date">This show already ended😞</div>
+                ): (
+                  <BookingButton title="Book a place" show={show} />
+                )
               )}
             </div>
           </div>
