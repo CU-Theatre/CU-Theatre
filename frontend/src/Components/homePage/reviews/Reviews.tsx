@@ -7,7 +7,7 @@ import ReactPlayer from 'react-player';
 
 export const Reviews: React.FC = () => {
   const [ref, isVisible] = useFadeIn();
-  const videos = ['/video/reviews/IMG_3711.MOV', '/video/reviews/IMG_5852.MOV'];
+  const videos = ['/video/reviews/IMG_3711.MOV', '/video/reviews/review.mp4'];
 
   return (
     <section className="home__reviews reviews">
