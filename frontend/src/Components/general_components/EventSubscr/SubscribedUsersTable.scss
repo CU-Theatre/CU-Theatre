@@ -134,8 +134,13 @@
   }
 
   &__user {
-    margin-top: 10px;
+    margin: 10px 0;
     text-align: center;
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    align-items: center;
+    padding: 0 10px;
   }
 
   &__count-block {
@@ -178,6 +183,26 @@
     @include on-tablet {
       width: 18px;
       height: 18px;
+    }
+  }
+
+  &__delete {
+    background-image: url('../burgerMenu/img/IconClose.svg');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain;
+    transition: all  0.3s;
+    width: 8px;
+    height: 8px;
+
+    &:hover {
+      transform: scale(1.05);
+      filter: grayscale(1) brightness(0.5);
+    }
+
+    @include on-tablet {
+      width: 12px;
+      height: 12px;
     }
   }
 }
