@@ -1,5 +1,5 @@
 import { CourseEvent } from "../types/CourseEvent";
-import heelsIcon from "../Components/img/shoe.webp";
+import heelsIcon from "../Components/img/high-heels.svg";
 import poleDanceIcon from "../Components/img/icons/pole-dance.webp";
 import twerkIcon from "../Components/img/icons/twerk.webp";
 import stretchingIcon from "../Components/img/icons/stretching.webp";
