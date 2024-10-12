@@ -6,6 +6,9 @@ export interface Guest {
   guestSurname?: string;
   phone?: string;
   friend?: string,
+  paymentType?: string,
+  classPrice?: string,
+  peoplesPerClass?: string,
 }
 
 export interface MainEvents {

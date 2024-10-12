@@ -18,7 +18,7 @@ import {
 } from "../../../utils/globalVariables";
 import { useFadeIn } from "../../../hooks/useFadeIn";
 import { SwiperNavigation } from "../../general_components/swiperNavigation";
-import { SignButton } from "../../general_components/signButton";
+import { Link } from "react-router-dom";
 
 const classesArr = [
   {
@@ -88,7 +88,7 @@ export const MoreClasses: React.FC = () => {
                   alt={`from ${training.title}`}
                   className={style.classes__img}
                 />
-                <SignButton title="Sign for a class" path="/classes"/>
+                <Link to={'/classes'} className={style.classes__button}>Sign for a class</Link>
               </SwiperSlide>
             ))}
 

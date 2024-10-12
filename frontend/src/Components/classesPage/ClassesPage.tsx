@@ -6,7 +6,6 @@ import { groupTrainings } from "../../utils/groupTraining";
 import { getAllTraining } from "../../api/trainingApi";
 import { GroupedLesson } from "../../types/GroupedLesson";
 import { TrainingCell } from "./trainingCell/TrainingCell";
-import { Link } from "react-router-dom";
 import { allClasses } from "../../utils/allClasses";
 
 
@@ -20,8 +19,6 @@ export const ClassesPage: React.FC = () => {
       // const newGroupedTrainings = groupTrainings(allTrainings);
       const newGroupedTrainings = groupTrainings(allClasses);
       
-      console.log(newGroupedTrainings);
-      
       setGroupedTrainings(newGroupedTrainings);
     })
   }, []) 
@@ -30,10 +27,6 @@ export const ClassesPage: React.FC = () => {
     <main className="classes-page">
       <div className="classes-page__container">
         <h1 className="classes-page__title">Our Classes</h1>
-
-        <Link to='/users-table' className="white-button">users-table</Link>
-
-
         <ul className="classes-page__list">
           {groupedTrainings?.map((training) => (
             <li className="classes-page__li" key={training.title}>

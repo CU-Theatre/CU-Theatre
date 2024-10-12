@@ -114,32 +114,50 @@ input {
   border-radius: 11px;
   bottom: -20px;
   transition: background-color 0.3s;
+  width: 50%;
+  height: 30px;
 
   &:hover {
     background-color: gray;
   }
 
   &::before {
-    width: 15px;
-    height: 11px;
+    width: 30px;
+    height: 15px;
     display: block;
     background-size: contain;
     background-position: center;
     background-repeat: no-repeat;
     content: '';
+    position: absolute;
+    top: 8px;
+
+    @include on-tablet {
+      transform: translateX(50%);
+    }
   }
 
   &--prev {
-    left: 0;
+    position: relative;
     &::before {
+      left: 55px;
       background-image: url('./Components/general_components/ModalWindowSwiper/img/prev.svg');
+
+      @include on-tablet {
+        left: 50%;
+      }
     }
   }
 
   &--next {
-    right: 0;
+    position: relative;
     &::before {
+      right: 55px;
       background-image: url('./Components/general_components/ModalWindowSwiper/img/next.svg');
+
+      @include on-tablet {
+        right: 50%;
+      }
     }
   }
 }

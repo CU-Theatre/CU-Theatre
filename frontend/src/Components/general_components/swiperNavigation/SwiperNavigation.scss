@@ -10,10 +10,9 @@
 
   &__button {
     background-color: $white;
-    height: 20px;
-    width: 60px;
-    border-radius: 11px;
-    transition: background-color 0.3s;
+    height: 30px;
+    width: 50%;
+    transition: opacity .3s;
 
     font-size: 0;
     line-height: 0;
@@ -21,12 +20,12 @@
     position: relative;
 
     &:hover {
-      background-color: gray;
+      opacity: .5;
     }
 
     &::before {
-      width: 15px;
-      height: 11px;
+      width: 30px;
+      height: 15px;
       display: block;
       background-size: contain;
       background-position: center;

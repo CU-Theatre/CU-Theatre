@@ -12,6 +12,8 @@ interface Props {
   setCurrentEvent: (a: CourseEvent | null) => void;
 }
 
+type PriceType = 'groupClass' | 'privateClass' | 'privateForTwo';
+
 export const EventInfo: React.FC<Props> = ({ currentEvent, setCurrentEvent }) => {
   const { setEventInfoIsOpen, eventInfoIsOpen, setEventDetailIsOpen, userState, setCourses, currentShows } = useAppContext();
   const classes = ['Heels', 'Exotic', 'Stretching', 'Pole Dance', 'Twerk'];
@@ -19,6 +21,18 @@ export const EventInfo: React.FC<Props> = ({ currentEvent, setCurrentEvent }) =>
   const daysOfWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
   const [alreadyBooked, setAlreadyBooked] = useState(false);
   const [isPastEvent, setIsPastEvent] = useState(false);
+  const prices = currentEvent?.title === 'Heels' || currentEvent?.title === 'Twerk' || currentEvent?.title === 'Stretching' 
+    ? {
+      groupClass: '15',
+      privateClass: '40',
+      privateForTwo: '25',
+    } : {
+      groupClass: '20',
+      privateClass: '50',
+      privateForTwo: '35',
+    };
+  const [selectedPrice, setSelectedPrice] = useState<PriceType>('privateClass');
+  const [paymentType, setPaymentType] = useState('Card');
 
   useEffect(() => {
     if (currentEvent) {
@@ -96,13 +110,16 @@ export const EventInfo: React.FC<Props> = ({ currentEvent, setCurrentEvent }) =>
 
       let newClass;
 
-      const newClassGuest = {
+      const newClassGuest: Guest = {
         id: 0,
         dayOfWeek: dayOfWeek,
         date: newDate,
         guestName: userState?.firstName,
         guestSurname: userState.lastName,
         phone: userState?.phoneNumber,
+        paymentType: paymentType,
+        classPrice: prices[selectedPrice],
+        peoplesPerClass: selectedPrice,
       };
 
       switch (currentEvent?.title) {
@@ -232,7 +249,36 @@ export const EventInfo: React.FC<Props> = ({ currentEvent, setCurrentEvent }) =>
         <p className='event-info__duration'>
           Event duration - {currentEvent && format(currentEvent.start, 'HH:mm')} - {currentEvent && format(currentEvent.end, 'HH:mm')}
         </p>
-        {currentEvent && someShows.includes(currentEvent?.title) ? (
+        {currentEvent && classes.includes(currentEvent.title) && (
+          <div className='event-info__price'>
+            <p className='event-info__price-title'>Price</p>
+            <p className='event-info__price-title'>Choose your class option:</p>
+            <div className='event-info__class-count'>
+              <p className={classNames('event-info__class-option', {
+                'event-info__class-option--selected': selectedPrice === 'groupClass'
+              })}
+              onClick={() => setSelectedPrice('groupClass')}
+              >
+                Group class - {prices.groupClass}EUR
+              </p>
+              <p className={classNames('event-info__class-option', {
+                'event-info__class-option--selected': selectedPrice === 'privateClass'
+              })}
+              onClick={() => setSelectedPrice('privateClass')}
+              >
+                Private class - {prices.privateClass}EUR
+              </p>
+              <p className={classNames('event-info__class-option', {
+                'event-info__class-option--selected': selectedPrice === 'privateForTwo'
+              })}
+              onClick={() => setSelectedPrice('privateForTwo')}
+              >
+                Group class - {prices.privateForTwo}EUR
+              </p>
+            </div>
+          </div>
+        )}
+        {currentEvent && someShows.includes(currentEvent.title) ? (
           <div className='event-info__description'>
             {currentShows[currentShows.findIndex(show => show.showName === currentEvent.title)].showTitle}
           </div>
@@ -266,6 +312,29 @@ export const EventInfo: React.FC<Props> = ({ currentEvent, setCurrentEvent }) =>
           </ul>
         </div>
         )}
+        {currentEvent && classes.includes(currentEvent?.title) && (
+          <div className='event-info__pay-option'>
+            <button 
+              type='button' 
+              className={classNames('event-info__pay', {
+                'event-info__pay--selected': paymentType === 'Cash'
+              })}
+              onClick={() => setPaymentType('Cash')}
+            >
+              Cash
+            </button>
+            <button 
+              type='button' 
+              className={classNames('event-info__pay', {
+                'event-info__pay--selected': paymentType === 'Card'
+              })}
+              onClick={() => setPaymentType('Card')}
+            >
+              Card
+            </button>
+          </div>
+        )}
+
         {currentEvent && someShows.includes(currentEvent?.title) && (
           <button onClick={cancelShowBooking} className='event-info__button' type='button'>Cancel show booking</button>
         )}

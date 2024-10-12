@@ -1,5 +1,6 @@
 import React from 'react'; 
 import './Welcome.scss';
+import { Link } from 'react-router-dom';
 
 export const Welcome = () => {
   return (
@@ -12,7 +13,7 @@ export const Welcome = () => {
             Where Dublin Laughs, Heals and Rises
           </p>
         </div>
-        <button className='welcome__button white-button'>Learn more</button>
+        <Link to={'/about'} className='welcome__button white-button'>Learn more</Link>
       </div>
     </section>
   );

@@ -158,7 +158,7 @@ export const CoursesWindow: React.FC = () => {
               type="button"
               className="course-window__button course-window__button--left"
             >
-              Book
+              Subscribe
             </button>
             <button
               type="button"

@@ -125,10 +125,8 @@ export const EventsTable: React.FC<Props> = ({ events }) => {
                         {'events-table__users--hidden': hiddenColumns.impro[day]})}
                       >
                         {improEvents.map(event => (
-                          <div className='events-table__user'>
-                          <p
-                            key={event.phone}
-                          >
+                          <div className='events-table__user' key={event.phone}>
+                          <p>
                             {event.guestName} ({event.phone})
                           </p>
                           <button 
@@ -158,10 +156,8 @@ export const EventsTable: React.FC<Props> = ({ events }) => {
                         {'events-table__users--hidden': hiddenColumns.playback[day]})}
                       >
                         {playbackEvents.map(event => (
-                          <div className='events-table__user'>
-                            <p
-                              key={event.phone}
-                            >
+                          <div className='events-table__user' key={event.phone}>
+                            <p>
                               {event.guestName} ({event.phone})
                             </p>
                             <button
@@ -191,10 +187,8 @@ export const EventsTable: React.FC<Props> = ({ events }) => {
                         {'events-table__users--hidden': hiddenColumns.livePerf[day]})}
                       >
                         {livePerfEvents.map(event => (
-                          <div className='events-table__user'>
-                          <p
-                            key={event.phone}
-                          >
+                          <div className='events-table__user' key={event.phone}>
+                          <p>
                             {event.guestName} ({event.phone})
                           </p>
                           <button
@@ -260,12 +254,17 @@ export const EventsTable: React.FC<Props> = ({ events }) => {
                       )}
                       <div className={classNames('events-table__users', {'events-table__users--hidden': hiddenClassColumns.heels[day]})}>
                         {heelsEvents.map(event => (
-                          <div className='events-table__user'>
-                            <p
-                              key={event.phone}
-                            >
-                              {event.guestName} ({event.phone})
-                            </p>
+                          <div className='events-table__user' key={event.phone}>
+                            <div>
+                              {event.guestName} {event.phone} 
+                              <p className='events-table__payment'>{event.paymentType}</p>
+                              {event.classPrice && (
+                                <>
+                                  <p className='events-table__payment'>{event.peoplesPerClass}</p>
+                                  <p className='events-table__payment'>{event.classPrice}EUR</p>
+                                </>
+                              )}
+                            </div>
                             <button
                               onClick={() => openPreDeleteModal(event.phone, 'heels', day, date, true)}
                               type='button' className='events-table__delete'></button>
@@ -290,12 +289,17 @@ export const EventsTable: React.FC<Props> = ({ events }) => {
                       )}
                       <div className={classNames('events-table__users', {'events-table__users--hidden': hiddenClassColumns.twerk[day]})}>
                         {twerkEvents.map(event => (
-                          <div className='events-table__user'>
-                            <p
-                              key={event.phone}
-                            >
-                              {event.guestName} ({event.phone})
-                            </p>
+                          <div className='events-table__user' key={event.phone}>
+                            <div>
+                              {event.guestName} {event.phone} 
+                              <p className='events-table__payment'>{event.paymentType}</p>
+                              {event.classPrice && (
+                                <>
+                                  <p className='events-table__payment'>{event.peoplesPerClass}</p>
+                                  <p className='events-table__payment'>{event.classPrice}EUR</p>
+                                </>
+                              )}
+                            </div>
                             <button
                               onClick={() => openPreDeleteModal(event.phone, 'twerk', day, date, true)}
                               type='button' className='events-table__delete'></button>
@@ -320,12 +324,17 @@ export const EventsTable: React.FC<Props> = ({ events }) => {
                       )}
                       <div className={classNames('events-table__users', {'events-table__users--hidden': hiddenClassColumns.exotic[day]})}>
                         {exoticEvents.map(event => (
-                          <div className='events-table__user'>
-                              <p
-                                key={event.phone}
-                              >
-                                {event.guestName} ({event.phone})
-                              </p>
+                          <div className='events-table__user' key={event.phone}>
+                              <div>
+                                {event.guestName} {event.phone} 
+                                <p className='events-table__payment'>{event.paymentType}</p>
+                                {event.classPrice && (
+                                <>
+                                  <p className='events-table__payment'>{event.peoplesPerClass}</p>
+                                  <p className='events-table__payment'>{event.classPrice}EUR</p>
+                                </>
+                              )}
+                              </div>
                               <button
                                 onClick={() => openPreDeleteModal(event.phone, 'exotic', day, date, true)}
                                 type='button' className='events-table__delete'></button>
@@ -350,12 +359,17 @@ export const EventsTable: React.FC<Props> = ({ events }) => {
                       )}
                       <div className={classNames('events-table__users', {'events-table__users--hidden': hiddenClassColumns.poleDance[day]})}>
                         {poleDanceEvents.map(event => (
-                          <div className='events-table__user'>
-                            <p
-                              key={event.phone}
-                            >
-                              {event.guestName} ({event.phone})
-                            </p>
+                          <div className='events-table__user' key={event.phone}>
+                            <div>
+                              {event.guestName} {event.phone} 
+                              <p className='events-table__payment'>{event.paymentType}</p>
+                              {event.classPrice && (
+                                <>
+                                  <p className='events-table__payment'>{event.peoplesPerClass}</p>
+                                  <p className='events-table__payment'>{event.classPrice}EUR</p>
+                                </>
+                              )}
+                            </div>
                             <button
                               onClick={() => openPreDeleteModal(event.phone, 'poleDance', day, date, true)}
                               type='button' className='events-table__delete'></button>
@@ -380,12 +394,17 @@ export const EventsTable: React.FC<Props> = ({ events }) => {
                       )}
                       <div className={classNames('events-table__users', {'events-table__users--hidden': hiddenClassColumns.stretching[day]})}>
                         {stretchingEvents.map(event => (
-                          <div className='events-table__user'>
-                            <p
-                              key={event.phone}
-                            >
-                              {event.guestName} ({event.phone})
-                            </p>
+                          <div className='events-table__user' key={event.phone}>
+                            <div>
+                              {event.guestName} {event.phone} 
+                              <p className='events-table__payment'>{event.paymentType}</p>
+                              {event.classPrice && (
+                                <>
+                                  <p className='events-table__payment'>{event.peoplesPerClass}</p>
+                                  <p className='events-table__payment'>{event.classPrice}EUR</p>
+                                </>
+                              )}
+                            </div>
                             <button
                               onClick={() => openPreDeleteModal(event.phone, 'stretching', day, date, true)}
                               type='button' className='events-table__delete'></button>
