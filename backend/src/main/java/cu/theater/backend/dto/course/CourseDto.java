@@ -1,6 +1,7 @@
 package cu.theater.backend.dto.course;
 
 import cu.theater.backend.dto.roadmap.RoadMapDto;
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Set;
 import lombok.Data;
@@ -12,6 +13,8 @@ public class CourseDto {
     private String description;
     private String status;
     private String startDate;
+    private String finishDate;
+    private BigDecimal price;
     private String image;
     private String icon;
     private List<RoadMapDto> roadMaps;
