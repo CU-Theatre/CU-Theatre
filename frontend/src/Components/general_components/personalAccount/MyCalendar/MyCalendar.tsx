@@ -6,13 +6,13 @@ import getDay from 'date-fns/getDay';
 import enUS from 'date-fns/locale/en-US';
 import './MyCalendar.scss';
 import { useCalendarSize } from '../../../../hooks/useCalendarSize';
-import { allCourses } from '../../../../utils/courses';
 import { useMediaQuery } from 'react-responsive';
 import { TABLE_MIN_WIDTH } from '../../../../utils/globalVariables';
 import { CalendarModal } from './CalendarModal';
 import React, { useState } from 'react';
 import { CourseEvent } from '../../../../types/CourseEvent';
 import { useAppContext } from '../../../../AppContext';
+import { createRrule } from '../../../../utils/createRrule';
 
 const locales = {
   'en-US': enUS,
@@ -31,15 +31,13 @@ interface Props {
 }
 
 export const MyCalendar: React.FC<Props> = ({ setCurrentEvent }) => {
-  const [dramaCourse] = allCourses;
-  const { setEventInfoIsOpen } = useAppContext();
-  const [courses, setCourses] = useState(dramaCourse.courseTime);
+  const { setEventInfoIsOpen, courses, setCourses, setEventDetailIsOpen } = useAppContext();
   const isMobile = useMediaQuery({ query: `(max-width: ${TABLE_MIN_WIDTH}px)` });
   const [modalIsOpen, setModalIsOpen] = useState(false);
 
   const recurringEvents = courses.flatMap(event => {
-    if (event.rrule) {
-      const rule = event.rrule;
+    if (event.rule) {
+      const rule = createRrule(event.rule);
       return rule.all().map(date => {
         const start = new Date(date);
         start.setHours(event.start.getHours(), event.start.getMinutes());
@@ -60,7 +58,8 @@ export const MyCalendar: React.FC<Props> = ({ setCurrentEvent }) => {
   
   const handleEventClick = (event: CourseEvent) => {
     setEventInfoIsOpen(false);
-    setCurrentEvent(event)
+    setCurrentEvent(event);
+    setEventDetailIsOpen(true);
   };
 
   return (

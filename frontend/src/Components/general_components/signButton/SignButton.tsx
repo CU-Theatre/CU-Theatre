@@ -4,15 +4,16 @@ import { Link } from "react-router-dom";
 
 interface Props {
   title: string;
-  path?: string;
+  path: string;
 }
 
 export const SignButton: React.FC<Props> = ({ title, path }) => {
-  let currantPath =
-    path || title.toLowerCase().includes("course") ? "/our-courses" : "";
-
   return (
-      <Link to={currantPath} className="sign-button">
+      <Link
+        to={path}
+        type="button" 
+        className="sign-button"
+        >
         {title}
       </Link>
   );

@@ -1,8 +1,11 @@
-import { RRule } from "rrule";
+import { Rule } from "./Rule";
 
 export interface CourseEvent {
   title: string;
   start: Date;
   end: Date;
-  rrule?: RRule;
+  description?: string;
+  id?: number;
+  icon?: string;
+  rule?: Rule;
 }

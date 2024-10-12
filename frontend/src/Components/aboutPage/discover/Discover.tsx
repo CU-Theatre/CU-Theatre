@@ -39,7 +39,7 @@ export const Discover: React.FC = () => {
         </div>
 
         <div className="discover__button">
-          <SignButton title="Sign for a course" />
+          <SignButton title="Sign for a course" path="/our-courses"/>
         </div>
       </div>
     </section>

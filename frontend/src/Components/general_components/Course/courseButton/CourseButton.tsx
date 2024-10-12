@@ -22,7 +22,7 @@ export const CourseButton: React.FC<Props> = ({ course }) => {
     setCourseModal(true);
   }
 
-  const { courseName, courseDuration } = course;
+  const { name, startDate, finishDate } = course;
 
   const setStatusBasedOnCurrent = () => {
     // TODO return branching operator when would be clear userState?.currentCourse
@@ -37,19 +37,19 @@ export const CourseButton: React.FC<Props> = ({ course }) => {
 
   useEffect(() => {
     if (isLoginned) {
-      if (courseName.toLowerCase() === REQUIRED_COURSE) {
+      if (name.toLowerCase() === REQUIRED_COURSE) {
         setStatusBasedOnCurrent();
       } else if (userState?.dramaCourseFinisher) {
         setStatusBasedOnCurrent();
       } else {
         setButtonStatus(StatusButton.LOCK);
       }
-    } else if (courseName.toLowerCase() === REQUIRED_COURSE) {
+    } else if (name.toLowerCase() === REQUIRED_COURSE) {
       setButtonStatus(StatusButton.BUY);
     } else {
       setButtonStatus(StatusButton.LOCK);
     }
-  }, [isLoginned, courseName, courseDuration, userState]);
+  }, [isLoginned, name, startDate, finishDate, userState]);
 
   return (
     <>
@@ -78,7 +78,7 @@ export const CourseButton: React.FC<Props> = ({ course }) => {
           {/* TODO add link to buy-page */}
           <span className="course-button__text">Course duration:</span>
           <span className="course-button__text course-button__text--duration">
-            {courseDuration}
+            {`${startDate} - ${finishDate}`}
           </span>
         </div>
       )}

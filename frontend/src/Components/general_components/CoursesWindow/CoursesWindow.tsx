@@ -80,7 +80,7 @@ export const CoursesWindow: React.FC = () => {
               type="button"
               className="course-window__close"
             ></button>
-            <h2 className="course-window__title title">{course.courseName}</h2>
+            <h2 className="course-window__title title">{course.name}</h2>
 
             {isAdmin && (
               <>
@@ -102,8 +102,7 @@ export const CoursesWindow: React.FC = () => {
           <div className="course-window__image-for">
             <div className="course-window__for">
               <p className="course-window__subtitle">
-                {" "}
-                This course for those who{" "}
+                This course for those who
               </p>
               <Swiper
                 modules={[Autoplay]}
@@ -124,7 +123,7 @@ export const CoursesWindow: React.FC = () => {
             </div>
             <img
               className="course-window__image"
-              src={course.courseBackground}
+              src={course.image}
               alt="groupPhoto"
             />
           </div>
@@ -144,13 +143,13 @@ export const CoursesWindow: React.FC = () => {
             <div className="course-window__info-schedule">
               <p className="course-window__info-title">Dates</p>
               <p className="course-window__info-subtitle">
-                {course.courseDuration}
+                {`${course.startDate} - ${course.finishDate}`}
               </p>
             </div>
             <div className="course-window__info-schedule">
               <p className="course-window__info-title">Price</p>
               <p className="course-window__info-subtitle">
-                {course.coursePrice}
+                {course.price}
               </p>
             </div>
           </div>

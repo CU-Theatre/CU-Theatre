@@ -22,7 +22,7 @@ export const WhoWe: React.FC = () => {
             a strong emphasis on providing a personalized approach, ensuring that each visitor receives personalized guidance and support.
           </p>
         </div>
-        <SignButton title="More classes" />
+        <SignButton title="More classes" path="/classes"/>
       </div>
     </section>
   );

@@ -1,0 +1,48 @@
+@import "../../styles/variables.scss";
+@import "../../styles/mixins.scss";
+
+.classes-page {
+  padding-top: $header-hight-mob;
+  background-color: $burgundy-color;
+
+  @include on-tablet {
+    padding-top: $header-hight-tab;
+  }
+
+  &__container {
+    padding-block: 50px;
+    @include page-grid;
+  }
+
+  &__title {
+    grid-column: 1 / -1;
+
+    font-size: 30px;
+    text-transform: uppercase;
+    text-align: center;
+    color: $white;
+    margin-bottom: 40px;
+
+    @include on-tablet {
+      font-size: 32px;
+      margin-bottom: 70px;
+    }
+
+    @include on-desktop {
+      font-size: 64px;
+      margin-bottom: 140px;
+    }
+  }
+
+  &__list {
+    grid-column: 1 / -1;
+
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+
+    @include on-desktop {
+      grid-column: 1 / 10;
+    }
+  }
+}

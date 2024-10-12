@@ -21,8 +21,9 @@ databaseChangeLog:
               - column:
                   name: image
                   type: varchar(255)
-                  constraints:
-                    nullable: false
+              - column:
+                  name: icon
+                  type: varchar(255)
               - column:
                   name: start_date
                   type: Timestamp

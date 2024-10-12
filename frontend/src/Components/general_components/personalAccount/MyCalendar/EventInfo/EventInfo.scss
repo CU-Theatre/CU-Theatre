@@ -20,7 +20,6 @@
 
   @include on-tablet {
     width: 400px;
-    overflow: visible;
   }
 
   &__content,
@@ -74,5 +73,19 @@
 
   &__item {
     list-style: disc;
+  }
+
+  &__button {
+    background: $white;
+    padding: 10px 40px;
+    border-radius: 18px;
+    border: 1px solid $white;
+    transition: background-color 0.3s, color 0.3s, border 0.3s;
+
+    &:not(:disabled):hover {
+      background: $black;
+      color: $white;
+      border: 1px solid $white;
+    }
   }
 }

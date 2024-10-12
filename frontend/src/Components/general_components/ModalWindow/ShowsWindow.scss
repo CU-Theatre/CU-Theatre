@@ -12,6 +12,7 @@
   bottom: 0;
   z-index: 50;
   transition: transform 0.3s;
+  overflow-y: scroll;
 
   &__wrapper,
   &__main,
@@ -138,5 +139,54 @@
 
   &__button {
     align-self: center;
+  }
+
+  &__close {
+    width: 16px;
+    height: 16px;
+    background-image: url('./img/IconClose.svg');
+    background-repeat: no-repeat;
+    background-size: contain;
+    display: block;
+    filter: grayscale(0) brightness(1);
+    transition: all  0.3s;
+
+
+    @include on-tablet {
+      width: 24px;
+      height: 24px;
+    }
+
+    
+    &:hover {
+      transform: scale(1.05);
+      filter: grayscale(1) brightness(0.5);
+    }
+  }
+
+  &__error {
+    color: red;
+    font-weight: 700;
+    font-style: 16;
+    font-size: 22px;
+  }
+
+  &__tickets-left {
+    background-color: $white;
+    padding: 8px 10px;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 700;
+
+    @include on-tablet {
+      font-size: 22px;
+      padding: 12px 16px;
+    }
+  }
+
+  &__end-date {
+    font-size: 22px;
+    color: $white;
+    font-weight: 700;
   }
 }

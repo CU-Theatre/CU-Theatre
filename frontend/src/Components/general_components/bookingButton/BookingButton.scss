@@ -1,0 +1,59 @@
+@import "../../../styles/variables";
+@import "../../../styles/mixins";
+
+.booking-button {
+  width: 100%;
+  max-width: 280px;
+  height: 64px;
+  border-radius: 28px;
+  background-color: $white;
+  font-size: 12px;
+  line-height: 16px;
+  position: relative;
+  grid-column: 1 / -1;
+  justify-self: center;
+  border: 1px solid transparent;
+  transition: all 0.3s;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  @include on-tablet {
+    max-width: 368px;
+    font-size: 16px;
+  }
+
+  @include on-desktop {
+    font-size: 20px;
+  }
+
+  &::before {
+    content: "";
+    display: block;
+    position: absolute;
+    right: 50px;
+    top: 19px;
+    width: 30px;
+    height: 26px;
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center;
+    background-image: url("./signShooe.svg");
+  }
+
+  &:not(&--disabled):hover {
+    background-color: black;
+    color: $white;
+    border: 1px solid $white;
+
+    &::before {
+      background-image: url("./whiteShoe.svg");
+    }
+  }
+
+  &--disabled {
+    cursor: not-allowed;
+    background: gray;
+  }
+}

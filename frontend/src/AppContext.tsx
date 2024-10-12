@@ -8,6 +8,10 @@ import { useLocalStorage } from "./hooks/useLocalStorage";
 import { FetchErrorMessage } from "./types/FetchErrorMessage";
 import { allCourses } from "./utils/courses";
 import { CourseType } from "./types/CourseType";
+import { CourseEvent } from "./types/CourseEvent";
+import { allClasses } from "./utils/allClasses";
+import { Events } from "./types/Events";
+import { events } from "./utils/events";
 
 interface AppContextInterface {
   isOpen: boolean;
@@ -26,6 +30,14 @@ interface AppContextInterface {
   setCourseInfo: React.Dispatch<React.SetStateAction<CourseType>>;
   eventInfoIsOpen: boolean;
   setEventInfoIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  courses: CourseEvent[];
+  setCourses: React.Dispatch<React.SetStateAction<CourseEvent[]>>;
+  eventDetailIsOpen: boolean;
+  setEventDetailIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  eventList: Events | undefined;
+  setEventList: React.Dispatch<React.SetStateAction<Events | undefined>>;
+  currentShows: ShowType[];
+  setCurrentShows: React.Dispatch<React.SetStateAction<ShowType[]>>;
 }
 
 const AppContext = createContext<AppContextInterface | undefined>(undefined);
@@ -33,14 +45,18 @@ const AppContext = createContext<AppContextInterface | undefined>(undefined);
 export const AppProvider: React.FC<React.PropsWithChildren<{}>> = ({
   children,
 }) => {
-  const [liveShow] = allShows;
+  const [currentShows, setCurrentShows] = useState<ShowType[]>(allShows);
+  const [liveShow] = currentShows;
   const [ dramaCourse ] = allCourses;
   const [isOpen, setIsOpen] = useState(false);
   const [isLoginned, setIsLoginned] = useState(false);
   const [userState, setUserState] = useState<User | null>(null);
   const [modalsOpen, setModalIsOpen] = useState(false);
+  const [eventDetailIsOpen, setEventDetailIsOpen] = useState(false);
   const [modalInfo, setModalInfo] = useState<ShowType>(liveShow);
   const [eventInfoIsOpen, setEventInfoIsOpen] = useState(true);
+  const [eventList, setEventList] = useState<Events | undefined>(events);
+  const [courses, setCourses] = useState<CourseEvent[] | []>([...allClasses, ...dramaCourse.courseTime ]);
 
   const [token, setToken] = useLocalStorage(KEY_TOKEN, "");
 
@@ -48,6 +64,7 @@ export const AppProvider: React.FC<React.PropsWithChildren<{}>> = ({
     getCurrentUser(token)
       .then((newUser) => {
         setUserState(newUser);
+        console.log(newUser);
         setIsLoginned(true);
       })
       .catch((err: Error) => {
@@ -69,12 +86,12 @@ export const AppProvider: React.FC<React.PropsWithChildren<{}>> = ({
   const [courseModal, setCourseModal] = useState(false);
 
   useEffect(() => {
-    if (modalsOpen || isOpen || courseModal) {
+    if (modalsOpen || isOpen || courseModal || eventDetailIsOpen) {
       document.body.style.overflow = 'hidden';
     } else {
       document.body.style.overflow = '';
     }
-  }, [modalsOpen, isOpen, courseModal]);
+  }, [modalsOpen, isOpen, courseModal, eventDetailIsOpen]);
 
   return (
     <AppContext.Provider
@@ -95,6 +112,14 @@ export const AppProvider: React.FC<React.PropsWithChildren<{}>> = ({
         setCourseInfo,
         eventInfoIsOpen,
         setEventInfoIsOpen,
+        courses,
+        setCourses,
+        eventDetailIsOpen,
+        setEventDetailIsOpen,
+        eventList,
+        setEventList,
+        currentShows,
+        setCurrentShows,
       }}
     >
       {children}

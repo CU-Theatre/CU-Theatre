@@ -5,7 +5,7 @@ import { useAppContext } from "../../../AppContext";
 import { SignButton } from "../signButton";
 import happyMask from "../../img/AccountImg/happymask.svg";
 import { Course } from "../Course";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { KEY_TOKEN } from "../../../utils/globalVariables";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { getCurrentUser, updateUser } from "../../../api/userApi";
@@ -13,16 +13,17 @@ import { useLocalStorage } from "../../../hooks/useLocalStorage";
 import { FetchErrorMessage } from "../../../types/FetchErrorMessage";
 import { validEmail } from "../../../utils/validEmail";
 import { CabinetFormInput } from "../../../types/CabinetFormInput";
-import classNames from "classnames";
-import { MyCalendar } from "./MyCalendar";
-import { CourseEvent } from "../../../types/CourseEvent";
-import { EventInfo } from "./MyCalendar/EventInfo";
+import { ErrorNotification } from "../errorNotification";
+import { ShowType } from "../../../types/ShowType";
 
 export const YourAccount: React.FC = () => {
-  const { userState, setUserState, setIsLoginned, eventInfoIsOpen } = useAppContext();
+  const { userState, setUserState, setIsLoginned, currentShows, setCurrentShows } =
+    useAppContext();
   const [isRootErrShown, setIsRootErrShown] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const [currentEvent, setCurrentEvent] = useState<CourseEvent | null>(null);
+  const [errorMessage, setErrorMessage] = useState("");
+  const [temporaryShows, setTemporaryShows] = useState<ShowType[]>(currentShows);
+  const [isModalVisible, setIsModalVisible] = useState(false);
 
   const navigate = useNavigate();
 
@@ -31,30 +32,9 @@ export const YourAccount: React.FC = () => {
     handleSubmit,
     reset,
     formState: { errors },
-    setError,
-    clearErrors,
   } = useForm<CabinetFormInput>();
 
   const [token] = useLocalStorage(KEY_TOKEN, "");
-
-  const setRootError = (str: string) => {
-    setError("root", {
-      message: str,
-      type: "manual",
-    });
-
-    setTimeout(() => {
-      setIsRootErrShown(true);
-    }, 0);
-
-    setTimeout(() => {
-      setIsRootErrShown(false);
-    }, 2000);
-
-    setTimeout(() => {
-      clearErrors("root");
-    }, 2500);
-  };
 
   useEffect(() => {
     setIsLoading(true);
@@ -73,7 +53,8 @@ export const YourAccount: React.FC = () => {
 
           default:
             console.error(err);
-            setRootError("Something went wrong. Reload the page.");
+            setErrorMessage("Something went wrong. Reload the page.");
+            setIsRootErrShown(true);
             break;
         }
       })
@@ -85,7 +66,8 @@ export const YourAccount: React.FC = () => {
   const handleSave: SubmitHandler<CabinetFormInput> = (data) => {
     console.log(data);
     setIsLoading(true);
-    setRootError("Something went wrong. Your changes did not save.");
+    setErrorMessage("Something went wrong. Your changes did not save.");
+    setIsRootErrShown(true);
     // TODO add params
     // updateUser()
     //   .then()
@@ -112,6 +94,38 @@ export const YourAccount: React.FC = () => {
     setUserState(null);
 
     window.localStorage.removeItem(KEY_TOKEN);
+  };
+
+  const handleShowChange = (index: number, field: keyof ShowType, value: string) => {
+    const updatedShows = [...temporaryShows];
+    updatedShows[index] = {
+      ...updatedShows[index],
+      [field]: value,
+    };
+
+    setTemporaryShows(updatedShows);
+  };
+
+  const handleImageUpload = (index: number, file: File) => {
+    const reader = new FileReader();
+    reader.onload = (event) => {
+      const updatedShows = [...temporaryShows];
+      updatedShows[index] = {
+        ...updatedShows[index],
+        showImg: event.target?.result as string,
+      };
+      setTemporaryShows(updatedShows);
+    };
+    reader.readAsDataURL(file);
+  };
+
+  const handleSubmitShowChanges = (e: React.FormEvent<HTMLFormElement>, index: number) => {
+    e.preventDefault();
+    setCurrentShows(temporaryShows);
+    setIsModalVisible(true);
+    setTimeout(() => {
+      setIsModalVisible(false);
+    }, 3000);
   };
 
   return (
@@ -171,7 +185,7 @@ export const YourAccount: React.FC = () => {
                 Phone number
               </label>
               <input
-                {...register("phoneNumber", { required: true,  })}
+                {...register("phoneNumber", { required: true })}
                 id="userEmail"
                 className="cabinet__user-name"
                 type="tel"
@@ -196,14 +210,11 @@ export const YourAccount: React.FC = () => {
               Log Out
             </button>
 
-            {errors.root && (
-              <div
-                className={classNames("cabinet__err", {
-                  'cabinet__err--active': isRootErrShown,
-                })}
-              >
-                <p className="cabinet__err-text">{errors.root?.message}</p>
-              </div>
+            {isRootErrShown && (
+              <ErrorNotification
+                message={errorMessage}
+                setIsError={setIsRootErrShown}
+              />
             )}
           </form>
 
@@ -219,24 +230,103 @@ export const YourAccount: React.FC = () => {
             <h3 className="cabinet__main-title">
               {"You are not subscribed to any course yet :("}
             </h3>
-            <SignButton title="Sign for a course?" />
+            <SignButton title="Sign for a course?" path="/our-courses"/>
           </div>
         ) : (
           <div className="cabinet__main">
             <h3 className="cabinet__main-title">Assigned courses:</h3>
             <div className="cabinet__courses">
               {userState?.currentCourse?.map((course) => (
-                <Course key={course.courseName} course={course} />
+                <Course key={course.name} course={course} />
               ))}
             </div>
           </div>
         )}
-        <div className="cabinet__calendar">
-          <h3 className="cabinet__main-title">Schedule</h3>
-          <MyCalendar setCurrentEvent={setCurrentEvent}/>
+        <Link to={"/users-table"} className="cabinet__users-table">
+          Users table page
+        </Link>
+        <div className="cabinet__shows">
+          <h2 className="cabinet__title title">Shows editor</h2>
+          <div className="cabinet__allShows">
+            {temporaryShows.map((someShow, index) => (
+              <form 
+                className="cabinet__show" 
+                key={index} 
+                onSubmit={(e) => {
+                  handleSubmitShowChanges(e, index);
+                }}
+              >
+                <label className="cabinet__show-label">
+                  Show name:
+                  <input 
+                    type="text"
+                    className="cabinet__show-input"
+                    value={someShow.showName}
+                    onChange={(e) => handleShowChange(index, "showName", e.target.value)}
+                    readOnly={true}
+                  />
+                </label>
+                <label className="cabinet__show-label">
+                  Show date:
+                  <input 
+                    type="text"
+                    className="cabinet__show-input"
+                    value={someShow.showDate}
+                    onChange={(e) => handleShowChange(index, "showDate", e.target.value)}
+                  />
+                </label>
+                <label>
+                  Show image:
+                  <img
+                    className="cabinet__show-img"
+                    src={someShow.showImg}
+                    alt="showImage"
+                    onClick={() => document.getElementById(`file-input-${index}`)?.click()}
+                  />
+                  <input
+                    type="file"
+                    id={`file-input-${index}`}
+                    style={{ display: "none" }}
+                    accept="image/*"
+                    onChange={(e) =>
+                      e.target.files && handleImageUpload(index, e.target.files[0])
+                    }
+                  />
+                </label>
+                <label className="cabinet__show-label">
+                  Show price: 
+                  <input 
+                    type="text"
+                    className="cabinet__show-input"
+                    value={someShow.showPrice}
+                    onChange={(e) => handleShowChange(index, "showPrice", e.target.value)}
+                    />
+                </label>
+                <label className="cabinet__show-label">
+                  Show title:
+                  <input 
+                    type="text"
+                    className="cabinet__show-input"
+                    value={someShow.showTitle}
+                    onChange={(e) => handleShowChange(index, "showTitle", e.target.value)}
+                    />
+                </label>
+
+                <button className="cabinet__show-submit" type="submit">Submit changes</button>
+              </form>
+            ))}
+          </div>
         </div>
+
+        {isModalVisible && (
+          <div className="cabinet__modal">
+            <div className="cabinet__modal-content">
+              <p>Changes saved successfully!</p>
+            </div>
+            <div className="cabinet__progress-bar"></div>
+          </div>
+        )}
       </div>
-        <EventInfo currentEvent={currentEvent}/>
     </section>
   );
 };

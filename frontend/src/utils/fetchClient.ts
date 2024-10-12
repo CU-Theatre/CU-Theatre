@@ -29,30 +29,26 @@ async function request<T>(
 
   options.headers = headers;
 
+  // console.log(options.headers.Authorization);
+  // console.log('options.body', options.body);
+
   return wait(100)
     .then(() => {
       return fetch(BASE_URL + url, options);
     })
     .then(async (response) => {
       if (!response.ok) {
-
-        console.log('response', await response.json());
-        
+        // console.log("response", await response.json());
 
         switch (response.status) {
           case 400: {
-            const res = await response.text()
+            const res = await response.text();
             throw new Error(res);
-          }
-          case 500:
-          case 0:
-          case 401: {            
-            const res = await response.json()
-            throw new Error(res.error);
           }
 
           default:
-            throw new Error();
+            const res = await response.json();
+            throw new Error(res.error);
         }
       }
 

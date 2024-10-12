@@ -12,22 +12,101 @@
     align-items: center;
   }
 
-  &__label {
+  &__label,
+  &__roadmap-title {
     color: $white;
     font-size: 12px;
+    margin-bottom: 5px;
 
     @include on-tablet {
       font-size: 19px;
-
     }
   }
 
   &__input {
+    width: 100%;
     padding: 10px;
     border-radius: 4px;
 
     &--textarea {
       height: 150px;
+      resize: none;
     }
+  }
+
+  &__classes-time-list {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    margin: 10px 0 30px 10px;
+
+    @include on-tablet {
+      margin-left: 30px;
+    }
+  }
+
+  &__classes-time-cell {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+
+    @include on-tablet {
+      flex-direction: row;
+      gap: 20px;
+    }
+  }
+
+  &__classes-time-label {
+    display: grid;
+    grid-template-columns: 1fr 4fr;
+    gap: 5px;
+
+    @include on-tablet {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  &__classes-time-title {
+    color: $white;
+    font-size: 12px;
+
+    @include on-tablet {
+      font-size: 16px;
+    }
+  }
+
+  &__roadmap-list {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    margin-bottom: 20px;
+  }
+
+  &__roadmap-cell {
+    display: grid;
+    grid-template-columns: 4fr 1fr;
+    grid-template-rows: min-content 1fr;
+    align-items: center;
+    row-gap: 10px;
+  }
+
+  &__roadmap-label {
+    grid-column: 1 / 2;
+  }
+
+  &__roadmap-button-cross {
+    grid-column: 2 / 3;
+    grid-row: 1 / 3;
+    justify-self: center;
+  }
+
+  &__roadmap-title {
+    margin-bottom: 5px;
+  }
+
+  &__save-button {
+    padding: 10px;
+    width: fit-content;
+    margin: 0 auto;
   }
 }

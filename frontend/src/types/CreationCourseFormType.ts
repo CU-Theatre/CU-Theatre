@@ -1,15 +1,15 @@
-import { CourseEvent } from "./CourseEvent";
-import { RoadmapItem } from "./Rodmap";
+import { EventRule } from "./EventRule";
+import { RoadmapItemCreate } from "./RoadmapItem";
 
 export type CreationCourseFormType = {
-  courseName: string;
-  courseDuration: string;
-  courseImg: string;
-  courseIcon: string;
-  courseLink: string;
-  coursePrice: string;
-  courseRoadmap: RoadmapItem[];
-  courseBackground: string;
-  courseDescr: string;
-  courseTime: CourseEvent[];
+  name: string;
+  description: string;
+  startDate: string;
+  finishDate: string;
+  icon: string;
+  price: number | string;
+  image: string;
+  roadmap: Omit<RoadmapItemCreate, "courseId">[];
+  maxPeople?: number | string;
+  classTime: EventRule[];
 };
