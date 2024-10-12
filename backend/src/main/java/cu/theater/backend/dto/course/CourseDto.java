@@ -1,7 +1,6 @@
 package cu.theater.backend.dto.course;
 
 import cu.theater.backend.dto.roadmap.RoadMapDto;
-
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.Set;
