@@ -8,5 +8,13 @@ export const user: User = {
   phoneNumber: '',
   dramaCourseFinisher: false,
   currentCourse: [dramaCourse],
+  emergencyContactDto: {
+    id: null,
+    userId: 3,
+    firstName: null,
+    lastName: null,
+    relation: null,
+    phoneNumber: null
+},
   role: 'admin'
 };

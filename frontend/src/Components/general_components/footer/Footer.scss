@@ -21,13 +21,18 @@
   &__contacts {
     grid-column: span 2;
 
-    @include on-tablet {
-    }
-
     @include on-desktop {
       text-align: center;
       grid-column: span 4;
     }
+  }
+
+  &__hours {
+    color: $white;
+    font-size: 18px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
   }
 
   &__title {

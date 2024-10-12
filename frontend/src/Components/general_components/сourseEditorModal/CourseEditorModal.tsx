@@ -125,7 +125,7 @@ export const CourseEditorModal: React.FC<Props> = ({
         <ButtonCross onClick={!isLoading ? onClose : () => {}} />
 
         <h1 className="course-editor-modal__title title">
-          {isCreating ? "Create" : "Adit"} course
+          {isCreating ? "Create" : "Edit"} course
         </h1>
 
         <CreationCourse

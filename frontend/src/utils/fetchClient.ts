@@ -7,7 +7,7 @@ function wait(delay: number) {
   });
 }
 
-type RequestMethod = "GET" | "POST" | "PATCH" | "DELETE";
+type RequestMethod = "GET" | "POST" | "PATCH" | "DELETE" | "PUT";
 
 async function request<T>(
   url: string,
@@ -64,4 +64,6 @@ export const client = {
     request<T>(url, token, "PATCH", data),
   delete: <T>(url: string, token: string = "") =>
     request<T>(url, token, "DELETE"),
+  put: <T>(url: string, data: any, token: string = "") =>
+    request<T>(url, token, "PUT", data),
 };

@@ -7,5 +7,13 @@ export interface User {
   phoneNumber: string;
   dramaCourseFinisher: boolean;
   currentCourse: CourseType[];
+  emergencyContactDto?: {
+    id: number | null,
+    userId: number | null,
+    firstName: string | null,
+    lastName: string | null,
+    relation: string | null,
+    phoneNumber: string | null,
+}
   role: "admin" | "customer";
 }

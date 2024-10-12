@@ -15,6 +15,10 @@ import { validEmail } from "../../../utils/validEmail";
 import { CabinetFormInput } from "../../../types/CabinetFormInput";
 import { ErrorNotification } from "../errorNotification";
 import { ShowType } from "../../../types/ShowType";
+import { User } from "../../../types/User";
+import { EventsTable } from "../EventSubscr/eventsTable";
+import { events } from "../../../utils/events";
+import { filterEventsByUser } from "../../../utils/filterEventsByUser";
 
 export const YourAccount: React.FC = () => {
   const { userState, setUserState, setIsLoginned, currentShows, setCurrentShows } =
@@ -24,6 +28,22 @@ export const YourAccount: React.FC = () => {
   const [errorMessage, setErrorMessage] = useState("");
   const [temporaryShows, setTemporaryShows] = useState<ShowType[]>(currentShows);
   const [isModalVisible, setIsModalVisible] = useState(false);
+  const userEvents = userState 
+    ? filterEventsByUser(events, { name: userState?.firstName, surname: userState?.lastName }) 
+    :  {
+      mainEvents: {
+        impro: [],
+        playback: [],
+        livePerf: []
+      },
+      otherClasses: {
+        heels: [],
+        twerk: [],
+        exotic: [],
+        poleDance: [],
+        stretching: []
+      }
+    };
 
   const navigate = useNavigate();
 
@@ -31,7 +51,6 @@ export const YourAccount: React.FC = () => {
     register,
     handleSubmit,
     reset,
-    formState: { errors },
   } = useForm<CabinetFormInput>();
 
   const [token] = useLocalStorage(KEY_TOKEN, "");
@@ -61,31 +80,44 @@ export const YourAccount: React.FC = () => {
       .finally(() => {
         setIsLoading(false);
       });
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const handleSave: SubmitHandler<CabinetFormInput> = (data) => {
-    console.log(data);
     setIsLoading(true);
-    setErrorMessage("Something went wrong. Your changes did not save.");
-    setIsRootErrShown(true);
-    // TODO add params
-    // updateUser()
-    //   .then()
-    //   .catch((err: Error) => {
-    //     switch (err.message) {
-    //       case FetchErrorMessage.Occupied:
-    //         setRootError("This email address is already taken");
-    //         break;
-
-    //       default:
-    //         setRootError("Something went wrong. Your changes did not save.");
-    //         userState && reset(userState);
-    //         break;
-    //     }
-    //   })
-    //   .finally(() => {
-    //     // setIsLoading(false);
-    //   });
+    setErrorMessage("");
+    setIsRootErrShown(false);
+  
+    const updatedUser: User = {
+      ...userState,
+      firstName: data.firstName,
+      lastName: data.lastName,
+      email: data.email,
+      phoneNumber: data.phoneNumber,
+      currentCourse: userState?.currentCourse || [],
+      dramaCourseFinisher: userState?.dramaCourseFinisher || false,
+      role: userState?.role || "customer",
+    };
+  
+    updateUser(updatedUser, token)
+      .then((response) => {
+        setUserState(response);
+        setErrorMessage("Your changes were successfully saved!");
+      })
+      .catch((err: Error) => {
+        switch (err.message) {
+          case FetchErrorMessage.Occupied:
+            setErrorMessage("This email address is already taken");
+            break;
+          default:
+            setErrorMessage("Something went wrong. Your changes did not save.");
+            break;
+        }
+        setIsRootErrShown(true);
+      })
+      .finally(() => {
+        setIsLoading(false);
+      });
   };
 
   const logOut = () => {
@@ -242,6 +274,10 @@ export const YourAccount: React.FC = () => {
             </div>
           </div>
         )}
+        <div className="cabinet__user-events">
+          <h3 className="cabinet__events-title title">Your events</h3>
+          <EventsTable events={userEvents} />
+        </div>
         <Link to={"/users-table"} className="cabinet__users-table">
           Users table page
         </Link>

@@ -6,4 +6,6 @@ export const getCurrentUser = (token: string) => {
 };
 
 // TODO finish function
-export const updateUser = () => {};
+export const updateUser = (updatedUser: User, token: string) => {
+  return client.put<User>("/user/update", updatedUser, token);
+};
