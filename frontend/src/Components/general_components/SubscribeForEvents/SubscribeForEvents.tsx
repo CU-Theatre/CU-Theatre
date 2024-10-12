@@ -14,6 +14,14 @@ const getFromLocalStorage = (key: string) => {
   return savedData ? JSON.parse(savedData) : null;
 };
 
+const parseShowDate = (dateString: string) => {
+  const [dayMonth] = dateString.split("-");
+  const [day, month] = dayMonth.split(".").map(Number);
+  const currentYear = new Date().getFullYear();
+
+  return new Date(currentYear, month - 1, day);
+};
+
 export const SubscribeForEvents: React.FC = () => {
   const [selectedShow, setSelectedShow] = useState<ShowType | undefined>();
   const { userState, setCourses, eventList, setEventList, currentShows } = useAppContext();
@@ -24,6 +32,13 @@ export const SubscribeForEvents: React.FC = () => {
   const [ticketCount, setTicketCount] = useState<Record<string, number>>(() => {
     return getFromLocalStorage('ticketCount') || {};
   });
+
+  const isPastShow = (showDate: string) => {
+    const showParsedDate = parseShowDate(showDate);
+    const currentDate = new Date();
+
+    return showParsedDate < currentDate;
+  };
 
   const detectShow = (someShowName: string) => {
     if (!eventList?.mainEvents) return;
@@ -222,10 +237,15 @@ export const SubscribeForEvents: React.FC = () => {
           <h2 className="subscribe-for-event__title title">Choose your show!</h2>
           <div className="subscribe-for-event__selection">
             {currentShows.map(show => (
-              <div className='subscribe-for-event__wrapper' key={show.showName}>
+              <div 
+                className={classNames('subscribe-for-event__wrapper', {
+                  "subscribe-for-event__wrapper--past": isPastShow(show.showDate)
+                })}
+                key={show.showName}
+              >
                 <div 
                   className={classNames("subscribe-for-event__show", {
-                    "subscribe-for-event__show--selected": selectedShow === show
+                    "subscribe-for-event__show--selected": selectedShow === show,
                   })}
                   onClick={() => toggleSelectShow(show)} 
                 >
@@ -244,7 +264,7 @@ export const SubscribeForEvents: React.FC = () => {
                       className="subscribe-for-event__changing-count"
                       onClick={() => decrement(show.showName)}
                       >-</button>
-                    <p className="subscribe-for-event__tickets">Tickets count: {ticketCount[show.showName] || 0}</p>
+                    <p className="subscribe-for-event__tickets">Tickets count: {ticketCount[show.showName] || 1}</p>
                     <button 
                       type="button" 
                       className="subscribe-for-event__changing-count"
@@ -263,34 +283,40 @@ export const SubscribeForEvents: React.FC = () => {
           </button>
         </div>
         <div className="subscribe-for-event__current-tickets">
-          <div className="subscribe-for-event__current-group">
-            <h4 className="subscribe-for-event__current-title">Impro shows</h4>
-            {userEventListImpro && userEventListImpro.map(user => 
-            <div className="subscribe-for-event__current-ticket" key={user.id}>
-              <p>Your ticket: {user.guestName} {user.guestSurname && user.guestSurname} {user.date} {user.dayOfWeek}</p>
-              <button type="button" className="subscribe-for-event__delete" onClick={() => deleteTicket(user.id, 'Impro shows')}>X</button>
-            </div>
-            )}
+          {userEventListImpro && userEventListImpro.length > 0 && (
+            <div className="subscribe-for-event__current-group">
+              <h4 className="subscribe-for-event__current-title">Impro shows</h4>
+              {userEventListImpro.map(user => 
+              <div className="subscribe-for-event__current-ticket" key={user.id}>
+                <p>Your ticket: {user.guestName} {user.guestSurname && user.guestSurname} {user.date} {user.dayOfWeek}</p>
+                <button type="button" className="subscribe-for-event__delete" onClick={() => deleteTicket(user.id, 'Impro shows')}>X</button>
+              </div>
+              )}
 
-          </div>
-          <div className="subscribe-for-event__current-group">
-            <h4 className="subscribe-for-event__current-title">Playback shows</h4>
-            {userEventListPlayback && userEventListPlayback.map(user => 
-            <div className="subscribe-for-event__current-ticket" key={user.id}>
-              <p>Your ticket: {user.guestName} {user.guestSurname && user.guestSurname} {user.date} {user.dayOfWeek}</p>
-              <button type="button" className="subscribe-for-event__delete" onClick={() => deleteTicket(user.id, 'Playback shows')}>X</button>
             </div>
-            )}
-          </div>
-          <div className="subscribe-for-event__current-group">
-            <h4 className="subscribe-for-event__current-title">Live performance</h4>
-            {userEventListLivePerf && userEventListLivePerf.map(user => 
-            <div className="subscribe-for-event__current-ticket" key={user.id}>
-              <p>Your ticket: {user.guestName} {user.guestSurname && user.guestSurname} {user.date} {user.dayOfWeek}</p>
-              <button type="button" className="subscribe-for-event__delete" onClick={() => deleteTicket(user.id, 'Live performance')}>X</button>
+          )}
+          {userEventListPlayback && userEventListPlayback.length > 0 && (
+            <div className="subscribe-for-event__current-group">
+              <h4 className="subscribe-for-event__current-title">Playback shows</h4>
+              {userEventListPlayback.map(user => 
+              <div className="subscribe-for-event__current-ticket" key={user.id}>
+                <p>Your ticket: {user.guestName} {user.guestSurname && user.guestSurname} {user.date} {user.dayOfWeek}</p>
+                <button type="button" className="subscribe-for-event__delete" onClick={() => deleteTicket(user.id, 'Playback shows')}>X</button>
+              </div>
+              )}
             </div>
-            )}
-          </div>
+          )}
+          {userEventListLivePerf && userEventListLivePerf.length > 0 && (
+            <div className="subscribe-for-event__current-group">
+              <h4 className="subscribe-for-event__current-title">Live performance</h4>
+              {userEventListLivePerf.map(user => 
+              <div className="subscribe-for-event__current-ticket" key={user.id}>
+                <p>Your ticket: {user.guestName} {user.guestSurname && user.guestSurname} {user.date} {user.dayOfWeek}</p>
+                <button type="button" className="subscribe-for-event__delete" onClick={() => deleteTicket(user.id, 'Live performance')}>X</button>
+              </div>
+              )}
+            </div>
+          )}
         </div>
       </div>
     </div>

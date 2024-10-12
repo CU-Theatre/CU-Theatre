@@ -143,13 +143,13 @@ export const CoursesWindow: React.FC = () => {
             <div className="course-window__info-schedule">
               <p className="course-window__info-title">Dates</p>
               <p className="course-window__info-subtitle">
-                {`${course.startDate} - ${course.finishDate}`}
+                {`${course.startDate.slice(0, 10)} / ${course.finishDate.slice(0, 10)}`}
               </p>
             </div>
             <div className="course-window__info-schedule">
               <p className="course-window__info-title">Price</p>
               <p className="course-window__info-subtitle">
-                {course.price}
+                {course.price}$
               </p>
             </div>
           </div>
@@ -158,7 +158,7 @@ export const CoursesWindow: React.FC = () => {
               type="button"
               className="course-window__button course-window__button--left"
             >
-              Book
+              Subscribe
             </button>
             <button
               type="button"

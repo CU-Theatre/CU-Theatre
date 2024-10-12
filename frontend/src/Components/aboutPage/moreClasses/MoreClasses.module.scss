@@ -78,12 +78,21 @@
 
   &__button {
     color: $white;
+    display: block;
     font-size: 12px;
     text-align: center;
     padding: 19px;
     width: 100%;
+    border: 1px solid white;
     border-radius: 28px;
     background-color: $black;
+    transition: border .3s, background-color .3s, color .3s;
+
+    &:hover {
+      background-color: white;
+      color: black;
+      border: 1px solid black;
+    }
 
     @include on-tablet {
       font-size: 16px;

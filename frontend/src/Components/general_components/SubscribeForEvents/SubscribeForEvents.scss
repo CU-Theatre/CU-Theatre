@@ -37,6 +37,15 @@
     background: $white;
   }
 
+  &__wrapper {
+    &--past {
+      opacity: 0.5;        // робимо блок напівпрозорим
+      cursor: not-allowed;  // змінюємо курсор на "заборонено"
+      pointer-events: none; // блокуємо взаємодію
+      background-color: #e0e0e0; // сірий фон
+    }
+  }
+
   &__show {
     padding: 20px;
     width: 100%;

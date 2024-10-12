@@ -20,7 +20,7 @@ export const Footer: React.FC = () => {
 
           <div className='footer__hours'>
             <h3 className='footer__title'>Hours</h3>
-            <ul className='footer__list'>{/*TODO add work hours */}</ul>
+            <p className='footer__item'>12:00-19:00</p>
           </div>
 
           <div className='footer__contacts'>
@@ -28,22 +28,30 @@ export const Footer: React.FC = () => {
             <ul className='footer__list'>
               <li className='footer__item'>
                 <a
-                  href="mailto:"
-                  target="_blank"
+                  href="mailto:herasymchukelina@gmail.com"
                   rel="noreferrer"
                   className='footer__link'
                 >
-                  <div>Email</div>
+                  <div>Email: herasymchukelina@gmail.com</div>
                 </a>
               </li>
               <li className='footer__item'>
                 <a
-                  href="tel:+"
-                  target="_blank"
+                  href="tel:+350873425121"
                   rel="noreferrer"
                   className='footer__link'
                 >
-                  <div>Tel</div>
+                  <div>Tel: +350873425121</div>
+                </a>
+              </li>
+              <li className='footer__item'>
+                <a
+                  href="https://www.instagram.com/cu.elina/"
+                  target="blank"
+                  rel="noreferrer"
+                  className='footer__link'
+                >
+                  <div>Inst: @cu_elina</div>
                 </a>
               </li>
             </ul>

@@ -25,7 +25,19 @@
   }
 
   &__top-block,
-  &__user-info {
+  &__user-info,
+  &__user-events {
+    grid-column: 1 / -1;
+  }
+
+  &__user-events {
+    width: 100%;
+
+    @include page-grid;
+    row-gap: 40px;
+  }
+
+  &__events-title {
     grid-column: 1 / -1;
   }
 
@@ -309,7 +321,5 @@
     right: 0;
     animation: progressBarAnimation 3s linear forwards; /* Анімація прогрес-бару */
   }
-  
-
 
 }

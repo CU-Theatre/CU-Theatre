@@ -64,7 +64,7 @@ export const AppProvider: React.FC<React.PropsWithChildren<{}>> = ({
     getCurrentUser(token)
       .then((newUser) => {
         setUserState(newUser);
-        console.log(newUser);
+        console.log(token);
         setIsLoginned(true);
       })
       .catch((err: Error) => {

@@ -6,7 +6,6 @@ import masks from "../img/timetable/masks.png";
 import { MyCalendar } from "../general_components/personalAccount/MyCalendar";
 import { EventInfo } from "../general_components/personalAccount/MyCalendar/EventInfo";
 import { CourseEvent } from "../../types/CourseEvent";
-import { Link } from "react-router-dom";
 
 export const TimeTable: React.FC = () => {
   const days = [
@@ -224,10 +223,6 @@ export const TimeTable: React.FC = () => {
         currentEvent={currentEvent}
         setCurrentEvent={setCurrentEvent}
       />
-
-      <Link to="/users-table" className="white-button">
-        users-table
-      </Link>
     </div>
   );
 };
