@@ -46,6 +46,8 @@ public class Course {
     private String name;
     @Column(nullable = false, name = "description")
     private String description;
+    @Column(nullable = false, name = "max_students")
+    private Integer maxStudents;
     @Column(name = "image")
     private String image;
     @Column(name = "icon")

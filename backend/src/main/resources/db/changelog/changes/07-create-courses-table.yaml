@@ -25,6 +25,9 @@ databaseChangeLog:
                   name: icon
                   type: varchar(255)
               - column:
+                  name: max_students
+                  type: int
+              - column:
                   name: start_date
                   type: Timestamp
                   constraints:

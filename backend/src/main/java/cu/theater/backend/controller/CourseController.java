@@ -9,6 +9,8 @@ import cu.theater.backend.service.course.CourseService;
 import io.swagger.v3.oas.annotations.Operation;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -80,6 +82,19 @@ public class CourseController {
     @DeleteMapping("/{id}")
     DeleteDto deleteCourse(@PathVariable Long id) {
         return courseService.deleteCourse(id);
+    }
+
+    @DeleteMapping("/{courseId}/users/{userId}")
+    public ResponseEntity<String> unsignUserFromCourse(@PathVariable Long courseId,
+                                                       @PathVariable Long userId) {
+        try {
+            courseService.unsignUserFromCourse(courseId, userId);
+            return ResponseEntity.ok("User with ID " + userId
+                    + " was successfully unsigned from course with ID " + courseId);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("Error unsigning user from course: " + e.getMessage());
+        }
     }
 
 }

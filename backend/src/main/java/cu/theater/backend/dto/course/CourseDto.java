@@ -17,6 +17,7 @@ public class CourseDto {
     private BigDecimal price;
     private String image;
     private String icon;
+    private Integer maxStudents;
     private List<RoadMapDto> roadMaps;
     private Set<Long> usersId;
 }
