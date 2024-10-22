@@ -16,6 +16,9 @@ databaseChangeLog:
                   name: icon
                   value: drama_icon.jpg
               - column:
+                  name: max_students
+                  value: 15
+              - column:
                   name: start_date
                   value: 2024-08-21 01:00:00
               - column:

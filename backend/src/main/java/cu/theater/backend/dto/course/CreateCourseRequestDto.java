@@ -17,5 +17,6 @@ public class CreateCourseRequestDto {
     private String image;
     private String icon;
     private BigDecimal price;
+    private Integer maxStudents;
 
 }

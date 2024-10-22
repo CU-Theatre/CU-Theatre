@@ -22,4 +22,6 @@ public interface CourseService {
 
     DeleteDto deleteCourse(Long courseId);
 
+    void unsignUserFromCourse(Long courseId, Long userId);
+
 }
