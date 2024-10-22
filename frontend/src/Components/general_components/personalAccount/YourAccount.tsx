@@ -9,7 +9,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { KEY_TOKEN } from "../../../utils/globalVariables";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { getCurrentUser, updateUser } from "../../../api/userApi";
-import { useLocalStorage } from "../../../hooks/useLocalStorage";
+import { useTokenLocalStorage } from "../../../hooks/useLocalStorage";
 import { FetchErrorMessage } from "../../../types/FetchErrorMessage";
 import { validEmail } from "../../../utils/validEmail";
 import { CabinetFormInput } from "../../../types/CabinetFormInput";
@@ -19,6 +19,7 @@ import { User } from "../../../types/User";
 import { EventsTable } from "../EventSubscr/eventsTable";
 import { events } from "../../../utils/events";
 import { filterEventsByUser } from "../../../utils/filterEventsByUser";
+import { allCourses } from "../../../utils/courses";
 
 export const YourAccount: React.FC = () => {
   const { userState, setUserState, setIsLoginned, currentShows, setCurrentShows } =
@@ -53,7 +54,7 @@ export const YourAccount: React.FC = () => {
     reset,
   } = useForm<CabinetFormInput>();
 
-  const [token] = useLocalStorage(KEY_TOKEN, "");
+  const [token] = useTokenLocalStorage();
 
   useEffect(() => {
     setIsLoading(true);
@@ -87,19 +88,22 @@ export const YourAccount: React.FC = () => {
     setIsLoading(true);
     setErrorMessage("");
     setIsRootErrShown(false);
+
+    if (!userState) return;
   
     const updatedUser: User = {
       ...userState,
+      id: userState?.id,
       firstName: data.firstName,
       lastName: data.lastName,
       email: data.email,
       phoneNumber: data.phoneNumber,
-      currentCourse: userState?.currentCourse || [],
-      dramaCourseFinisher: userState?.dramaCourseFinisher || false,
-      role: userState?.role || "customer",
+      currentCourses: userState?.currentCourses || [],
+      dramaCourseFinished: userState?.dramaCourseFinished || false,
+      roleName: userState?.roleName || "customer",
     };
   
-    updateUser(updatedUser, token)
+    updateUser(updatedUser, token, userState.id)
       .then((response) => {
         setUserState(response);
         setErrorMessage("Your changes were successfully saved!");
@@ -256,8 +260,8 @@ export const YourAccount: React.FC = () => {
             alt="happymask"
           />
         </div>
-        {userState?.currentCourse?.length &&
-        userState?.currentCourse?.length < 1 ? (
+        {userState?.currentCourses?.length &&
+        userState?.currentCourses?.length < 1 ? (
           <div className="cabinet__main">
             <h3 className="cabinet__main-title">
               {"You are not subscribed to any course yet :("}
@@ -268,8 +272,8 @@ export const YourAccount: React.FC = () => {
           <div className="cabinet__main">
             <h3 className="cabinet__main-title">Assigned courses:</h3>
             <div className="cabinet__courses">
-              {userState?.currentCourse?.map((course) => (
-                <Course key={course.name} course={course} />
+              {userState?.currentCourses && userState.currentCourses.map((courseId) => (
+                <Course key={allCourses[courseId].name} courseId={courseId - 1} />
               ))}
             </div>
           </div>

@@ -21,7 +21,7 @@ export const OurCoursesPage: React.FC = () => {
   useEffect(() => {
     getCurrentUser(token)
       .then((user) => {
-        if (user.role === "admin") {
+        if (user.roleName === "admin") {
           setIsAdmin(true);
         }
         setUserState(user);
@@ -65,7 +65,7 @@ export const OurCoursesPage: React.FC = () => {
         <div className="our-courses-page__courses">
           {allCourses?.map((course) => (
             // TODO привести CourseType и CourseResponse к 1 типу 
-            <Course key={course.name} course={course} />
+            <Course key={course.name} courseId={course.id - 1} />
           ))}
         </div>
       </div>

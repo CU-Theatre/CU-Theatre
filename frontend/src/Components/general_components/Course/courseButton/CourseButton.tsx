@@ -15,7 +15,7 @@ enum StatusButton {
 }
 export const CourseButton: React.FC<Props> = ({ course }) => {
   const { isLoginned, userState, setCourseInfo, setCourseModal } = useAppContext();
-  const [buttonStatus, setButtonStatus] = useState<StatusButton>();
+  const [buttonStatus, setButtonStatus] = useState<StatusButton>(StatusButton.LOCK);
 
   const openCourseWindow = (course: CourseType) => {
     setCourseInfo(course);
@@ -24,32 +24,23 @@ export const CourseButton: React.FC<Props> = ({ course }) => {
 
   const { name, startDate, finishDate } = course;
 
-  const setStatusBasedOnCurrent = () => {
-    // TODO return branching operator when would be clear userState?.currentCourse
-
-    // if (userState?.currentCourse.includes(course)) {
-    //   setButtonStatus(StatusButton.DURATION);
-    // } else {
-    //   setButtonStatus(StatusButton.BUY);
-    // }
-    setButtonStatus(StatusButton.BUY);
-  };
-
   useEffect(() => {
-    if (isLoginned) {
+    if (!isLoginned) {
+      // Якщо користувач не залогінений, блокуємо всі курси
+      setButtonStatus(StatusButton.LOCK);
+    } else if (isLoginned && userState) {
       if (name.toLowerCase() === REQUIRED_COURSE) {
-        setStatusBasedOnCurrent();
-      } else if (userState?.dramaCourseFinisher) {
-        setStatusBasedOnCurrent();
+        // Якщо курс - це drama course, і користувач залогінений
+        setButtonStatus(StatusButton.BUY);
+      } else if (userState.dramaCourseFinished) {
+        // Якщо користувач завершив drama course, всі інші курси доступні для купівлі
+        setButtonStatus(StatusButton.BUY);
       } else {
+        // Якщо користувач залогінений, але не завершив drama course
         setButtonStatus(StatusButton.LOCK);
       }
-    } else if (name.toLowerCase() === REQUIRED_COURSE) {
-      setButtonStatus(StatusButton.BUY);
-    } else {
-      setButtonStatus(StatusButton.LOCK);
     }
-  }, [isLoginned, name, startDate, finishDate, userState]);
+  }, [isLoginned, userState, name]);
 
   return (
     <>

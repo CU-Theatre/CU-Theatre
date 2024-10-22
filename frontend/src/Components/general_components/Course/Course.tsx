@@ -1,13 +1,14 @@
 import React from "react";
-import { CourseType } from "../../../types/CourseType";
 import "./Course.scss";
 import { CourseButton } from "./courseButton";
+import { allCourses } from "../../../utils/courses";
 
 type Props = {
-  course: CourseType;
+  courseId: number;
 };
 
-export const Course: React.FC<Props> = ({ course }) => {
+export const Course: React.FC<Props> = ({ courseId }) => {
+  const course = allCourses[courseId];
   const { icon, name, description } = course;
 
   return (

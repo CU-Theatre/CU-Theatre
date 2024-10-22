@@ -12,3 +12,7 @@ export const createCourse = (
 export const getAllCourse = (token: string) => {
   return client.get<CourseResponse[]>("/courses/all", token);
 };
+
+export const courseSubscribe = (courseId: number, token: string) => {
+  return client.post<CourseResponse>(`/courses/add/${courseId}`,null, token);
+};

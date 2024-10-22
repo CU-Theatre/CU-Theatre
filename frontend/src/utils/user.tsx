@@ -1,13 +1,13 @@
 import { User } from "../types/User";
-import { dramaCourse } from "./courses";
 
 export const user: User = {
+  id: 25,
   firstName: "Ihor",
   lastName: "Prodan",
   email: "ihorprodan@gmail.com",
   phoneNumber: '',
-  dramaCourseFinisher: false,
-  currentCourse: [dramaCourse],
+  dramaCourseFinished: false,
+  currentCourses: [1],
   emergencyContactDto: {
     id: null,
     userId: 3,
@@ -16,5 +16,5 @@ export const user: User = {
     relation: null,
     phoneNumber: null
 },
-  role: 'admin'
+  roleName: 'admin'
 };

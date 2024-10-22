@@ -9,8 +9,10 @@ import { WindowSwiper } from "../ModalWindowSwiper";
 import { CourseRoadmap } from "./courseRodmap";
 import { Footer } from "../footer";
 import { useTokenLocalStorage } from "../../../hooks/useLocalStorage";
-import { getCurrentUser } from "../../../api/userApi";
+import { getCurrentUser, updateUser } from "../../../api/userApi";
 import { CourseEditorModal } from "../сourseEditorModal";
+import { User } from "../../../types/User";
+import { courseSubscribe } from "../../../api/courseApi";
 
 export const CoursesWindow: React.FC = () => {
   const courseFor = [
@@ -26,6 +28,7 @@ export const CoursesWindow: React.FC = () => {
   const {
     courseModal,
     courseInfo: course,
+    userState,
     setCourseModal,
     setUserState,
     setIsLoginned,
@@ -38,7 +41,7 @@ export const CoursesWindow: React.FC = () => {
   useEffect(() => {
     getCurrentUser(token)
       .then((user) => {
-        if (user.role === "admin") {
+        if (user.roleName === "admin") {
           setIsAdmin(true);
         }
         setUserState(user);
@@ -67,6 +70,44 @@ export const CoursesWindow: React.FC = () => {
       setCourseModal(false);
     };
   }, []);
+
+  const subscribeOnCourse = () => {
+    if (!userState?.firstName || !userState?.lastName || !userState?.email || !userState?.phoneNumber) {
+      console.error("User is missing required fields.");
+      return;
+    }
+  
+    const currentCourses = userState.currentCourses;
+  
+    const isCourseAlreadySubscribed = currentCourses.some(
+      (userCourseId) => userCourseId === course.id
+    );
+  
+    if (isCourseAlreadySubscribed) {
+      alert("You are already subscribed to this course.");
+      return;
+    }
+
+    if (typeof userState.id !== 'number') {
+      console.error("Invalid user id:", userState.id);
+      return;
+    }
+  
+    const updatedUser: User = {
+      ...userState,
+      currentCourses: [...currentCourses, course.id],
+    };
+  
+    console.log('updatedUser:', updatedUser);
+  
+    courseSubscribe(course.id, token)
+    .then((res) => {
+      console.log('User updated on server:', res);
+    })
+    .catch((err: Error) => {
+      console.error("Failed to update user:", err);
+    });
+  };
 
   return (
     <section
@@ -157,6 +198,7 @@ export const CoursesWindow: React.FC = () => {
             <button
               type="button"
               className="course-window__button course-window__button--left"
+              onClick={() => subscribeOnCourse()}
             >
               Subscribe
             </button>
