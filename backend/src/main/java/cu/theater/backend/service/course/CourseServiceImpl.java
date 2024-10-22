@@ -9,6 +9,7 @@ import cu.theater.backend.mapper.CourseMapper;
 import cu.theater.backend.mapper.UserCoursesMapper;
 import cu.theater.backend.model.Course;
 import cu.theater.backend.model.Status;
+import cu.theater.backend.model.User;
 import cu.theater.backend.model.UserCourses;
 import cu.theater.backend.repository.CourseRepository;
 import cu.theater.backend.repository.UserRepository;
@@ -31,7 +32,14 @@ public class CourseServiceImpl implements CourseService {
     private final RoadMapService roadMapService;
 
     @Override
+    @Transactional
     public CourseDto addUserToCourse(Long courseId, Long userId) {
+        List<User> users = getUsersByCourseId(courseId);
+        if (users.size() >= courseRepository.findById(courseId)
+                .orElseThrow(() -> new IllegalStateException("Course not found"))
+                .getMaxStudents()) {
+            throw new IllegalStateException("Course is full");
+        }
         UserCourses userCourses = userCoursesMapper.toModel(courseId, userId);
         userCourses.setCourse(courseRepository.findById(courseId)
                 .orElseThrow(() -> new IllegalStateException("Course not found")));
@@ -43,6 +51,7 @@ public class CourseServiceImpl implements CourseService {
     }
 
     @Override
+    @Transactional
     public CourseDto updateCourseStatus(UpdateCourseDto updateCourseStatusDto,
                                         Long courseId) {
         Course course = courseRepository.findById(courseId)
@@ -53,6 +62,7 @@ public class CourseServiceImpl implements CourseService {
         course.setImage(updateCourseStatusDto.image());
         course.setIcon(updateCourseStatusDto.icon());
         course.setPrice(updateCourseStatusDto.price());
+
         courseRepository.save(course);
         return courseMapper.toDto(course);
     }
@@ -88,9 +98,16 @@ public class CourseServiceImpl implements CourseService {
     }
 
     @Override
+    @Transactional
     public DeleteDto deleteCourse(Long courseId) {
         courseRepository.deleteById(courseId);
         return new DeleteDto(courseId);
+    }
+
+    @Transactional
+    @Override
+    public void unsignUserFromCourse(Long courseId, Long userId) {
+        usersCoursesRepository.deleteUserFromCourse(courseId, userId);
     }
 
     @Transactional
@@ -116,6 +133,7 @@ public class CourseServiceImpl implements CourseService {
         course.setPrice(requestDto.getPrice());
         course.setImage(requestDto.getImage());
         course.setIcon(requestDto.getIcon());
+        course.setMaxStudents(requestDto.getMaxStudents());
         return course;
     }
 
@@ -123,6 +141,10 @@ public class CourseServiceImpl implements CourseService {
         List<RoadMapDto> allByCourseId = roadMapService.findAllByCourseId(courseId);
         dto.setRoadMaps(allByCourseId);
         dto.setUsersId(new HashSet<>(usersCoursesRepository.findUserIdsByCourseId(courseId)));
+    }
+
+    private List<User> getUsersByCourseId(Long courseId) {
+        return usersCoursesRepository.findUsersByCourseId(courseId);
     }
 
 }

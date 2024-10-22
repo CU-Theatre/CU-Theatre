@@ -7,8 +7,10 @@ import cu.theater.backend.dto.user.UserResponseDto;
 import cu.theater.backend.exception.EntityNotFoundException;
 import cu.theater.backend.exception.RegistrationException;
 import cu.theater.backend.mapper.UserMapper;
+import cu.theater.backend.model.Course;
 import cu.theater.backend.model.Role;
 import cu.theater.backend.model.User;
+import cu.theater.backend.repository.CourseRepository;
 import cu.theater.backend.repository.RoleRepository;
 import cu.theater.backend.repository.UserRepository;
 import cu.theater.backend.repository.UsersCoursesRepository;
@@ -18,6 +20,7 @@ import java.util.Set;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
@@ -27,6 +30,7 @@ public class UserServiceImpl implements UserService {
     private final PasswordEncoder passwordEncoder;
     private final RoleRepository roleRepository;
     private final UsersCoursesRepository usersCoursesRepository;
+    private final CourseRepository courseRepository;
 
     @Override
     public UserResponseDto registerUser(UserRegistrationRequestDto requestDto)
@@ -44,9 +48,18 @@ public class UserServiceImpl implements UserService {
         return setCurrentCourses(dto);
     }
 
-    @Override
+    @Transactional
     public void deleteById(Long id) {
-        userRepository.deleteById(id);
+        User user = userRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Can't find user by id=" + id));
+
+        // Remove user from all courses
+        for (Course course : user.getCourses()) {
+            course.getUsers().remove(user);
+            courseRepository.save(course);
+        }
+
+        userRepository.delete(user);
     }
 
     @Override

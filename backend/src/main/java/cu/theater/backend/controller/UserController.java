@@ -9,7 +9,7 @@ import cu.theater.backend.service.user.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
-import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -58,9 +58,14 @@ public class UserController {
     @Operation(summary = "Delete user by id")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @DeleteMapping("/{id}")
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
-    public void deleteById(@PathVariable Long id) {
-        userService.deleteById(id);
+    public void deleteById(@PathVariable Long id, Authentication authentication) {
+        User user = (User) authentication.getPrincipal();
+        if (user.getId().equals(id) || user.getRoles().stream()
+                .anyMatch(role -> role.getName().equals("ROLE_ADMIN"))) {
+            userService.deleteById(id);
+        } else {
+            throw new AccessDeniedException("You do not have permission to delete this account.");
+        }
     }
 
     @Operation(summary = "Setting user drama course to finished",
