@@ -37,7 +37,11 @@ public class CourseEventController {
     @ResponseStatus(HttpStatus.CREATED)
     public CourseEventResponseDto createCourseEvent(
             @RequestBody CourseEventCreateDto courseEventCreateDto) {
-        return courseEventService.createCourseEvent(courseEventCreateDto);
+        CourseEventResponseDto courseEvent = courseEventService
+                .createCourseEvent(courseEventCreateDto);
+        courseEvent.setInterval(courseEventCreateDto.getInterval());
+        courseEvent.setCourseId(courseEventCreateDto.getCourseId());
+        return courseEvent;
     }
 
     @PutMapping("/{id}")
