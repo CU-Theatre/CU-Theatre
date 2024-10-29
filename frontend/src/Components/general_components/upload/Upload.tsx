@@ -25,6 +25,7 @@ export const Upload: React.FC<Props> = ({
   const id = useId();
   const [progress, setProgress] = useState(0);
   const [loading, setLoading] = useState(false);
+  const [previewUrl, setPreviewUrl] = useState<string | null>(null);
   const abortUploading = useRef<() => void>();
 
   const reset = () => {
@@ -52,9 +53,9 @@ export const Upload: React.FC<Props> = ({
     abortUploading.current = uploading.abort;
 
     uploading
-      .then(onUpload)
+      .then(() => onUpload('Img uploaded'))
       .catch((err) => {
-        console.log(err);
+        console.error("Upload failed:", err);
       })
       .finally(reset);
   };
@@ -85,6 +86,11 @@ export const Upload: React.FC<Props> = ({
         </div>
       )}
       {/* TODO add preview img */}
+      {previewUrl && (
+        <div className="upload__preview">
+          <img src={previewUrl} alt="Uploaded preview" className="upload__preview-image" />
+        </div>
+      )}
     </div>
   );
 };

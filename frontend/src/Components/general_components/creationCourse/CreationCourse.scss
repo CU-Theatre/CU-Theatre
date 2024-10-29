@@ -109,4 +109,25 @@
     width: fit-content;
     margin: 0 auto;
   }
+
+  &__upload {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  &__import {
+    display: flex;
+    gap: 50px;
+    align-items: center;
+  }
+
+  &__import-text {
+    color: white;
+    font-size: 12px;
+
+    @include on-tablet {
+      font-size: 19px;
+    }
+  }
 }

@@ -43,44 +43,47 @@ export const CourseEditorModal: React.FC<Props> = ({
     sendingData.image = "aaa.jpg";
 
     try {
-      if (typeof sendingData.price === "string") {
-        sendingData.price = parseFloat(sendingData.price);
-        sendingData.price = Math.abs(sendingData.price);
-      }
-      // if (typeof sendingData.maxPeople === "string") {
-      //   sendingData.maxPeople = parseFloat(sendingData.maxPeople);
-      //   sendingData.maxPeople = Math.abs(sendingData.maxPeople);
-      // }
+      // Ensure price and maxPeople are numbers and positive
+      sendingData.price = Math.abs(parseFloat(sendingData.price as unknown as string)) || 0;
     } catch {
-      // TODO write a errHandler when prise isn't number
+      console.error("Invalid price or maxStudents format");
+      return;
     }
 
-    const newClassTime = classTime.map((time) => {
-      console.log(time);
-
-      return createEvent(
-        time,
-        sendingData.name,
-        sendingData.finishDate,
-        sendingData.startDate,
-        sendingData.description,
-        sendingData.icon
-      );
-    });
-
-    console.log("newClassTime", newClassTime);
-
-    sendingData.finishDate = new Date(sendingData.finishDate).toISOString();
-    sendingData.finishDate = sendingData.finishDate.split(".")[0];
-    sendingData.finishDate = sendingData.finishDate.split("T").join(" ");
+    const maxStudents = maxPeople ? Math.abs(parseInt(maxPeople as unknown as string, 10)) || 0 : 0;
     sendingData.startDate = new Date(sendingData.startDate).toISOString();
-    sendingData.startDate = sendingData.startDate.split(".")[0];
-    sendingData.startDate = sendingData.startDate.split("T").join(" ");
+    sendingData.finishDate = new Date(sendingData.finishDate).toISOString();
 
-    console.log("sendingData", sendingData);
+    const formattedData = {
+      name: sendingData.name,
+      description: sendingData.description,
+      startDate: sendingData.startDate,
+      finishDate: sendingData.finishDate,
+      image: sendingData.image,
+      icon: sendingData.icon || "default-icon", // Ensure icon is set
+      price: sendingData.price,
+      maxStudents: maxStudents,
+    };
+
+    // const newClassTime = classTime.map((time) => {
+    //   console.log(time);
+
+    //   return createEvent(
+    //     time,
+    //     sendingData.name,
+    //     sendingData.finishDate,
+    //     sendingData.startDate,
+    //     sendingData.description,
+    //     sendingData.icon
+    //   );
+    // });
+
+    // console.log("newClassTime", newClassTime);
+
+    console.log("formattedData", formattedData);
 
     setIsLoading(true);
-    createCourse(sendingData, token)
+    createCourse(formattedData, token)
       .then((newCourse) => {
         console.log("newCourse", newCourse);
 

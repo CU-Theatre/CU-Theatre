@@ -81,7 +81,7 @@ export const dramaCourse: CourseType = {
     {
       id: 12,
       title: "Performance and Certification ",
-      mainTitle: "Week 11",
+      mainTitle: "Week 12",
       text: "It’s exam time!",
     },
   ],

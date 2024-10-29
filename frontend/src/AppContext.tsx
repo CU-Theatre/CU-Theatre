@@ -80,7 +80,7 @@
               break;
           }
         });
-    }, [setToken, token]);
+    }, [token]);
 
     const [courseInfo, setCourseInfo] = useState<CourseType>(dramaCourse);
     const [courseModal, setCourseModal] = useState(false);

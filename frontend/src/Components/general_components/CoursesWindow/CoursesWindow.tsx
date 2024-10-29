@@ -13,6 +13,8 @@ import { getCurrentUser, updateUser } from "../../../api/userApi";
 import { CourseEditorModal } from "../сourseEditorModal";
 import { User } from "../../../types/User";
 import { courseSubscribe } from "../../../api/courseApi";
+import { NavLink } from "react-router-dom";
+import { LoaderButton } from "../Loader/LoaderButton";
 
 export const CoursesWindow: React.FC = () => {
   const courseFor = [
@@ -37,6 +39,7 @@ export const CoursesWindow: React.FC = () => {
   const [isAdmin, setIsAdmin] = useState(true);
   const [isEditingCourse, setIsEditingCourse] = useState(false);
   const [token] = useTokenLocalStorage();
+  const [loadingButton, setLoadingButton] = useState(false);
 
   useEffect(() => {
     getCurrentUser(token)
@@ -98,7 +101,7 @@ export const CoursesWindow: React.FC = () => {
       currentCourses: [...currentCourses, course.id],
     };
   
-    console.log('updatedUser:', updatedUser);
+    setLoadingButton(true);
   
     courseSubscribe(course.id, token)
     .then((res) => {
@@ -106,6 +109,9 @@ export const CoursesWindow: React.FC = () => {
     })
     .catch((err: Error) => {
       console.error("Failed to update user:", err);
+    })
+    .finally(() => {
+      setLoadingButton(false);
     });
   };
 
@@ -195,13 +201,30 @@ export const CoursesWindow: React.FC = () => {
             </div>
           </div>
           <div className="course-window__buttons">
-            <button
-              type="button"
-              className="course-window__button course-window__button--left"
-              onClick={() => subscribeOnCourse()}
-            >
-              Subscribe
-            </button>
+            {userState?.emergencyContactDto ? (
+              <button
+                type="button"
+                className={classNames("course-window__button course-window__button--left", 
+                  {'course-window__button--disabled': loadingButton})
+                }
+                disabled={loadingButton}
+                onClick={() => subscribeOnCourse()}
+              >
+                {loadingButton ? (
+                  <div className="course-window__button-content" />
+                ) : (
+                  'Sign for a course'
+                )}
+              </button>
+            ) : (
+              <NavLink
+                type="button"
+                className="course-window__button course-window__button--left"
+                to={'/emergency-contact'}
+              >
+                Subscribe
+              </NavLink>
+            )}
             <button
               type="button"
               className="course-window__button course-window__button--right"
