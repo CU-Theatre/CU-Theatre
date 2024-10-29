@@ -9,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -32,8 +33,8 @@ public class EmergencyContactController {
 
     @Operation(summary = "get emergency contact ",
             description = "get emergency contact of user")
-    @GetMapping("/get")
-    public EmergencyContactDto getEmergencyContactOfUser(@RequestBody
+    @GetMapping("/get/{userId}")
+    public EmergencyContactDto getEmergencyContactOfUser(@PathVariable
             Long userId) {
         return emergencyContactService.getEmergencyContact(userId);
     }
@@ -48,9 +49,8 @@ public class EmergencyContactController {
 
     @Operation(summary = "delete emergency contact ",
             description = "delete emergency contact of user")
-    @DeleteMapping("/delete")
-    public void deleteEmergencyContactOfUser(@RequestBody
-            Long id) {
-        emergencyContactService.deleteEmergencyContact(id);
+    @DeleteMapping("/delete/{userId}")
+    public void deleteEmergencyContactOfUser(@PathVariable Long userId) {
+        emergencyContactService.deleteEmergencyContact(userId);
     }
 }

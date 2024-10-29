@@ -30,12 +30,15 @@ public class CourseEventServiceImpl implements CourseEventService {
         CourseEvent courseEvent = courseEventRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("CourseEvent not found with id "
                         + id));
-        return courseEventMapper.toResponseDto(courseEvent);
+        CourseEventResponseDto responseDto = courseEventMapper.toResponseDto(courseEvent);
+        responseDto.setInterval(courseEvent.getStep());
+        return responseDto;
     }
 
     @Override
     public CourseEventResponseDto createCourseEvent(CourseEventCreateDto courseEventCreateDto) {
         CourseEvent courseEvent = courseEventMapper.toEntity(courseEventCreateDto);
+        courseEvent.setStep(courseEventCreateDto.getInterval());
         courseEvent = courseEventRepository.save(courseEvent);
         return courseEventMapper.toResponseDto(courseEvent);
     }
@@ -48,7 +51,9 @@ public class CourseEventServiceImpl implements CourseEventService {
                         + id));
         courseEventMapper.updateEntityFromDto(courseEventUpdateDto, courseEvent);
         courseEvent = courseEventRepository.save(courseEvent);
-        return courseEventMapper.toResponseDto(courseEvent);
+        CourseEventResponseDto responseDto = courseEventMapper.toResponseDto(courseEvent);
+        responseDto.setInterval(courseEvent.getStep());
+        return responseDto;
     }
 
     @Override
