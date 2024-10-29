@@ -40,31 +40,11 @@ databaseChangeLog:
                   constraints:
                     nullable: false
               - column:
-                  name: rule_id
-                  type: BIGINT
-                  constraints:
-                    nullable: true
-        - createTable:
-            tableName: rule
-            columns:
-              - column:
-                  name: id
-                  type: BIGINT
-                  autoIncrement: true
-                  constraints:
-                    primaryKey: true
-                    nullable: false
-              - column:
                   name: freq
                   type: VARCHAR(255)
               - column:
-                  name: day
+                  name: days
                   type: VARCHAR(255)
               - column:
-                  name: interval
+                  name: step
                   type: INT
-              - column:
-                  name: course_event_id
-                  type: BIGINT
-                  constraints:
-                    nullable: false

@@ -1,6 +1,8 @@
 package cu.theater.backend.dto.courseevent;
 
+import cu.theater.backend.model.Days;
 import java.util.Date;
+import java.util.List;
 import lombok.Data;
 
 @Data
@@ -10,5 +12,8 @@ public class CourseEventUpdateDto {
     private Date end;
     private String description;
     private String icon;
-    private RuleDto rule;
+    private Long courseId;
+    private String freq;
+    private Integer interval;
+    private List<Days> days;
 }
