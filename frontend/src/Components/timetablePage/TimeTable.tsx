@@ -7,6 +7,8 @@ import { MyCalendar } from "../general_components/personalAccount/MyCalendar";
 import { EventInfo } from "../general_components/personalAccount/MyCalendar/EventInfo";
 import { ClassesAPI } from "../../types/ClassesAPI";
 import { CourseEvent } from "../../types/CourseEvent";
+import { useAppContext } from "../../AppContext";
+import { Loader } from "../general_components/Loader";
 
 export const TimeTable: React.FC = () => {
   const days = [
@@ -149,6 +151,7 @@ export const TimeTable: React.FC = () => {
   ];
   const [activeDay, setActiveDay] = useState<string | null>("Tuesday");
   const [currentEvent, setCurrentEvent] = useState<ClassesAPI | CourseEvent | null>(null);
+  const { timetablePageLoader } = useAppContext();
 
   useEffect(() => {
     const currentData = new Date();
@@ -160,70 +163,74 @@ export const TimeTable: React.FC = () => {
   }, []);
 
   return (
-    <div className="schedule">
-      <div className="schedule__container">
-        <h2 className="schedule__title title">Timetable</h2>
-        <div className="schedule__timetable">
-          <div className="schedule__days">
-            {days.map((day) => (
-              <div key={day.day} className="schedule__day">
-                <div className="schedule__day-info">
-                  <h3 className="schedule__day-title">{day.day}</h3>
-                  {activeDay === day.day ? (
-                    <button
-                      type="button"
-                      className="schedule__day-button"
-                      onClick={() => setActiveDay(null)}
-                    ></button>
-                  ) : (
-                    <button
-                      type="button"
-                      className="schedule__day-button schedule__day-button--open"
-                      onClick={() => setActiveDay(day.day)}
-                    ></button>
-                  )}
+    timetablePageLoader ? (
+      <Loader />
+    ) : (
+      <div className="schedule">
+        <div className="schedule__container">
+          <h2 className="schedule__title title">Timetable</h2>
+          <div className="schedule__timetable">
+            <div className="schedule__days">
+              {days.map((day) => (
+                <div key={day.day} className="schedule__day">
+                  <div className="schedule__day-info">
+                    <h3 className="schedule__day-title">{day.day}</h3>
+                    {activeDay === day.day ? (
+                      <button
+                        type="button"
+                        className="schedule__day-button"
+                        onClick={() => setActiveDay(null)}
+                      ></button>
+                    ) : (
+                      <button
+                        type="button"
+                        className="schedule__day-button schedule__day-button--open"
+                        onClick={() => setActiveDay(day.day)}
+                      ></button>
+                    )}
+                  </div>
+                  <div
+                    className={cn("schedule__day-classes", {
+                      "schedule__day-classes--active": activeDay === day.day,
+                    })}
+                  >
+                    {day.schedule.map((lesson, index) => (
+                      <p
+                        key={index}
+                        className="schedule__day-class"
+                      >{`${lesson.classtype} - ${lesson.duration}`}</p>
+                    ))}
+                  </div>
                 </div>
-                <div
-                  className={cn("schedule__day-classes", {
-                    "schedule__day-classes--active": activeDay === day.day,
-                  })}
-                >
-                  {day.schedule.map((lesson, index) => (
-                    <p
-                      key={index}
-                      className="schedule__day-class"
-                    >{`${lesson.classtype} - ${lesson.duration}`}</p>
-                  ))}
-                </div>
+              ))}
+            </div>
+            <img className="schedule__masks" src={masks} alt="" />
+          </div>
+          <SignButton title="More classes" path="/classes" />
+          <h2 className="schedule__title title">Pricelist</h2>
+          <div className="schedule__pricelist">
+            {courses.map((course) => (
+              <div key={course.coursesName} className="schedule__classtype">
+                <h3 className="schedule__pricelist-name">{course.coursesName}</h3>
+                {course.typeAndPrice.map((sect, index) => (
+                  <p key={index} className="schedule__pricelist-price">
+                    {sect.classType}- <b>{sect.classPrice}</b>
+                  </p>
+                ))}
               </div>
             ))}
           </div>
-          <img className="schedule__masks" src={masks} alt="" />
+          <SignButton title="Sign for a course" path="/our-courses" />
+          <div className="schedule__calendar">
+            <h3 className="schedule__main-title">Schedule</h3>
+            <MyCalendar setCurrentEvent={setCurrentEvent} />
+          </div>
         </div>
-        <SignButton title="More classes" path="/classes" />
-        <h2 className="schedule__title title">Pricelist</h2>
-        <div className="schedule__pricelist">
-          {courses.map((course) => (
-            <div key={course.coursesName} className="schedule__classtype">
-              <h3 className="schedule__pricelist-name">{course.coursesName}</h3>
-              {course.typeAndPrice.map((sect, index) => (
-                <p key={index} className="schedule__pricelist-price">
-                  {sect.classType}- <b>{sect.classPrice}</b>
-                </p>
-              ))}
-            </div>
-          ))}
-        </div>
-        <SignButton title="Sign for a course" path="/our-courses" />
-        <div className="schedule__calendar">
-          <h3 className="schedule__main-title">Schedule</h3>
-          <MyCalendar setCurrentEvent={setCurrentEvent} />
-        </div>
+        <EventInfo
+          currentEvent={currentEvent}
+          setCurrentEvent={setCurrentEvent}
+        />
       </div>
-      <EventInfo
-        currentEvent={currentEvent}
-        setCurrentEvent={setCurrentEvent}
-      />
-    </div>
+    )
   );
 };
