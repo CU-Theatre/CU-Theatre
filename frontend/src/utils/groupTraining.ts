@@ -1,4 +1,4 @@
-import { CourseEvent } from "../types/CourseEvent";
+import { ClassesAPI } from "../types/ClassesAPI";
 import { GroupedLesson } from "../types/GroupedLesson";
 
 const baseGroupedTraining = {
@@ -8,7 +8,7 @@ const baseGroupedTraining = {
   dates: [],
 };
 
-export const groupTrainings = (allTrainings: CourseEvent[]) => {
+export const groupTrainings = (allTrainings: ClassesAPI[]) => {
   const groupedTraining: { [a: string]: GroupedLesson } = {};
 
   allTrainings.forEach((training) => {
@@ -19,6 +19,7 @@ export const groupTrainings = (allTrainings: CourseEvent[]) => {
     const currentDates = groupedTraining[title].dates;
 
     groupedTraining[title] = {
+      id,
       title,
       description,
       icon,

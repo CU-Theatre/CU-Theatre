@@ -6,21 +6,27 @@ import { useAppContext } from '../../../../../AppContext';
 import classNames from 'classnames';
 import { events } from '../../../../../utils/events';
 import { Guest } from '../../../../../types/Events';
+import { ClassesAPI } from '../../../../../types/ClassesAPI';
+import useCheckClassPage from '../../../../../hooks/useCheckClassPage';
+import { GroupedLesson } from '../../../../../types/GroupedLesson';
+import { DeleteClassModal } from './PreDeleteModal';
 
 interface Props {
-  currentEvent: CourseEvent | null;
-  setCurrentEvent: (a: CourseEvent | null) => void;
+  currentEvent: ClassesAPI | CourseEvent | null;
+  setCurrentEvent: (a: ClassesAPI | CourseEvent | null) => void;
+  setGroupedTrainings?: React.Dispatch<React.SetStateAction<GroupedLesson[] | undefined>>;
 }
 
 type PriceType = 'groupClass' | 'privateClass' | 'privateForTwo';
 
-export const EventInfo: React.FC<Props> = ({ currentEvent, setCurrentEvent }) => {
+export const EventInfo: React.FC<Props> = ({ currentEvent, setCurrentEvent, setGroupedTrainings }) => {
   const { setEventInfoIsOpen, eventInfoIsOpen, setEventDetailIsOpen, userState, setCourses, currentShows } = useAppContext();
   const classes = ['Heels', 'Exotic', 'Stretching', 'Pole Dance', 'Twerk'];
   const someShows = ["Live performance", "Impro shows", "Playback shows"];
   const daysOfWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
   const [alreadyBooked, setAlreadyBooked] = useState(false);
   const [isPastEvent, setIsPastEvent] = useState(false);
+  const [isCurrentPageCLass, setIsCurrentPageClass] = useState(false);
   const prices = currentEvent?.title === 'Heels' || currentEvent?.title === 'Twerk' || currentEvent?.title === 'Stretching' 
     ? {
       groupClass: '15',
@@ -33,12 +39,16 @@ export const EventInfo: React.FC<Props> = ({ currentEvent, setCurrentEvent }) =>
     };
   const [selectedPrice, setSelectedPrice] = useState<PriceType>('privateClass');
   const [paymentType, setPaymentType] = useState('Card');
+  const [modalVisible, setModalVisible] = useState(false);
+
+  useCheckClassPage(setIsCurrentPageClass);
 
   useEffect(() => {
     if (currentEvent) {
       const now = new Date();
-      const isPast = isBefore(currentEvent.start, now);
+      const isPast = isBefore(new Date(currentEvent.start), now);
       setIsPastEvent(isPast);
+      console.log(isCurrentPageCLass, currentEvent);
     }
   }, [currentEvent]);
 
@@ -46,6 +56,10 @@ export const EventInfo: React.FC<Props> = ({ currentEvent, setCurrentEvent }) =>
     title: currentEvent?.title,
     start: currentEvent?.start,
     end: currentEvent?.end,
+  };
+
+  const handleOpenModal = () => {
+    setModalVisible(true);
   };
 
   const cancelShowBooking = () => {
@@ -102,11 +116,11 @@ export const EventInfo: React.FC<Props> = ({ currentEvent, setCurrentEvent }) =>
 
   const bookClassPlace = () => {
     if (currentEvent && userState && !isPastEvent) {
-  
-      const newDay = String(currentEvent.start.getDate()).padStart(2, '0');
-      const newMonth = String(currentEvent.start.getMonth() + 1).padStart(2, '0');
+      const startDate = new Date(currentEvent.start);
+      const newDay = String(startDate.getDate()).padStart(2, '0');
+      const newMonth = String(startDate.getMonth() + 1).padStart(2, '0');
       const newDate = `${newDay}.${newMonth}`;
-      const dayOfWeek = daysOfWeek[currentEvent.start.getDay()];
+      const dayOfWeek = daysOfWeek[startDate.getDay()];
 
       let newClass;
 
@@ -155,8 +169,9 @@ export const EventInfo: React.FC<Props> = ({ currentEvent, setCurrentEvent }) =>
 
   const cancelBooking = () => {
     if (currentEvent && userState) {
-      const newDay = String(currentEvent.start.getDate()).padStart(2, '0');
-      const newMonth = String(currentEvent.start.getMonth() + 1).padStart(2, '0');
+      const startDate = new Date(currentEvent.start);
+      const newDay = String(startDate.getDate()).padStart(2, '0');
+      const newMonth = String(startDate.getMonth() + 1).padStart(2, '0');
       const newDate = `${newDay}.${newMonth}`;
   
       let currentClass;
@@ -201,8 +216,9 @@ export const EventInfo: React.FC<Props> = ({ currentEvent, setCurrentEvent }) =>
   useEffect(() => {
     if (currentEvent && userState) {
       let newClass;
-      const newDay = String(currentEvent.start.getDate()).padStart(2, '0');
-      const newMonth = String(currentEvent.start.getMonth() + 1).padStart(2, '0');
+      const startDate = new Date(currentEvent.start);
+      const newDay = String(startDate.getDate()).padStart(2, '0');
+      const newMonth = String(startDate.getMonth() + 1).padStart(2, '0');
       const newDate = `${newDay}.${newMonth}`;
 
       switch (currentEvent?.title) {
@@ -235,7 +251,19 @@ export const EventInfo: React.FC<Props> = ({ currentEvent, setCurrentEvent }) =>
 
   return (
     <div className={classNames('event-info', {'event-open' : eventInfoIsOpen})}>
+      {modalVisible && (
+        <DeleteClassModal setGroupedTrainings={setGroupedTrainings} classId={currentEvent?.id} setModalVisible={setModalVisible} />
+      )}
       <div className='event-info__top'>
+        {isCurrentPageCLass && (
+          <button 
+            type="button" 
+            className="event-info__delete-button" 
+            onClick={handleOpenModal}
+            >
+              
+            </button>
+        )}
         <h4 className='event-info__title'>{currentEvent?.title}</h4>
         <button 
           onClick={handleCloseClick} 
@@ -244,10 +272,10 @@ export const EventInfo: React.FC<Props> = ({ currentEvent, setCurrentEvent }) =>
       </div>
       <div className='event-info__content'>
         <p className='event-info__date'>
-          Event day - {currentEvent && format(currentEvent.start, 'dd.MM')}
+          Event day - {currentEvent && format(new Date(currentEvent.start), 'dd.MM')}
         </p>
         <p className='event-info__duration'>
-          Event duration - {currentEvent && format(currentEvent.start, 'HH:mm')} - {currentEvent && format(currentEvent.end, 'HH:mm')}
+          Event duration - {currentEvent && format(new Date(currentEvent.start), 'HH:mm')} - {currentEvent && format(new Date(currentEvent.end), 'HH:mm')}
         </p>
         {currentEvent && classes.includes(currentEvent.title) && (
           <div className='event-info__price'>

@@ -26,31 +26,31 @@ export const ClassCreatingForm = () => {
   const weekDays = [
     {
       dayName: 'Monday',
-      dayVal: 'MO'
+      dayVal: 'MONDAY'
     },
     {
       dayName: 'Tuesday',
-      dayVal: 'TU'
+      dayVal: 'TUESDAY'
     },
     {
       dayName: 'Wednesday',
-      dayVal: 'WE'
+      dayVal: 'WEDNESDAY'
     },
     {
       dayName: 'Thursday',
-      dayVal: 'TH'
+      dayVal: 'THURSDAY'
     },
     {
       dayName: 'Friday',
-      dayVal: 'FR'
+      dayVal: 'FRIDAY'
     },
     {
       dayName: 'Saturday',
-      dayVal: 'SA'
+      dayVal: 'SATURDAY'
     },
     {
       dayName: 'Sunday',
-      dayVal: 'SU'
+      dayVal: 'SUNDAY'
     },
   ];
 
@@ -81,6 +81,7 @@ export const ClassCreatingForm = () => {
     createClass(formattedData, token)
     .then(res => {
       console.log('Submitted data:', formattedData, res);
+      window.location.reload();
     })
     .catch(err => {
       console.log(err);

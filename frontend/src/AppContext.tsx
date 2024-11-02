@@ -9,11 +9,12 @@
   import { allCourses } from "./utils/courses";
   import { CourseType } from "./types/CourseType";
   import { CourseEvent } from "./types/CourseEvent";
-  import { allClasses } from "./utils/allClasses";
   import { Events } from "./types/Events";
   import { events } from "./utils/events";
 import { getEmergencyContact } from "./api/emergency-contactApi";
 import { EmergencyContactType } from "./types/EmergencyContactType";
+import { getAllClasses } from "./api/classesApi";
+import { ClassesAPI } from "./types/ClassesAPI";
 
   interface AppContextInterface {
     isOpen: boolean;
@@ -60,13 +61,45 @@ import { EmergencyContactType } from "./types/EmergencyContactType";
     const [modalInfo, setModalInfo] = useState<ShowType>(liveShow);
     const [eventInfoIsOpen, setEventInfoIsOpen] = useState(true);
     const [eventList, setEventList] = useState<Events | undefined>(events);
-    const [courses, setCourses] = useState<CourseEvent[] | []>([...allClasses, ...dramaCourse.courseTime ]);
+    const [courses, setCourses] = useState<CourseEvent[] | []>([...dramaCourse.courseTime ]);
     const [currUserEmergency, setCurrUserEmergency] = useState<EmergencyContactType | null | undefined>();
 
     const [token, setToken] = useLocalStorage(KEY_TOKEN, "");
 
-
     useEffect(() => {
+      const fetchClasses = async () => {
+        try {
+          const response = await getAllClasses(token);
+          const transformedClasses = (response as ClassesAPI[]).map((course: any) => ({
+            id: course.id,
+            title: course.title,
+            start: new Date(course.start),
+            end: new Date(course.end),
+            description: course.description || "",
+            icon: course.icon || "",
+            rule: {
+              freq: course.freq || 'WEEKLY',
+              interval: course.interval || 1,
+              day: course.days.length > 0 ? course.days.map((day: string) => day.slice(0, 2)) : [],
+              start: new Date(course.start).toString(),
+              finish: new Date(course.end).toString(),
+            },
+          }));
+
+          const newCLasses = [...transformedClasses, ...dramaCourse.courseTime]
+  
+          setCourses(newCLasses);
+        } catch (error) {
+          console.error('Error fetching classes:', error);
+        }
+      };
+  
+      fetchClasses();
+      console.log(courses);
+    }, [token]);
+    
+    useEffect(() => {
+
       getCurrentUser(token)
         .then((newUser) => {
           setUserState(newUser);
@@ -74,7 +107,6 @@ import { EmergencyContactType } from "./types/EmergencyContactType";
           getEmergencyContact(newUser.id, token)
             .then((currUser) => {
               setCurrUserEmergency(currUser);
-
             })
             .catch(err => {
               console.log('failed to load currUser', err);

@@ -1,22 +1,24 @@
 import React, { useState } from "react";
 import "./TrainingCell.scss";
-import { CourseEvent } from "../../../types/CourseEvent";
 import { useAppContext } from "../../../AppContext";
 import { GroupedLesson } from "../../../types/GroupedLesson";
-import { getCurrentTraining } from "../../../api/trainingApi";
 import { ErrorNotification } from "../../general_components/errorNotification";
 import { useTokenLocalStorage } from "../../../hooks/useLocalStorage";
 import { getCurrentUser } from "../../../api/userApi";
 import { useNavigate } from "react-router-dom";
+import { getClass } from "../../../api/classesApi";
+import { ClassesAPI } from "../../../types/ClassesAPI";
 
 type Props = {
   training: GroupedLesson;
-  setCurrentEvent: (p: CourseEvent) => void;
+  setCurrentEvent: (p: ClassesAPI) => void;
+  setGroupedTrainings: (value: React.SetStateAction<GroupedLesson[] | undefined>) => void;
 };
 
 export const TrainingCell: React.FC<Props> = ({
   training,
   setCurrentEvent,
+  setGroupedTrainings,
 }) => {
   const { setEventInfoIsOpen, setEventDetailIsOpen } = useAppContext();
   const [isError, setIsError] = useState(false);
@@ -25,10 +27,10 @@ export const TrainingCell: React.FC<Props> = ({
 
   const { title, description, icon, dates } = training;
 
-  const openClassDetails = (id: number) => {
+  const openClassDetails = (classId: number) => {
     getCurrentUser(token)
       .then(() => {
-        getCurrentTraining(id)
+        getClass(classId, token)
           .then((currentTraining) => {
             if (currentTraining) {
               setCurrentEvent(currentTraining);
@@ -63,7 +65,7 @@ export const TrainingCell: React.FC<Props> = ({
               className="training-cell__button"
               onClick={() => openClassDetails(date.lessonId)}
             >
-              {date.date.getDate()}
+              {new Date(date.date).getDate()}
             </button>
           ))}
         </div>

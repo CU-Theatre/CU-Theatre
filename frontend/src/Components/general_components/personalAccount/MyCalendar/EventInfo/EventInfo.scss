@@ -147,4 +147,22 @@
       opacity: .5;
     }
   }
+
+  &__delete-button {
+    background-image: url('../../../../img/icons/trashCart.svg');
+    width: 18px;
+    height: 18px;
+    cursor: pointer;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    filter: brightness(1) invert(1);
+    position: absolute;
+    left: 0;
+    transition: all .3s;
+
+    &:hover {
+      filter: brightness(0.8) invert(0.7);
+    }
+  }
 }
