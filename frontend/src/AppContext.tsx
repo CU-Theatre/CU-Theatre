@@ -12,6 +12,8 @@
   import { allClasses } from "./utils/allClasses";
   import { Events } from "./types/Events";
   import { events } from "./utils/events";
+import { getEmergencyContact } from "./api/emergency-contactApi";
+import { EmergencyContactType } from "./types/EmergencyContactType";
 
   interface AppContextInterface {
     isOpen: boolean;
@@ -38,6 +40,8 @@
     setEventList: React.Dispatch<React.SetStateAction<Events | undefined>>;
     currentShows: ShowType[];
     setCurrentShows: React.Dispatch<React.SetStateAction<ShowType[]>>;
+    currUserEmergency: EmergencyContactType | null | undefined;
+    setCurrUserEmergency: React.Dispatch<React.SetStateAction<EmergencyContactType | null | undefined>>;
   }
 
   const AppContext = createContext<AppContextInterface | undefined>(undefined);
@@ -57,14 +61,24 @@
     const [eventInfoIsOpen, setEventInfoIsOpen] = useState(true);
     const [eventList, setEventList] = useState<Events | undefined>(events);
     const [courses, setCourses] = useState<CourseEvent[] | []>([...allClasses, ...dramaCourse.courseTime ]);
+    const [currUserEmergency, setCurrUserEmergency] = useState<EmergencyContactType | null | undefined>();
 
     const [token, setToken] = useLocalStorage(KEY_TOKEN, "");
+
 
     useEffect(() => {
       getCurrentUser(token)
         .then((newUser) => {
           setUserState(newUser);
           setIsLoginned(true);
+          getEmergencyContact(newUser.id, token)
+            .then((currUser) => {
+              setCurrUserEmergency(currUser);
+
+            })
+            .catch(err => {
+              console.log('failed to load currUser', err);
+            });
         })
         .catch((err: Error) => {
           switch (err.message) {
@@ -120,6 +134,8 @@
           setEventList,
           currentShows,
           setCurrentShows,
+          currUserEmergency,
+          setCurrUserEmergency,
         }}
       >
         {children}

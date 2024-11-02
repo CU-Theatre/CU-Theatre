@@ -59,8 +59,8 @@ export const CourseEditorModal: React.FC<Props> = ({
       description: sendingData.description,
       startDate: sendingData.startDate,
       finishDate: sendingData.finishDate,
-      image: sendingData.image,
-      icon: sendingData.icon || "default-icon", // Ensure icon is set
+      image: '',
+      icon: '', // Ensure icon is set
       price: sendingData.price,
       maxStudents: maxStudents,
     };

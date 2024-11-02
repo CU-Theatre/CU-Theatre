@@ -3,6 +3,6 @@ export interface EmergencyContactType {
   userId?: number | null | undefined;
   firstName: string | null;
   lastName: string | null;
-  phoneNumber: string | null;
   relation: string | null;
+  phoneNumber: string | null;
 }

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import './EmergencyContact.scss';
 import { useAppContext } from '../../../AppContext';
-import { addEmergencyContact } from '../../../api/emergency-contact';
+import { addEmergencyContact } from '../../../api/emergency-contactApi';
 import { useTokenLocalStorage } from '../../../hooks/useLocalStorage';
 import { LoaderButton } from '../Loader/LoaderButton';
 import classNames from 'classnames';

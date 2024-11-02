@@ -8,3 +8,7 @@ export const addEmergencyContact = (contact: EmergencyContactType, token: string
 export const updateEmergencyContact = (contact: EmergencyContactType, token: string) => {
   return client.put('/emergency-contact/update', contact, token);
 };
+
+export const getEmergencyContact = ( userId: number, token: string): Promise<EmergencyContactType> => {
+  return client.get(`/emergency-contact/get/${userId}`, token);
+};

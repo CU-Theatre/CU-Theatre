@@ -21,12 +21,11 @@ import { events } from "../../../utils/events";
 import { filterEventsByUser } from "../../../utils/filterEventsByUser";
 import { allCourses } from "../../../utils/courses";
 import classNames from "classnames";
-import { updateEmergencyContact } from "../../../api/emergency-contact";
-import { EmergencyContactType } from "../../../types/EmergencyContactType";
+import { updateEmergencyContact } from "../../../api/emergency-contactApi";
 import { Loader } from "../Loader";
 
 export const YourAccount: React.FC = () => {
-  const { userState, setUserState, setIsLoginned, currentShows, setCurrentShows } =
+  const { userState, setUserState, setIsLoginned, currentShows, setCurrentShows, currUserEmergency } =
     useAppContext();
   const [isRootErrShown, setIsRootErrShown] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
@@ -39,7 +38,6 @@ export const YourAccount: React.FC = () => {
   const [emergencyPhoneNumber, setEmergencyPhoneNumber] = useState('');
   const [emergencyId, setEmergencyId] = useState(0);
   const [loadingButton, setLoadingButton] = useState(false);
-  const [currUserEmergency, setCurrUserEmergency] = useState<EmergencyContactType | null>();
   const [loadingPage, setLoadingPage] = useState(false);
   const [inputErrors, setInputErrors] = useState({
     name: '',
@@ -76,28 +74,14 @@ export const YourAccount: React.FC = () => {
   const [token] = useTokenLocalStorage();
   const promises: Promise<any>[] = [];
 
-  useEffect(() => {
-    if (
-      currUserEmergency?.firstName &&
-      currUserEmergency?.lastName &&
-      currUserEmergency?.relation &&
-      currUserEmergency?.phoneNumber &&
-      currUserEmergency.id
-    ) {
-      setEmergencyName(currUserEmergency.firstName);
-      setEmergencyLastName(currUserEmergency.lastName);
-      setEmergencyRelation(currUserEmergency.relation);
-      setEmergencyPhoneNumber(currUserEmergency.phoneNumber);
-      setEmergencyId(currUserEmergency.id);
-    }
-  }, [currUserEmergency]);
-
+  
+  
   useEffect(() => {
     setIsLoading(true);
     setLoadingPage(true);
     const userPromise = getCurrentUser(token)
-      .then((newUser) => {
-        reset(newUser);
+    .then((newUser) => {
+      reset(newUser);
         setUserState(newUser);
       })
       .catch((err: Error) => {
@@ -119,20 +103,24 @@ export const YourAccount: React.FC = () => {
         setIsLoading(false);
       });
   // eslint-disable-next-line react-hooks/exhaustive-deps
-
-    const getEmergencyPromise = getCurrentUser(token)
-      .then(currUser => {
-        if (currUser.emergencyContactDto) {
-          setCurrUserEmergency(currUser.emergencyContactDto)
-        }
-      })
-      .catch(err => {
-        console.log('failed to load currUser', err);
-      });
-
-      promises.push(getEmergencyPromise);
       promises.push(userPromise)
   }, []);
+
+  useEffect(() => {
+    if (
+      currUserEmergency?.firstName &&
+      currUserEmergency?.lastName &&
+      currUserEmergency?.relation &&
+      currUserEmergency?.phoneNumber &&
+      currUserEmergency.id
+    ) {
+      setEmergencyName(currUserEmergency.firstName);
+      setEmergencyLastName(currUserEmergency.lastName);
+      setEmergencyRelation(currUserEmergency.relation);
+      setEmergencyPhoneNumber(currUserEmergency.phoneNumber);
+      setEmergencyId(currUserEmergency.id);
+    }
+  }, [currUserEmergency]);
 
   useEffect(() => {
     Promise.all(promises)
@@ -433,7 +421,6 @@ export const YourAccount: React.FC = () => {
           <Link to={"/users-table"} className="cabinet__users-table">
             Users table page
           </Link>
-          {currUserEmergency && (
             <div className="cabinet__emergency-info">
               <h3 className="cabinet__emergency-title title">Emergency contact info</h3>
               <form className='cabinet__emergency-form'>
@@ -503,7 +490,6 @@ export const YourAccount: React.FC = () => {
                 </button>
               </form>
             </div>
-          )}
           <div className="cabinet__shows">
             <h2 className="cabinet__title title">Shows editor</h2>
             <div className="cabinet__allShows">
