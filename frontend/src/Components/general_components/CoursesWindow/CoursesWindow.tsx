@@ -9,8 +9,12 @@ import { WindowSwiper } from "../ModalWindowSwiper";
 import { CourseRoadmap } from "./courseRodmap";
 import { Footer } from "../footer";
 import { useTokenLocalStorage } from "../../../hooks/useLocalStorage";
-import { getCurrentUser } from "../../../api/userApi";
+import { getCurrentUser, updateUser } from "../../../api/userApi";
 import { CourseEditorModal } from "../сourseEditorModal";
+import { User } from "../../../types/User";
+import { courseSubscribe } from "../../../api/courseApi";
+import { NavLink } from "react-router-dom";
+import { LoaderButton } from "../Loader/LoaderButton";
 
 export const CoursesWindow: React.FC = () => {
   const courseFor = [
@@ -26,6 +30,7 @@ export const CoursesWindow: React.FC = () => {
   const {
     courseModal,
     courseInfo: course,
+    userState,
     setCourseModal,
     setUserState,
     setIsLoginned,
@@ -34,11 +39,12 @@ export const CoursesWindow: React.FC = () => {
   const [isAdmin, setIsAdmin] = useState(true);
   const [isEditingCourse, setIsEditingCourse] = useState(false);
   const [token] = useTokenLocalStorage();
+  const [loadingButton, setLoadingButton] = useState(false);
 
   useEffect(() => {
     getCurrentUser(token)
       .then((user) => {
-        if (user.role === "admin") {
+        if (user.roleName === "admin") {
           setIsAdmin(true);
         }
         setUserState(user);
@@ -67,6 +73,47 @@ export const CoursesWindow: React.FC = () => {
       setCourseModal(false);
     };
   }, []);
+
+  const subscribeOnCourse = () => {
+    if (!userState?.firstName || !userState?.lastName || !userState?.email || !userState?.phoneNumber) {
+      console.error("User is missing required fields.");
+      return;
+    }
+  
+    const currentCourses = userState.currentCourses;
+  
+    const isCourseAlreadySubscribed = currentCourses.some(
+      (userCourseId) => userCourseId === course.id
+    );
+  
+    if (isCourseAlreadySubscribed) {
+      alert("You are already subscribed to this course.");
+      return;
+    }
+
+    if (typeof userState.id !== 'number') {
+      console.error("Invalid user id:", userState.id);
+      return;
+    }
+  
+    const updatedUser: User = {
+      ...userState,
+      currentCourses: [...currentCourses, course.id],
+    };
+  
+    setLoadingButton(true);
+  
+    courseSubscribe(course.id, token)
+    .then((res) => {
+      console.log('User updated on server:', res);
+    })
+    .catch((err: Error) => {
+      console.error("Failed to update user:", err);
+    })
+    .finally(() => {
+      setLoadingButton(false);
+    });
+  };
 
   return (
     <section
@@ -154,12 +201,30 @@ export const CoursesWindow: React.FC = () => {
             </div>
           </div>
           <div className="course-window__buttons">
-            <button
-              type="button"
-              className="course-window__button course-window__button--left"
-            >
-              Subscribe
-            </button>
+            {userState?.emergencyContactDto ? (
+              <button
+                type="button"
+                className={classNames("course-window__button course-window__button--left", 
+                  {'course-window__button--disabled': loadingButton})
+                }
+                disabled={loadingButton}
+                onClick={() => subscribeOnCourse()}
+              >
+                {loadingButton ? (
+                  <div className="course-window__button-content" />
+                ) : (
+                  'Sign for a course'
+                )}
+              </button>
+            ) : (
+              <NavLink
+                type="button"
+                className="course-window__button course-window__button--left"
+                to={'/emergency-contact'}
+              >
+                Subscribe
+              </NavLink>
+            )}
             <button
               type="button"
               className="course-window__button course-window__button--right"

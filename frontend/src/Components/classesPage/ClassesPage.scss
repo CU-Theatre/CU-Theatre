@@ -11,6 +11,8 @@
 
   &__container {
     padding-block: 50px;
+    row-gap: 70px;
+
     @include page-grid;
   }
 
@@ -21,16 +23,13 @@
     text-transform: uppercase;
     text-align: center;
     color: $white;
-    margin-bottom: 40px;
 
     @include on-tablet {
       font-size: 32px;
-      margin-bottom: 70px;
     }
 
     @include on-desktop {
       font-size: 64px;
-      margin-bottom: 140px;
     }
   }
 

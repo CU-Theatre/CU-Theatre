@@ -17,12 +17,12 @@ export const Touch: React.FC = () => {
           </p>
 
           <div className="touch__links">
-            <a href="mailto:" className="touch__link">
-              Email
+            <a href="mailto:herasymchukelina@gmail.com" className="touch__link">
+              Email: herasymchukelina@gmail.com
             </a>
 
-            <a href="tel:+" className="touch__link">
-              Tell
+            <a href="tel:+350873425121" className="touch__link">
+              Tell: +350873425121
             </a>
 
             <a

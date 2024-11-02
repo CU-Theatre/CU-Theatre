@@ -134,7 +134,7 @@ export const CreationCourse: React.FC<Props> = ({
         <div className="creation-course__duration-cell">
           <div className="creation-course__input-cell">
             <label htmlFor="course-duration" className="creation-course__label">
-              Course's duration
+              Course's start Date
             </label>
             <input
               type="date"
@@ -147,7 +147,7 @@ export const CreationCourse: React.FC<Props> = ({
 
           <div className="creation-course__input-cell">
             <label htmlFor="course-duration" className="creation-course__label">
-              Course's duration
+              Course's Finish Date
             </label>
             <input
               type="date"
@@ -256,9 +256,17 @@ export const CreationCourse: React.FC<Props> = ({
           </div>
         </div>
 
-        <Upload onUpload={onUploadIcon} />
+        <div className="creation-course__upload">
+          <div className="creation-course__import">
+            <p className="creation-course__import-text">Select course icon</p>
+            <Upload onUpload={onUploadIcon} />
+          </div>
+          <div className="creation-course__import">
+            <p className="creation-course__import-text">Select course image</p>
+            <Upload onUpload={onUploadImg} />
+          </div>
+        </div>
 
-        <Upload onUpload={onUploadImg} />
 
         <ul className="creation-course__roadmap-list">
           {fieldsRoadmap.map((field, index) => (

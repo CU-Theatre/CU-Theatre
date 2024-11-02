@@ -3,6 +3,7 @@ import "./CourseButton.scss";
 import { useAppContext } from "../../../../AppContext";
 import { KEY_TOKEN, REQUIRED_COURSE } from "../../../../utils/globalVariables";
 import { CourseType } from "../../../../types/CourseType";
+import { useLocation } from "react-router-dom";
 
 type Props = {
   course: CourseType;
@@ -15,7 +16,8 @@ enum StatusButton {
 }
 export const CourseButton: React.FC<Props> = ({ course }) => {
   const { isLoginned, userState, setCourseInfo, setCourseModal } = useAppContext();
-  const [buttonStatus, setButtonStatus] = useState<StatusButton>();
+  const [buttonStatus, setButtonStatus] = useState<StatusButton>(StatusButton.LOCK);
+  const location = useLocation();
 
   const openCourseWindow = (course: CourseType) => {
     setCourseInfo(course);
@@ -24,32 +26,38 @@ export const CourseButton: React.FC<Props> = ({ course }) => {
 
   const { name, startDate, finishDate } = course;
 
-  const setStatusBasedOnCurrent = () => {
-    // TODO return branching operator when would be clear userState?.currentCourse
-
-    // if (userState?.currentCourse.includes(course)) {
-    //   setButtonStatus(StatusButton.DURATION);
-    // } else {
-    //   setButtonStatus(StatusButton.BUY);
-    // }
-    setButtonStatus(StatusButton.BUY);
+  const formatDate = (dateString: string): string => {
+    const date = new Date(dateString);
+    const day = date.getDate();
+    const month = date.getMonth() + 1; // Місяці в JS починаються з 0
+    const year = date.getFullYear().toString().slice(-2); // Останні дві цифри року
+    return `${day}.${month < 10 ? `0${month}` : month}.${year}`;
   };
 
+  const formattedStartDate = formatDate(startDate);
+  const formattedFinishDate = formatDate(finishDate);
+
   useEffect(() => {
-    if (isLoginned) {
+    if (location.pathname === "/your-account") {
+      setButtonStatus(StatusButton.DURATION);
+    } else if (!isLoginned) {
+      // Якщо користувач не залогінений, блокуємо всі курси
+      setButtonStatus(StatusButton.LOCK);
+    } else if (isLoginned && userState) {
       if (name.toLowerCase() === REQUIRED_COURSE) {
-        setStatusBasedOnCurrent();
-      } else if (userState?.dramaCourseFinisher) {
-        setStatusBasedOnCurrent();
+        // Якщо курс - це drama course, і користувач залогінений
+        setButtonStatus(StatusButton.BUY);
+      } else if (userState.dramaCourseFinished) {
+        // Якщо користувач завершив drama course, всі інші курси доступні для купівлі
+        setButtonStatus(StatusButton.BUY);
       } else {
+        // Якщо користувач залогінений, але не завершив drama course
         setButtonStatus(StatusButton.LOCK);
       }
-    } else if (name.toLowerCase() === REQUIRED_COURSE) {
-      setButtonStatus(StatusButton.BUY);
-    } else {
-      setButtonStatus(StatusButton.LOCK);
     }
-  }, [isLoginned, name, startDate, finishDate, userState]);
+  }, [isLoginned, userState, name, location.pathname]);
+
+
 
   return (
     <>
@@ -78,7 +86,7 @@ export const CourseButton: React.FC<Props> = ({ course }) => {
           {/* TODO add link to buy-page */}
           <span className="course-button__text">Course duration:</span>
           <span className="course-button__text course-button__text--duration">
-            {`${startDate} - ${finishDate}`}
+            {`${formattedStartDate} - ${formattedFinishDate}`}
           </span>
         </div>
       )}

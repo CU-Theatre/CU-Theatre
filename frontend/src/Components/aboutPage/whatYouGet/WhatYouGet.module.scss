@@ -36,18 +36,11 @@
 
   &__slide {
     box-sizing: border-box;
-    padding: 30px 10px;
+    padding: 20px 10px;
     background-color: $white;
     height: 174px;
-
-
-    @include on-tablet {
-      padding: 55px 20px;
-    }
-
-    @include on-desktop {
-      padding: 24px 33px;
-    }
+    display: flex;
+    align-items: center;
   }
 
   &__text {
@@ -58,10 +51,6 @@
     color: $black-text;
     line-height: 100%;
     letter-spacing: 3px;
-
-    @include on-tablet {
-      font-size: 16px;
-    }
 
     @include on-desktop {
       font-size: 18px;

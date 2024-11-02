@@ -35,24 +35,24 @@ export const MyCalendar: React.FC<Props> = ({ setCurrentEvent }) => {
   const isMobile = useMediaQuery({ query: `(max-width: ${TABLE_MIN_WIDTH}px)` });
   const [modalIsOpen, setModalIsOpen] = useState(false);
 
-  const recurringEvents = courses.flatMap(event => {
-    if (event.rule) {
-      const rule = createRrule(event.rule);
-      return rule.all().map(date => {
-        const start = new Date(date);
-        start.setHours(event.start.getHours(), event.start.getMinutes());
-        const end = new Date(date);
-        end.setHours(event.end.getHours(), event.end.getMinutes());
-        
-        return {
-          title: event.title,
-          start,
-          end,
-        };
-      });
-    }
-    return [event];
-  });
+    const recurringEvents = courses.flatMap(event => {
+      if (event.rule) {
+        const rule = createRrule(event.rule);
+        return rule.all().map(date => {
+          const start = new Date(date);
+          start.setHours(event.start.getHours(), event.start.getMinutes());
+          const end = new Date(date);
+          end.setHours(event.end.getHours(), event.end.getMinutes());
+          
+          return {
+            title: event.title,
+            start,
+            end,
+          };
+        });
+      }
+      return [event];
+    });
 
   const { calendarSize} = useCalendarSize();
   

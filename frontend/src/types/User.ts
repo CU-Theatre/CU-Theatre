@@ -1,12 +1,11 @@
-import { CourseType } from "./CourseType";
-
 export interface User {
+  id: number;
   firstName: string;
   lastName: string;
   email: string;
   phoneNumber: string;
-  dramaCourseFinisher: boolean;
-  currentCourse: CourseType[];
+  dramaCourseFinished: boolean;
+  currentCourses: number[];
   emergencyContactDto?: {
     id: number | null,
     userId: number | null,
@@ -15,5 +14,5 @@ export interface User {
     relation: string | null,
     phoneNumber: string | null,
 }
-  role: "admin" | "customer";
+  roleName: "admin" | "customer";
 }

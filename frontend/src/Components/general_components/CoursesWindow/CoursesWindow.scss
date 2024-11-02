@@ -271,11 +271,17 @@
 
   &__button {
     background-color: $white;
-    padding: 8px 40px;
+    padding: 8px 20px;
     font-size: 12px;
     text-align: center;
     border: 1px solid transparent;
     transition: all 0.3s;
+    justify-content: center;
+    width: 120px;
+    height: 55px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 
     &:hover {
       background-color: black;
@@ -285,8 +291,13 @@
 
     @include on-tablet {
       font-size: 16px;
-      padding: 12p 60px;
+      padding: 12px 40px;
       width: 185px;
+      height: 80px;
+    }
+
+    @include on-desktop {
+      width: 220px;
     }
 
     &--left {
@@ -297,5 +308,26 @@
       border-top-right-radius: 28px;
       border-bottom-right-radius: 28px;
     }
+    &--disabled {
+      cursor: not-allowed;
+    }
+  }
+
+  &__button-content {
+    border-radius: 50%;
+    width: 2em;
+    height: 2em;
+    border: 0.3em solid gray;
+    border-left-color: #fff;
+    animation: load8 1.2s infinite linear;
+  }
+}
+
+@keyframes load8 {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
   }
 }

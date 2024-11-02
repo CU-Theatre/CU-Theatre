@@ -5,6 +5,7 @@ import { SignButton } from "../general_components/signButton";
 import masks from "../img/timetable/masks.png";
 import { MyCalendar } from "../general_components/personalAccount/MyCalendar";
 import { EventInfo } from "../general_components/personalAccount/MyCalendar/EventInfo";
+import { ClassesAPI } from "../../types/ClassesAPI";
 import { CourseEvent } from "../../types/CourseEvent";
 
 export const TimeTable: React.FC = () => {
@@ -147,7 +148,7 @@ export const TimeTable: React.FC = () => {
     },
   ];
   const [activeDay, setActiveDay] = useState<string | null>("Tuesday");
-  const [currentEvent, setCurrentEvent] = useState<CourseEvent | null>(null);
+  const [currentEvent, setCurrentEvent] = useState<ClassesAPI | CourseEvent | null>(null);
 
   useEffect(() => {
     const currentData = new Date();

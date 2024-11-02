@@ -1,0 +1,178 @@
+@import '../../../styles/keyframes';
+@import '../../../styles/variables';
+@import '../../../styles/mixins';
+
+.emergency-contacts {
+  background: linear-gradient(rgb(119, 17, 57),rgb(0, 0, 0) 50.382%);
+  padding-top: 100px;
+  padding-bottom: 80px;
+
+  @include on-tablet {
+    padding-top: 144px;
+  }
+
+  @include on-desktop {
+    padding-top: 230px;
+  }
+
+  &__container {
+    color: white;
+
+    @include page-grid;
+
+    row-gap: 30px;
+
+    @include on-tablet {
+      row-gap: 50px;
+    }
+  }
+
+  &__title,
+  &__subtitle,
+  &__content {
+    grid-column: 1 / -1;
+    text-align: center;
+  }
+
+  &__content {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+  }
+
+  &__subtitle {
+    font-size: 14px;
+
+    @include on-tablet {
+      font-size: 16px;
+    }
+
+    @include on-desktop {
+      font-size: 22px;
+    }
+  }
+
+  &__form {
+    display: flex;
+    flex-direction: column;
+    align-self: center;
+    gap: 20px;
+    max-width: 400px;
+
+    @include on-tablet {
+      gap: 30px;
+    }
+
+    @include on-desktop {
+      max-width: 600px;
+      gap: 40px;
+    }
+  }
+
+  &__legend {
+    text-transform: uppercase;
+    font-size: 14px;
+
+    @include on-tablet {
+      font-size: 16px;
+    }
+
+    @include on-desktop {
+      font-size: 22px;
+    }
+  }
+
+  &__block {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+  }
+
+  &__label {
+    font-size: 12px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    transition: background-color .3s, color .3s;
+    padding-left: 10px;
+    border-radius: 8px;
+
+
+    &:hover {
+      background-color: #7d7c7c;
+      color:  black;
+    }
+
+    @include on-tablet {
+      font-size: 16px;
+    }
+
+    @include on-desktop {
+      font-size: 20px;
+    }
+  }
+
+  &__input {
+    font-size: 12px;
+    outline: none;
+    padding: 10px 5px;
+    border-radius: 8px;
+
+    @include on-tablet {
+      font-size: 16px;
+      padding: 10px;
+    }
+
+    @include on-desktop {
+      font-size: 20px;
+    }
+  }
+
+  &__button {
+    background-color: white;
+    border-radius: 18px;
+    color: black;
+    padding: 10px 0;
+    border: 1px solid transparent;
+    transition: color .3s, background-color .3s, border .3s;
+    font-size: 12px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 50px;
+
+    @include on-tablet {
+      font-size: 16px;
+      padding: 20px 0;
+      height: 70px;
+    }
+
+    &:hover {
+      background-color: black;
+      border: 1px solid white;
+      color: white;
+    }
+
+    &--disabled {
+      cursor: not-allowed;
+    }
+  }
+
+  &__button-content {
+    border-radius: 50%;
+    width: 2em;
+    height: 2em;
+    border: 0.3em solid gray;
+    border-left-color: #fff;
+    animation: load8 1.2s infinite linear;
+  }
+
+  &__error {
+    border-bottom: 1px solid red;
+    text-transform: uppercase;
+    color: red;
+    width: fit-content;
+    align-self: flex-end;
+  }
+}
