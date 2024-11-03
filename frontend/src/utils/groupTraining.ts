@@ -25,7 +25,7 @@ export const groupTrainings = (allTrainings: ClassesAPI[]) => {
       icon,
       dates: [
         ...currentDates,
-        { date: start, lessonId: id || 0 },
+        { date: new Date(start), lessonId: id || 0 },
       ],
     };
     // TODO delete " || 0" ↑ when id will be in every lesson

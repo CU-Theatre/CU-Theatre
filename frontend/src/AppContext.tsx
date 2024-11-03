@@ -43,6 +43,16 @@ import { ClassesAPI } from "./types/ClassesAPI";
     setCurrentShows: React.Dispatch<React.SetStateAction<ShowType[]>>;
     currUserEmergency: EmergencyContactType | null | undefined;
     setCurrUserEmergency: React.Dispatch<React.SetStateAction<EmergencyContactType | null | undefined>>;
+    contactPageLoader: boolean;
+    setContactPageLoader: React.Dispatch<React.SetStateAction<boolean>>;
+    timetablePageLoader: boolean;
+    setTimetablePageLoader: React.Dispatch<React.SetStateAction<boolean>>;
+    editingEvent: boolean;
+    setEditingEvent: React.Dispatch<React.SetStateAction<boolean>>;
+    editingEventId: number;
+    setEditingEventId: React.Dispatch<React.SetStateAction<number>>;
+    formClosed: boolean;
+    setFormClosed: React.Dispatch<React.SetStateAction<boolean>>;
   }
 
   const AppContext = createContext<AppContextInterface | undefined>(undefined);
@@ -63,10 +73,16 @@ import { ClassesAPI } from "./types/ClassesAPI";
     const [eventList, setEventList] = useState<Events | undefined>(events);
     const [courses, setCourses] = useState<CourseEvent[] | []>([...dramaCourse.courseTime ]);
     const [currUserEmergency, setCurrUserEmergency] = useState<EmergencyContactType | null | undefined>();
+    const [contactPageLoader, setContactPageLoader] = useState(false);
+    const [timetablePageLoader, setTimetablePageLoader] = useState(false);
+    const [editingEvent, setEditingEvent] = useState(false);
+    const [editingEventId, setEditingEventId] = useState<number>(0);
+    const [formClosed, setFormClosed] = useState(true);
 
     const [token, setToken] = useLocalStorage(KEY_TOKEN, "");
 
     useEffect(() => {
+      setTimetablePageLoader(true);
       const fetchClasses = async () => {
         try {
           const response = await getAllClasses(token);
@@ -94,11 +110,12 @@ import { ClassesAPI } from "./types/ClassesAPI";
         }
       };
   
-      fetchClasses();
-      console.log(courses);
+      fetchClasses()
+      .finally(() => setTimetablePageLoader(false));
     }, [token]);
     
     useEffect(() => {
+      setContactPageLoader(true);
 
       getCurrentUser(token)
         .then((newUser) => {
@@ -125,7 +142,8 @@ import { ClassesAPI } from "./types/ClassesAPI";
               // TODO add message Unexpected Error
               break;
           }
-        });
+        })
+        .finally(() => setContactPageLoader(false));
     }, [token]);
 
     const [courseInfo, setCourseInfo] = useState<CourseType>(dramaCourse);
@@ -168,6 +186,16 @@ import { ClassesAPI } from "./types/ClassesAPI";
           setCurrentShows,
           currUserEmergency,
           setCurrUserEmergency,
+          contactPageLoader,
+          setContactPageLoader,
+          timetablePageLoader,
+          setTimetablePageLoader,
+          editingEvent,
+          setEditingEvent,
+          editingEventId,
+          setEditingEventId,
+          formClosed,
+          setFormClosed,
         }}
       >
         {children}

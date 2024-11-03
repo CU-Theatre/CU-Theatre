@@ -132,15 +132,15 @@
     padding: 10px 30px;
     border-radius: 8px;
     font-weight: 700;
-    background-color: black;
-    color: white;
-    border: 1px solid white;
+    background-color: white;
+    color: black;
+    border: 1px solid transparent;
     transition: opacity .3s;
 
     &--selected {
-      background-color: white;
-      color: black;
-      border: 1px solid transparent;
+      background-color: black;
+      color: white;
+      border: 1px solid white;
     }
 
     &:hover {
@@ -165,4 +165,22 @@
       filter: brightness(0.8) invert(0.7);
     }
   }
+
+  &__edit-button {
+    background-image: url('../../../../img/icons/editIcon.svg');
+    width: 18px;
+    height: 18px;
+    cursor: pointer;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    filter: brightness(1) invert(1);
+    position: absolute;
+    left: 40px;
+    transition: all .3s;
+
+    &:hover {
+      filter: brightness(0.8) invert(0.7);
+    }
+  } 
 }

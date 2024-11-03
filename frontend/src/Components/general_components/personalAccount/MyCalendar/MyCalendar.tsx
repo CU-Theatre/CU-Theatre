@@ -13,6 +13,7 @@ import React, { useState } from 'react';
 import { CourseEvent } from '../../../../types/CourseEvent';
 import { useAppContext } from '../../../../AppContext';
 import { createRrule } from '../../../../utils/createRrule';
+import { ClassesAPI } from '../../../../types/ClassesAPI';
 
 const locales = {
   'en-US': enUS,
@@ -27,7 +28,7 @@ const localizer = dateFnsLocalizer({
 })
 
 interface Props {
-  setCurrentEvent: React.Dispatch<React.SetStateAction<CourseEvent | null>>;
+  setCurrentEvent: React.Dispatch<React.SetStateAction<CourseEvent | ClassesAPI | null>>;
 }
 
 export const MyCalendar: React.FC<Props> = ({ setCurrentEvent }) => {
