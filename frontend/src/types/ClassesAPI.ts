@@ -7,6 +7,6 @@ export interface ClassesAPI {
   icon: string,
   interval: null | number,
   id: number,
-  start: Date,
-  end: Date,
+  start: string,
+  end: string,
 }

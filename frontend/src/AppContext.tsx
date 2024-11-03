@@ -47,6 +47,10 @@ import { ClassesAPI } from "./types/ClassesAPI";
     setContactPageLoader: React.Dispatch<React.SetStateAction<boolean>>;
     timetablePageLoader: boolean;
     setTimetablePageLoader: React.Dispatch<React.SetStateAction<boolean>>;
+    editingEvent: boolean;
+    setEditingEvent: React.Dispatch<React.SetStateAction<boolean>>;
+    editingEventId: number;
+    setEditingEventId: React.Dispatch<React.SetStateAction<number>>;
   }
 
   const AppContext = createContext<AppContextInterface | undefined>(undefined);
@@ -69,6 +73,8 @@ import { ClassesAPI } from "./types/ClassesAPI";
     const [currUserEmergency, setCurrUserEmergency] = useState<EmergencyContactType | null | undefined>();
     const [contactPageLoader, setContactPageLoader] = useState(false);
     const [timetablePageLoader, setTimetablePageLoader] = useState(false);
+    const [editingEvent, setEditingEvent] = useState(false);
+    const [editingEventId, setEditingEventId] = useState<number>(0);
 
     const [token, setToken] = useLocalStorage(KEY_TOKEN, "");
 
@@ -181,6 +187,10 @@ import { ClassesAPI } from "./types/ClassesAPI";
           setContactPageLoader,
           timetablePageLoader,
           setTimetablePageLoader,
+          editingEvent,
+          setEditingEvent,
+          editingEventId,
+          setEditingEventId,
         }}
       >
         {children}

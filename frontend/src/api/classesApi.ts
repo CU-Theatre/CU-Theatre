@@ -1,5 +1,4 @@
 import { ClassesAPI } from "../types/ClassesAPI";
-import { CourseEvent } from "../types/CourseEvent";
 import { NewCourseEvents } from "../types/newCourseEvent";
 import { client } from "../utils/fetchClient";
 
@@ -19,6 +18,6 @@ export const deleteClass = (classId: number, token: string) => {
   return client.delete(`/course-events/${classId}`, token);
 }; 
 
-export const updateClass = (classId: number, updatedClass: CourseEvent, token: string) => {
+export const updateClass = (classId: number, updatedClass: ClassesAPI, token: string) => {
   return client.put(`/course-events/${classId}`, updatedClass, token);
 };

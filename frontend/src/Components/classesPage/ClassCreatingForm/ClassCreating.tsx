@@ -1,9 +1,11 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import './ClassCreating.scss';
-import { createClass } from "../../../api/classesApi";
+import { createClass, getClass, updateClass } from "../../../api/classesApi";
 import { useTokenLocalStorage } from "../../../hooks/useLocalStorage";
+import { useAppContext } from "../../../AppContext";
+import { ClassesAPI } from "../../../types/ClassesAPI";
 
-export const ClassCreatingForm = () => {
+export const ClassCreatingForm: React.FC = () => {
   const [formData, setFormData] = useState({
     title: '',
     start: '',
@@ -22,6 +24,7 @@ export const ClassCreatingForm = () => {
   };
 
   const [token] = useTokenLocalStorage();
+  const { editingEvent, editingEventId, setEditingEvent, setEditingEventId } = useAppContext();
 
   const weekDays = [
     {
@@ -64,6 +67,57 @@ export const ClassCreatingForm = () => {
     }));
   };
 
+  const handleCancelEditing = () => {
+    setFormData(
+      {
+        title: '',
+        start: '',
+        end: '',
+        description: '',
+        icon: '',
+        courseId: '',
+        freq: 'WEEKLY',
+        interval: 1,
+        days: [] as string []
+      }
+    )
+    setEditingEvent(false);
+    setEditingEventId(0);
+  };
+
+  const formatToLocalDateTime = (dateString: string) => {
+    const date = new Date(dateString);
+    const local = new Date(date.getTime() - date.getTimezoneOffset() * 60000);
+    return local.toISOString().slice(0, 16); // "YYYY-MM-DDThh:mm"
+  };
+
+  useEffect(() => {
+    if (editingEventId !== 0) {
+      getClass(editingEventId, token)
+        .then((res) => {
+          const currentEditEvent = res as ClassesAPI;
+  
+          if (res) {
+            const formattedData = {
+              title: currentEditEvent.title,
+              start: formatToLocalDateTime(currentEditEvent.start),
+              end: formatToLocalDateTime(currentEditEvent.end),
+              description: currentEditEvent.description,
+              icon: currentEditEvent.icon,
+              courseId:currentEditEvent.courseId ? currentEditEvent.courseId.toString() : '',
+              freq: currentEditEvent.freq,
+              interval: currentEditEvent.interval ? currentEditEvent.interval : 1,
+              days: [...currentEditEvent.days],
+            }
+            
+            console.log(formattedData)
+            setFormData({...formattedData})
+          }
+        })
+        .catch(err => console.log('Failed to load class', err))
+    }
+  }, [editingEventId, token]);
+
   const formatToISO = (dateString: string) => {
     const date = new Date(dateString);
     return date.toISOString();
@@ -71,26 +125,48 @@ export const ClassCreatingForm = () => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    const formattedData = {
-      ...formData,
-      start: formatToISO(formData.start),
-      end: formatToISO(formData.end),
-    };
-    console.log('Submitted data:', formattedData);
 
-    createClass(formattedData, token)
-    .then(res => {
-      console.log('Submitted data:', formattedData, res);
-      window.location.reload();
-    })
-    .catch(err => {
-      console.log(err);
-    });
+    
+    if (!editingEvent) {
+      const formattedData = {
+        ...formData,
+        start: formatToISO(formData.start),
+        end: formatToISO(formData.end),
+      };
+
+      createClass(formattedData, token)
+      .then(res => {
+        console.log('Submitted data:', formattedData, res);
+        window.location.reload();
+      })
+      .catch(err => {
+        console.log(err);
+      });
+    } else {
+      const formattedData = {
+        ...formData,
+        id: editingEventId,
+        courseId: +formData.courseId,
+        start: formatToISO(formData.start),
+        end: formatToISO(formData.end),
+      };
+
+      updateClass(editingEventId, formattedData, token)
+      .then(res => {
+        console.log('Submitted data:', formattedData, res);
+        window.location.reload();
+      })
+      .catch(err => {
+        console.log(err);
+      });
+    }
+
+
   };
 
   return (
-    <form onSubmit={handleSubmit} className="class-form">
-      <h3 className="class-form__title">Create new Class</h3>
+    <form onSubmit={handleSubmit} className="class-form" id="classCreating">
+      <h3 className="class-form__title">{editingEvent ? 'Edit' : 'Create new'} Class</h3>
 
       <label className="class-form__label">
         Title:
@@ -200,6 +276,15 @@ export const ClassCreatingForm = () => {
       </fieldset>
 
       <button className="class-form__button" type="submit">Submit</button>
+      {editingEvent && (
+        <button 
+          className="class-form__button" 
+          onClick={handleCancelEditing}
+          type="button"
+          >
+            Cancel
+          </button>
+      )}
     </form>
   );
 };

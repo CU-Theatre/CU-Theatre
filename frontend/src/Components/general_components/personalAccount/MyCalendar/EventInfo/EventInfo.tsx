@@ -20,7 +20,7 @@ interface Props {
 type PriceType = 'groupClass' | 'privateClass' | 'privateForTwo';
 
 export const EventInfo: React.FC<Props> = ({ currentEvent, setCurrentEvent, setGroupedTrainings }) => {
-  const { setEventInfoIsOpen, eventInfoIsOpen, setEventDetailIsOpen, userState, setCourses, currentShows } = useAppContext();
+  const { setEventInfoIsOpen, eventInfoIsOpen, setEventDetailIsOpen, userState, setCourses, currentShows, setEditingEvent, setEditingEventId } = useAppContext();
   const classes = ['Heels', 'Exotic', 'Stretching', 'Pole Dance', 'Twerk'];
   const someShows = ["Live performance", "Impro shows", "Playback shows"];
   const daysOfWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
@@ -48,7 +48,6 @@ export const EventInfo: React.FC<Props> = ({ currentEvent, setCurrentEvent, setG
       const now = new Date();
       const isPast = isBefore(new Date(currentEvent.start), now);
       setIsPastEvent(isPast);
-      console.log(isCurrentPageCLass, currentEvent);
     }
   }, [currentEvent]);
 
@@ -60,6 +59,14 @@ export const EventInfo: React.FC<Props> = ({ currentEvent, setCurrentEvent, setG
 
   const handleOpenModal = () => {
     setModalVisible(true);
+  };
+
+  const handleEditClass = () => {
+    setEventDetailIsOpen(false);
+    setEventInfoIsOpen(true);
+    setEditingEvent(true);
+    if (currentEvent?.id) setEditingEventId(currentEvent?.id)
+    setCurrentEvent(null);
   };
 
   const cancelShowBooking = () => {
@@ -94,7 +101,7 @@ export const EventInfo: React.FC<Props> = ({ currentEvent, setCurrentEvent, setG
         setCourses((prevEvents) => [...prevEvents]
           .filter(someEvent => 
             someEvent.title !== newCalendarShow.title || 
-            (newCalendarShow.start && someEvent.start.getTime() !== newCalendarShow.start.getTime())
+            (newCalendarShow.start && someEvent.start.getTime() !== new Date(newCalendarShow.start).getTime())
           )
         );
         console.log("Бронювання скасовано для:", userState.phoneNumber);
@@ -256,13 +263,18 @@ export const EventInfo: React.FC<Props> = ({ currentEvent, setCurrentEvent, setG
       )}
       <div className='event-info__top'>
         {isCurrentPageCLass && (
-          <button 
-            type="button" 
-            className="event-info__delete-button" 
-            onClick={handleOpenModal}
-            >
-              
-            </button>
+          <>
+            <button 
+              type="button" 
+              className="event-info__delete-button" 
+              onClick={handleOpenModal}
+            ></button>
+            <button 
+              type='button' 
+              className='event-info__edit-button'
+              onClick={handleEditClass}
+            ></button>
+          </>
         )}
         <h4 className='event-info__title'>{currentEvent?.title}</h4>
         <button 
