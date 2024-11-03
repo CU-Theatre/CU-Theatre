@@ -42,7 +42,6 @@ public class CourseEventController {
         CourseEventResponseDto courseEvent = courseEventService
                 .createCourseEvent(courseEventCreateDto);
         courseEvent.setInterval(courseEventCreateDto.getInterval());
-        courseEvent.setCourseId(courseEventCreateDto.getCourseId());
         return courseEvent;
     }
 

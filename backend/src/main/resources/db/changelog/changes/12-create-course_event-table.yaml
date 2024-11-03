@@ -35,11 +35,6 @@ databaseChangeLog:
                   name: icon
                   type: VARCHAR(255)
               - column:
-                  name: course_id
-                  type: BIGINT
-                  constraints:
-                    nullable: false
-              - column:
                   name: freq
                   type: VARCHAR(255)
               - column:

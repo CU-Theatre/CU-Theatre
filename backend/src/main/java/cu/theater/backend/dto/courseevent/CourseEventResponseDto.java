@@ -13,7 +13,6 @@ public class CourseEventResponseDto {
     private Date end;
     private String description;
     private String icon;
-    private Long courseId;
     private String freq;
     private Integer interval;
     private List<Days> days;
