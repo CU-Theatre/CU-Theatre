@@ -9,14 +9,17 @@ import { WindowSwiper } from "../ModalWindowSwiper";
 import { CourseRoadmap } from "./courseRodmap";
 import { Footer } from "../footer";
 import { useTokenLocalStorage } from "../../../hooks/useLocalStorage";
-import { getCurrentUser, updateUser } from "../../../api/userApi";
+import { getCurrentUser } from "../../../api/userApi";
 import { CourseEditorModal } from "../сourseEditorModal";
-import { User } from "../../../types/User";
 import { courseSubscribe } from "../../../api/courseApi";
 import { NavLink } from "react-router-dom";
-import { LoaderButton } from "../Loader/LoaderButton";
+import { EmergencyContactType } from "../../../types/EmergencyContactType";
 
-export const CoursesWindow: React.FC = () => {
+interface Props {
+  emergencyContacts: EmergencyContactType | null;
+}
+
+export const CoursesWindow: React.FC<Props> = ({ emergencyContacts }) => {
   const courseFor = [
     "seek to express through movement.",
     "dance with their soul.",
@@ -96,16 +99,12 @@ export const CoursesWindow: React.FC = () => {
       return;
     }
   
-    const updatedUser: User = {
-      ...userState,
-      currentCourses: [...currentCourses, course.id],
-    };
-  
     setLoadingButton(true);
   
     courseSubscribe(course.id, token)
     .then((res) => {
       console.log('User updated on server:', res);
+      window.location.reload();
     })
     .catch((err: Error) => {
       console.error("Failed to update user:", err);
@@ -201,29 +200,33 @@ export const CoursesWindow: React.FC = () => {
             </div>
           </div>
           <div className="course-window__buttons">
-            {userState?.emergencyContactDto ? (
-              <button
-                type="button"
-                className={classNames("course-window__button course-window__button--left", 
-                  {'course-window__button--disabled': loadingButton})
-                }
-                disabled={loadingButton}
-                onClick={() => subscribeOnCourse()}
-              >
-                {loadingButton ? (
-                  <div className="course-window__button-content" />
-                ) : (
-                  'Sign for a course'
-                )}
-              </button>
+            {!userState?.currentCourses.includes(course.id) ? (
+              emergencyContacts?.id ? (
+                <button
+                  type="button"
+                  className={classNames("course-window__button course-window__button--left", 
+                    {'course-window__button--disabled': loadingButton})
+                  }
+                  disabled={loadingButton}
+                  onClick={() => subscribeOnCourse()}
+                >
+                  {loadingButton ? (
+                    <div className="course-window__button-content" />
+                  ) : (
+                    'Sign for a course'
+                  )}
+                </button>
+              ) : (
+                <NavLink
+                  type="button"
+                  className="course-window__button course-window__button--left"
+                  to={'/emergency-contacts'}
+                >
+                  Subscribe
+                </NavLink>
+              )
             ) : (
-              <NavLink
-                type="button"
-                className="course-window__button course-window__button--left"
-                to={'/emergency-contact'}
-              >
-                Subscribe
-              </NavLink>
+              <div className="course-window__button course-window__button--left">Congrats!!! You are already signed</div>
             )}
             <button
               type="button"

@@ -1,5 +1,4 @@
 export interface ClassesAPI {
-  courseId: null | number,
   days: string[],
   description: string,
   title: string,

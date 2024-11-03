@@ -3,8 +3,8 @@ import './EmergencyContact.scss';
 import { useAppContext } from '../../../AppContext';
 import { addEmergencyContact } from '../../../api/emergency-contactApi';
 import { useTokenLocalStorage } from '../../../hooks/useLocalStorage';
-import { LoaderButton } from '../Loader/LoaderButton';
 import classNames from 'classnames';
+import { useNavigate } from 'react-router-dom';
 
 export const EmergencyContact: React.FC = () => {
   const { userState } = useAppContext();
@@ -14,6 +14,7 @@ export const EmergencyContact: React.FC = () => {
   const [emergencyRelation, setEmergencyRelation] = useState('');
   const [emergencyPhoneNumber, setEmergencyPhoneNumber] = useState('');
   const [loadingButton, setLoadingButton] = useState(false);
+  const navigate = useNavigate();
   const [inputErrors, setInputErrors] = useState({
     name: '',
     lastname: '',
@@ -106,6 +107,7 @@ export const EmergencyContact: React.FC = () => {
     addEmergencyContact(trimmedData, token)
     .then((contact) => {
       console.log('newContact', contact);
+      navigate('/our-courses');
     })
     .catch((err) => {
       console.log('failed to add contact', err);

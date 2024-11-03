@@ -4,6 +4,7 @@ import { createClass, getClass, updateClass } from "../../../api/classesApi";
 import { useTokenLocalStorage } from "../../../hooks/useLocalStorage";
 import { useAppContext } from "../../../AppContext";
 import { ClassesAPI } from "../../../types/ClassesAPI";
+import classNames from "classnames";
 
 export const ClassCreatingForm: React.FC = () => {
   const [formData, setFormData] = useState({
@@ -12,7 +13,6 @@ export const ClassCreatingForm: React.FC = () => {
     end: '',
     description: '',
     icon: '',
-    courseId: '',
     freq: 'WEEKLY',
     interval: 1,
     days: [] as string []
@@ -24,7 +24,7 @@ export const ClassCreatingForm: React.FC = () => {
   };
 
   const [token] = useTokenLocalStorage();
-  const { editingEvent, editingEventId, setEditingEvent, setEditingEventId } = useAppContext();
+  const { editingEvent, editingEventId, setEditingEvent, setEditingEventId, setFormClosed, formClosed } = useAppContext();
 
   const weekDays = [
     {
@@ -75,7 +75,6 @@ export const ClassCreatingForm: React.FC = () => {
         end: '',
         description: '',
         icon: '',
-        courseId: '',
         freq: 'WEEKLY',
         interval: 1,
         days: [] as string []
@@ -104,7 +103,6 @@ export const ClassCreatingForm: React.FC = () => {
               end: formatToLocalDateTime(currentEditEvent.end),
               description: currentEditEvent.description,
               icon: currentEditEvent.icon,
-              courseId:currentEditEvent.courseId ? currentEditEvent.courseId.toString() : '',
               freq: currentEditEvent.freq,
               interval: currentEditEvent.interval ? currentEditEvent.interval : 1,
               days: [...currentEditEvent.days],
@@ -146,7 +144,6 @@ export const ClassCreatingForm: React.FC = () => {
       const formattedData = {
         ...formData,
         id: editingEventId,
-        courseId: +formData.courseId,
         start: formatToISO(formData.start),
         end: formatToISO(formData.end),
       };
@@ -165,126 +162,130 @@ export const ClassCreatingForm: React.FC = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="class-form" id="classCreating">
-      <h3 className="class-form__title">{editingEvent ? 'Edit' : 'Create new'} Class</h3>
+    <div className="class-form">
+      <h3 
+        className={classNames("class-form__title", {
+          'class-form__title--arrow-down': formClosed,
+          'class-form__title--arrow-up': !formClosed
+        })}
+        onClick={() => setFormClosed(!formClosed)}
+      >
+        {editingEvent ? 'Edit' : 'Create new'} Class
+      </h3>
 
-      <label className="class-form__label">
-        Title:
-        <input 
-          type="text" 
-          name="title"
-          value={formData.title} 
-          onChange={handleChange} 
-          className="class-form__input"
-        />
-      </label>
+      <form 
+        onSubmit={handleSubmit} 
+        className={classNames("class-form__form", {"class-form__form--closed": formClosed})} 
+        id="classCreating"
+      >
 
-      <label className="class-form__label">
-        Start Date and Time:
-        <input 
-          type="datetime-local" 
-          name="start" 
-          value={formData.start} 
-          onChange={handleChange} 
-          className="class-form__input" 
+        <label className="class-form__label">
+          Title:
+          <input 
+            type="text" 
+            name="title"
+            value={formData.title} 
+            onChange={handleChange} 
+            className="class-form__input"
           />
-      </label>
+        </label>
 
-      <label className="class-form__label">
-        End Date and Time:
-        <input 
-          type="datetime-local" 
-          name="end" 
-          value={formData.end} 
-          onChange={handleChange} 
-          className="class-form__input" 
-        />
-      </label>
-
-      <label className="class-form__label">
-        Description:
-        <textarea 
-          name="description" 
-          value={formData.description} 
-          onChange={handleChange}
-          className="class-form__input"
-        />
-      </label>
-
-      <label className="class-form__label">
-        Icon:
-        <input 
-          type="text" 
-          name="icon" 
-          value={formData.icon} 
-          onChange={handleChange}
-          className="class-form__input"
-        />
-      </label>
-
-      <label className="class-form__label">
-        Course ID:
-        <input 
-          type="number" 
-          name="courseId" 
-          value={formData.courseId} 
-          onChange={handleChange}
-          className="class-form__input"
-        />
-      </label>
-
-      <label className="class-form__label">
-        Frequency:
-        <select 
-          name="freq" 
-          value={formData.freq} 
-          onChange={handleChange}
-          className="class-form__input"
-        >
-          <option value="WEEKLY">Weekly</option>
-          <option value="MONTHLY">Monthly</option>
-        </select>
-      </label>
-
-      <label className="class-form__label">
-        Interval:
-        <input 
-          type="number" 
-          name="interval" 
-          min="1" 
-          value={formData.interval} 
-          onChange={handleChange} 
-          className="class-form__input"
-        />
-      </label>
-
-      <fieldset className="class-form__fieldset">
-        <legend className="class-form__legend">Select Days:</legend>
-        {weekDays.map(day => (
-          <label key={day.dayVal} className="class-form__label">
-            <input 
-              type="checkbox" 
-              name="days" 
-              value={day.dayVal} 
-              checked={formData.days.includes(day.dayVal)} 
-              onChange={handleDaysChange} 
-              className="class-form__input"
+        <label className="class-form__label">
+          Start Date and Time:
+          <input 
+            type="datetime-local" 
+            name="start" 
+            value={formData.start} 
+            onChange={handleChange} 
+            className="class-form__input" 
             />
-            {day.dayName}
-          </label>
-        ))}
-      </fieldset>
+        </label>
 
-      <button className="class-form__button" type="submit">Submit</button>
-      {editingEvent && (
-        <button 
-          className="class-form__button" 
-          onClick={handleCancelEditing}
-          type="button"
+        <label className="class-form__label">
+          End Date and Time:
+          <input 
+            type="datetime-local" 
+            name="end" 
+            value={formData.end} 
+            onChange={handleChange} 
+            className="class-form__input" 
+          />
+        </label>
+
+        <label className="class-form__label">
+          Description:
+          <textarea 
+            name="description" 
+            value={formData.description} 
+            onChange={handleChange}
+            className="class-form__input"
+          />
+        </label>
+
+        <label className="class-form__label">
+          Icon:
+          <input 
+            type="text" 
+            name="icon" 
+            value={formData.icon} 
+            onChange={handleChange}
+            className="class-form__input"
+          />
+        </label>
+
+        <label className="class-form__label">
+          Frequency:
+          <select 
+            name="freq" 
+            value={formData.freq} 
+            onChange={handleChange}
+            className="class-form__input"
           >
-            Cancel
-          </button>
-      )}
-    </form>
+            <option value="WEEKLY">Weekly</option>
+            <option value="MONTHLY">Monthly</option>
+          </select>
+        </label>
+
+        <label className="class-form__label">
+          Interval:
+          <input 
+            type="number" 
+            name="interval" 
+            min="1" 
+            value={formData.interval} 
+            onChange={handleChange} 
+            className="class-form__input"
+          />
+        </label>
+
+        <fieldset className="class-form__fieldset">
+          <legend className="class-form__legend">Select Days:</legend>
+          {weekDays.map(day => (
+            <label key={day.dayVal} className="class-form__label">
+              <input 
+                type="checkbox" 
+                name="days" 
+                value={day.dayVal} 
+                checked={formData.days.includes(day.dayVal)} 
+                onChange={handleDaysChange} 
+                className="class-form__input"
+              />
+              {day.dayName}
+            </label>
+          ))}
+        </fieldset>
+
+        <button className="class-form__button" type="submit">Submit</button>
+        {editingEvent && (
+          <button 
+            className="class-form__button" 
+            onClick={handleCancelEditing}
+            type="button"
+            >
+              Cancel
+            </button>
+        )}
+      </form>
+    </div>
   );
 };

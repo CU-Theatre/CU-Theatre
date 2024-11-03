@@ -51,6 +51,8 @@ import { ClassesAPI } from "./types/ClassesAPI";
     setEditingEvent: React.Dispatch<React.SetStateAction<boolean>>;
     editingEventId: number;
     setEditingEventId: React.Dispatch<React.SetStateAction<number>>;
+    formClosed: boolean;
+    setFormClosed: React.Dispatch<React.SetStateAction<boolean>>;
   }
 
   const AppContext = createContext<AppContextInterface | undefined>(undefined);
@@ -75,6 +77,7 @@ import { ClassesAPI } from "./types/ClassesAPI";
     const [timetablePageLoader, setTimetablePageLoader] = useState(false);
     const [editingEvent, setEditingEvent] = useState(false);
     const [editingEventId, setEditingEventId] = useState<number>(0);
+    const [formClosed, setFormClosed] = useState(true);
 
     const [token, setToken] = useLocalStorage(KEY_TOKEN, "");
 
@@ -191,6 +194,8 @@ import { ClassesAPI } from "./types/ClassesAPI";
           setEditingEvent,
           editingEventId,
           setEditingEventId,
+          formClosed,
+          setFormClosed,
         }}
       >
         {children}

@@ -2,86 +2,139 @@
 @import '../../../styles/mixins';
 @import '../../../styles/variables';
 
+
 .class-form {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-  grid-column: 1 / -1;
-  justify-self: center;
-  text-align: center;
-
-  &__title {
-    font-size: 16px;
-    color: white;
-    font-weight: 700;
-    text-transform: uppercase;
-
-    @include on-tablet {
-      font-size: 18px;
-    }
-
-    @include on-desktop {
-      font-size: 20px;
-    }
-  }
-
-  &__label {
-    color: white;
-    font-size: 12px;
-    font-weight: 500;
-    display: flex;
-    gap: 10px;
-    align-items: center;
-    cursor: pointer;
-
-    @include on-tablet {
-      font-size: 14px;
-    }
-
-    @include on-desktop {
-      font-size: 18px;
-    }
-  }
-
-  &__input {
-    outline: none;
-    border-radius: 8px;
-    padding: 5px;
-  }
-
-  &__fieldset {
-    color: white;
-    font-size: 12px;
-    font-weight: 500;
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: 40px;
+    align-items: center;
+    grid-column: 1 / -1;
 
-    @include on-tablet {
-      font-size: 14px;
-    }
-
-    @include on-desktop {
-      font-size: 18px;
-    }
-  }
-
-  &__legend {
-    margin: 15px 0;
-  }
-
-  &__button {
-    background-color: white;
-    border-radius: 18px;
-    font-size: 14px;
-    border: 1px solid transparent;
-    transition: background-color .3s, color .3s, border .3s;
-    padding: 10px 0;
-
-    &:hover {
+    &__form {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      justify-self: center;
+      text-align: center;
       background-color: black;
-      color: white;
-      border: 1px solid white;
+      padding: 30px;
+      border-radius: 18px;
+      height: 100%;
+      overflow: hidden;
     }
-  }
+
+    &__form--closed {
+      height: 0;
+      padding: 0;
+    }
+
+    &__title--arrow-up {
+      &::before {
+        background-image: url('./img/arrow-up.svg');
+      }
+    }
+    
+    &__title--arrow-down {
+      &::before {
+        background-image: url('./img/arrow-down.svg');
+      }
+    }
+    
+    &__title {
+      font-size: 16px;
+      color: white;
+      font-weight: 700;
+      text-transform: uppercase;
+      position: relative;
+      background-color: black;
+      padding: 10px;
+      border-radius: 5px;
+
+      &::before {
+        cursor: pointer;
+        content: '';
+        position: absolute;
+        left: -20px;
+        width: 20px;
+        height: 20px;
+        background-position: center;
+        background-size: cover;
+        background-repeat: no-repeat;
+      }
+  
+      @include on-tablet {
+        font-size: 18px;
+
+        &::before {
+          top: 0;
+          left: -50px;
+          width: 40px;
+          height: 40px;
+        }
+      }
+  
+      @include on-desktop {
+        font-size: 20px;
+      }
+    }
+  
+    &__label {
+      color: white;
+      font-size: 12px;
+      font-weight: 500;
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      cursor: pointer;
+  
+      @include on-tablet {
+        font-size: 14px;
+      }
+  
+      @include on-desktop {
+        font-size: 18px;
+      }
+    }
+  
+    &__input {
+      outline: none;
+      border-radius: 8px;
+      padding: 5px;
+    }
+  
+    &__fieldset {
+      color: white;
+      font-size: 12px;
+      font-weight: 500;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+  
+      @include on-tablet {
+        font-size: 14px;
+      }
+  
+      @include on-desktop {
+        font-size: 18px;
+      }
+    }
+  
+    &__legend {
+      margin: 15px 0;
+    }
+  
+    &__button {
+      background-color: white;
+      border-radius: 18px;
+      font-size: 14px;
+      border: 1px solid transparent;
+      transition: background-color .3s, color .3s, border .3s;
+      padding: 10px 0;
+  
+      &:hover {
+        background-color: black;
+        color: white;
+        border: 1px solid white;
+      }
+    }
 }

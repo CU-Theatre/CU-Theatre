@@ -20,7 +20,17 @@ interface Props {
 type PriceType = 'groupClass' | 'privateClass' | 'privateForTwo';
 
 export const EventInfo: React.FC<Props> = ({ currentEvent, setCurrentEvent, setGroupedTrainings }) => {
-  const { setEventInfoIsOpen, eventInfoIsOpen, setEventDetailIsOpen, userState, setCourses, currentShows, setEditingEvent, setEditingEventId } = useAppContext();
+  const { 
+    setEventInfoIsOpen, 
+    eventInfoIsOpen, 
+    setEventDetailIsOpen, 
+    userState, 
+    setCourses, 
+    currentShows, 
+    setEditingEvent, 
+    setEditingEventId,
+    setFormClosed, 
+  } = useAppContext();
   const classes = ['Heels', 'Exotic', 'Stretching', 'Pole Dance', 'Twerk'];
   const someShows = ["Live performance", "Impro shows", "Playback shows"];
   const daysOfWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
@@ -65,6 +75,7 @@ export const EventInfo: React.FC<Props> = ({ currentEvent, setCurrentEvent, setG
     setEventDetailIsOpen(false);
     setEventInfoIsOpen(true);
     setEditingEvent(true);
+    setFormClosed(false);
     if (currentEvent?.id) setEditingEventId(currentEvent?.id)
     setCurrentEvent(null);
   };
