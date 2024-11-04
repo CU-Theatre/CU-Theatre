@@ -87,6 +87,8 @@ public class CourseController {
         return courseService.deleteCourse(id);
     }
 
+    @Operation(summary = "Unsign user from course",
+            description = "Unsign user from a specific course")
     @DeleteMapping("/{courseId}/users/{userId}")
     public ResponseEntity<String> unsignUserFromCourse(@PathVariable Long courseId,
                                                        @PathVariable Long userId) {
@@ -100,6 +102,8 @@ public class CourseController {
         }
     }
 
+    @Operation(summary = "Add course image",
+            description = "Add image to a specific course, can be used multiple times")
     @PostMapping("/{courseId}/images")
     public CourseDto addCourseImages(
             @PathVariable Long courseId,
@@ -114,10 +118,12 @@ public class CourseController {
         return updatedCourse;
     }
 
-    @DeleteMapping("/{courseId}/images/{imagePath}")
+    @Operation(summary = "Delete course image",
+            description = "Delete image from a specific course")
+    @DeleteMapping("/{courseId}/images/{imageName}")
     public ResponseEntity<String> deleteCourseImage(@PathVariable Long courseId,
-                                                    @PathVariable String imagePath) {
-        courseService.deleteCourseImage(courseId, imagePath);
+                                                    @PathVariable String imageName) {
+        courseService.deleteCourseImage(courseId, imageName);
         return ResponseEntity.ok("Image deleted successfully");
     }
 
