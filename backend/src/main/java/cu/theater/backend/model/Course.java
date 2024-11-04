@@ -48,8 +48,6 @@ public class Course {
     private String description;
     @Column(nullable = false, name = "max_students")
     private Integer maxStudents;
-    @Column(name = "image")
-    private String image;
     @Column(name = "icon")
     private String icon;
     @Column(nullable = false, name = "start_date")
@@ -61,6 +59,9 @@ public class Course {
 
     @OneToMany(mappedBy = "course", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<RoadMap> roadMaps = new ArrayList<>();
+
+    @OneToMany(mappedBy = "course", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<CourseImage> images = new ArrayList<>();
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(

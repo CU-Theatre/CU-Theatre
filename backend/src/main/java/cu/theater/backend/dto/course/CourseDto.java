@@ -15,7 +15,7 @@ public class CourseDto {
     private String startDate;
     private String finishDate;
     private BigDecimal price;
-    private String image;
+    private List<String> images;
     private String icon;
     private Integer maxStudents;
     private List<RoadMapDto> roadMaps;

@@ -1,0 +1,29 @@
+databaseChangeLog:
+  - changeSet:
+      id: 13-create-photos-table
+      author: artemsa223
+      changes:
+        - createTable:
+            tableName: file_data
+            columns:
+              - column:
+                  name: id
+                  type: BIGINT
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: name
+                  type: VARCHAR(255)
+              - column:
+                  name: type
+                  type: VARCHAR(255)
+              - column:
+                  name: file_path
+                  type: VARCHAR(255)
+              - column:
+                  name: is_video
+                  type: BOOLEAN
+                  constraints:
+                    nullable: false

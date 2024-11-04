@@ -7,6 +7,7 @@ import cu.theater.backend.dto.course.UpdateCourseDto;
 import cu.theater.backend.model.User;
 import cu.theater.backend.service.course.CourseService;
 import io.swagger.v3.oas.annotations.Operation;
+import java.io.IOException;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -21,7 +22,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 @RestController
 @RequiredArgsConstructor
@@ -95,6 +98,27 @@ public class CourseController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body("Error unsigning user from course: " + e.getMessage());
         }
+    }
+
+    @PostMapping("/{courseId}/images")
+    public CourseDto addCourseImages(
+            @PathVariable Long courseId,
+            @RequestParam("files") MultipartFile imageFile) {
+        CourseDto updatedCourse;
+        try {
+            updatedCourse = courseService.addCourseImages(courseId,
+                     imageFile);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        return updatedCourse;
+    }
+
+    @DeleteMapping("/{courseId}/images/{imagePath}")
+    public ResponseEntity<String> deleteCourseImage(@PathVariable Long courseId,
+                                                    @PathVariable String imagePath) {
+        courseService.deleteCourseImage(courseId, imagePath);
+        return ResponseEntity.ok("Image deleted successfully");
     }
 
 }
