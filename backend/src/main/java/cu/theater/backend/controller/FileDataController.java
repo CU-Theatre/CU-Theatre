@@ -1,6 +1,7 @@
 package cu.theater.backend.controller;
 
 import cu.theater.backend.service.filedata.FileStorageService;
+import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -22,6 +23,12 @@ public class FileDataController {
 
     private final FileStorageService fileDataService;
 
+    @Operation(summary = "Upload file",
+            description = "Uploads a file to the server, "
+                    + "file - the file to upload,"
+                    + "category - the category of the file(course, user...), "
+                    + "isVideo - whether the file is a video, "
+                    + "relatedId - the ID of the related entity")
     @PostMapping("/upload")
     public ResponseEntity<?> uploadFile(
             @RequestParam("file") MultipartFile file,
@@ -39,6 +46,11 @@ public class FileDataController {
         }
     }
 
+    @Operation(summary = "Download file",
+            description = "Downloads a file from the server, "
+                    + "category - the category of the file(course, user...), "
+                    + "mediaType - the media type of the file(photo, video...), "
+                    + "fileName - the name of the file")
     @GetMapping("/download/{category}/{mediaType}/{fileName}")
     public ResponseEntity<?> downloadFile(
             @PathVariable String category,
