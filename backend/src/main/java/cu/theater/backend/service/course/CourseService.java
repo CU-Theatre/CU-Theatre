@@ -4,7 +4,9 @@ import cu.theater.backend.dto.course.CourseDto;
 import cu.theater.backend.dto.course.CreateCourseRequestDto;
 import cu.theater.backend.dto.course.DeleteDto;
 import cu.theater.backend.dto.course.UpdateCourseDto;
+import java.io.IOException;
 import java.util.List;
+import org.springframework.web.multipart.MultipartFile;
 
 public interface CourseService {
 
@@ -23,4 +25,8 @@ public interface CourseService {
     DeleteDto deleteCourse(Long courseId);
 
     void unsignUserFromCourse(Long courseId, Long userId);
+
+    CourseDto addCourseImages(Long courseId, MultipartFile imageFile) throws IOException;
+
+    void deleteCourseImage(Long courseId, String imageName);
 }

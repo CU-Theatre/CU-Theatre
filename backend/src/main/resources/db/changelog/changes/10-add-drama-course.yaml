@@ -10,9 +10,6 @@ databaseChangeLog:
                   name: course_name
                   value: Drama course
               - column:
-                  name: image
-                  value: drama.jpg
-              - column:
                   name: icon
                   value: drama_icon.jpg
               - column:

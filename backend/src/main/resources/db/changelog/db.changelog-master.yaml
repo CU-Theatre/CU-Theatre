@@ -23,3 +23,5 @@ databaseChangeLog:
       file: db/changelog/changes/11-insert-drama-course-roadmaps.yaml
   - include:
       file: db/changelog/changes/12-create-course_event-table.yaml
+  - include:
+      file: db/changelog/changes/13-create-photos-table.yaml

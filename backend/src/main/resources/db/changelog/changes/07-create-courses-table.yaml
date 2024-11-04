@@ -19,9 +19,6 @@ databaseChangeLog:
                   constraints:
                     nullable: false
               - column:
-                  name: image
-                  type: varchar(255)
-              - column:
                   name: icon
                   type: varchar(255)
               - column:
@@ -58,4 +55,26 @@ databaseChangeLog:
                   type: BOOLEAN
                   defaultValueBoolean: false
                   constraints:
+                    nullable: false
+        - createTable:
+            tableName: course_images
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: image_path
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: course_id
+                  type: bigint
+                  constraints:
+                    foreignKeyName: fk_courses_images
+                    references: courses(id)
                     nullable: false
